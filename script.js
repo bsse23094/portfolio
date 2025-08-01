@@ -4,7 +4,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // Only initialize cursor and rain effects on non-touch devices
       if (!('ontouchstart' in window || navigator.maxTouchPoints)) {
         initCustomCursor();
-        createRain();
     } else {
         // Remove cursor elements if they exist
         const cursor = document.querySelector('.cursor');
@@ -12,6 +11,8 @@ document.addEventListener("DOMContentLoaded", () => {
         if (cursor) cursor.remove();
         if (cursorFollower) cursorFollower.remove();
     }
+
+    createRain();
 
 
     // Mobile menu toggle

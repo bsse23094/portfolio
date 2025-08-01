@@ -419,14 +419,14 @@ nav {
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 50%; /* Adjust as needed */
+    height: 40%; /* Adjust as needed */
     background-image: url('ChatGPT Image Aug 2, 2025, 03_36_16 AM.png'); /* Correct file path */
     background-repeat: repeat-x;
     background-size: auto 100%;
     background-position: bottom;
     z-index: 1;
     pointer-events: none;
-    opacity: 0.15; /* Subtle effect */
+    opacity: 0.35; /* Subtle effect */
     filter: drop-shadow(0 -5px 10px rgba(245, 166, 35, 0.2));
     mask-image: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
     -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
