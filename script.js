@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     console.log("Portfolio loaded successfully.");
-    
+      initCustomCursor();
     // Mobile menu toggle
     const menuToggle = document.querySelector('.menu-toggle');
     const nav = document.querySelector('nav');
@@ -33,6 +33,112 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
     
+    function initCustomCursor() {
+    // Check if device supports hover (not mobile)
+    if (matchMedia('(hover: hover) and (pointer: fine)').matches) {
+        const cursor = document.querySelector('.cursor');
+        const cursorFollower = document.querySelector('.cursor-follower');
+        
+        // Only proceed if elements exist
+        if (cursor && cursorFollower) {
+            let mouseX = 0;
+            let mouseY = 0;
+            let followerX = 0;
+            let followerY = 0;
+            let isActive = false;
+            let isClicking = false;
+            let isHidden = false;
+            
+            // Mouse move event
+            document.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+                
+                // Update cursor position immediately
+                cursor.style.left = mouseX + 'px';
+                cursor.style.top = mouseY + 'px';
+            });
+            
+            // Animate follower with smooth delay
+            function animateFollower() {
+                // Calculate follower position with delay
+                followerX += (mouseX - followerX) * 0.1;
+                followerY += (mouseY - followerY) * 0.1;
+                
+                // Apply positions
+                cursorFollower.style.left = followerX + 'px';
+                cursorFollower.style.top = followerY + 'px';
+                
+                requestAnimationFrame(animateFollower);
+            }
+            
+            // Start animation
+            animateFollower();
+            
+            // Hover effects
+            const hoverElements = document.querySelectorAll(
+                'a, button, .portfolio-item, .menu-toggle, input, textarea, [data-cursor-hover]'
+            );
+            
+            hoverElements.forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    cursor.classList.add('cursor-active');
+                    cursorFollower.classList.add('cursor-follower-active');
+                    isActive = true;
+                });
+                
+                el.addEventListener('mouseleave', () => {
+                    cursor.classList.remove('cursor-active');
+                    cursorFollower.classList.remove('cursor-follower-active');
+                    isActive = false;
+                });
+            });
+            
+            // Click effect
+            document.addEventListener('mousedown', () => {
+                isClicking = true;
+                cursor.classList.add('cursor-click');
+                cursorFollower.classList.add('cursor-follower-click');
+            });
+            
+            document.addEventListener('mouseup', () => {
+                isClicking = false;
+                cursor.classList.remove('cursor-click');
+                cursorFollower.classList.remove('cursor-follower-click');
+            });
+            
+            // Hide cursor when not moving
+            let timeout;
+            document.addEventListener('mousemove', () => {
+                // Show cursor if hidden
+                if (isHidden) {
+                    cursor.classList.remove('cursor-hidden');
+                    cursorFollower.classList.remove('cursor-follower-hidden');
+                    isHidden = false;
+                }
+                
+                // Clear previous timeout
+                clearTimeout(timeout);
+                
+                // Hide cursor after inactivity
+                timeout = setTimeout(() => {
+                    if (!isActive && !isClicking) {
+                        cursor.classList.add('cursor-hidden');
+                        cursorFollower.classList.add('cursor-follower-hidden');
+                        isHidden = true;
+                    }
+                }, 1500);
+            });
+        }
+    } else {
+        // Remove cursor elements if they exist
+        const cursor = document.querySelector('.cursor');
+        const cursorFollower = document.querySelector('.cursor-follower');
+        if (cursor) cursor.remove();
+        if (cursorFollower) cursorFollower.remove();
+    }
+}
+
     // Header scroll effect
     const header = document.querySelector('header');
     

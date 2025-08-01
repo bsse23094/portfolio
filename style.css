@@ -803,6 +803,74 @@ nav {
     transition: transform 0.3s ease, width 0.3s ease, height 0.3s ease;
 }
 
+
+@media (hover: hover) and (pointer: fine) {
+    .cursor {
+        position: fixed;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background-color: var(--primary-color);
+        pointer-events: none;
+        mix-blend-mode: difference;
+        z-index: 9999;
+        transform: translate(-50%, -50%);
+        transition: 
+            transform 0.15s ease,
+            width 0.2s ease,
+            height 0.2s ease;
+        will-change: transform;
+    }
+    
+    .cursor-follower {
+        position: fixed;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        border: 2px solid var(--primary-color);
+        pointer-events: none;
+        z-index: 9998;
+        transform: translate(-50%, -50%);
+        transition: 
+            transform 0.3s ease,
+            width 0.3s ease,
+            height 0.3s ease;
+        will-change: transform;
+    }
+    
+    /* Cursor states */
+    .cursor-active {
+        transform: translate(-50%, -50%) scale(1.5);
+        background-color: white;
+    }
+    
+    .cursor-follower-active {
+        transform: translate(-50%, -50%) scale(0.8);
+        background-color: rgba(37, 99, 235, 0.2);
+        border-width: 1px;
+    }
+    
+    .cursor-click {
+        transform: translate(-50%, -50%) scale(0.8);
+    }
+    
+    .cursor-follower-click {
+        transform: translate(-50%, -50%) scale(1.2);
+        border-color: var(--secondary-color);
+    }
+    
+    /* Hide cursor when not needed */
+    .cursor-hidden {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0);
+    }
+    
+    .cursor-follower-hidden {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0);
+    }
+}
+
 /* Responsive Styles */
 @media (max-width: 992px) {
     .hero-title {
