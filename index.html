@@ -6,10 +6,16 @@
     <link rel="icon" type="image/jpeg" href="BATLOGO.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@300;400;500;700&display=swap">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/css/3d.css">
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js"></script>
     <script src="script.js" defer></script>
 </head>
 <body>
+
+    
+
     <div class="bat-signal"></div>
     <div class="gotham-rain"></div>
     <div class="cursor"></div>
@@ -22,6 +28,7 @@
             </div>
             <nav>
                 <a href="#about" class="nav-link">Origins</a>
+                <a href="#experience" class="nav-link">Chronicles</a>
                 <a href="#skills" class="nav-link">Utility Belt</a>
                 <a href="#portfolio" class="nav-link">Case Files</a>
                 <a href="#contact" class="nav-link">Signal Me</a>
@@ -33,6 +40,7 @@
     </header>
 
     <section class="hero gotham-hero">
+        <div id="spline-container" class="spline-background"></div>
         <div class="hero-content">
             <h1 class="hero-title">
                 <span class="title-line">Ahmed Ayyan</span>
@@ -49,6 +57,7 @@
         <div class="gotham-building-silhouette"></div>
         <div class="gotham-lightning"></div>
         <div class="gotham-fog"></div>
+        <div class="particles-3d" id="particles-3d"></div>
     </section>
 
     <section id="about" class="section about-section gotham-section">
@@ -80,6 +89,67 @@
                     <div class="image-wrapper">
                         <div class="image-overlay"></div>
                         <img src="ahmed_batman.jpg" alt="Ahmed Ayyan as Batman" class="profile-img">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- New Experience Section -->
+    <section id="experience" class="section experience-section gotham-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Chronicles</h2>
+                <div class="section-divider"></div>
+                <p class="section-subtitle">My journey through Gotham's digital underworld</p>
+            </div>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">2023 - Present</div>
+                        <h3 class="timeline-title">Software Engineering Student</h3>
+                        <h4 class="timeline-subtitle">Information Technology University</h4>
+                        <p class="timeline-description">Mastering the art of code and algorithms to combat digital crime. Specializing in front-end development and user experience design.</p>
+                    </div>
+                    <div class="timeline-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">2022 - 2023</div>
+                        <h3 class="timeline-title">UI/UX Vigilante</h3>
+                        <h4 class="timeline-subtitle">Freelance Missions</h4>
+                        <p class="timeline-description">Took on various freelance projects to fight against bad design practices. Designed interfaces that put users first and delivered justice to confusing navigation.</p>
+                    </div>
+                    <div class="timeline-icon">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">2021 - 2022</div>
+                        <h3 class="timeline-title">Digital Content Creator</h3>
+                        <h4 class="timeline-subtitle">YouTube Channel</h4>
+                        <p class="timeline-description">Produced and edited video content about technology and design, honing my skills in motion graphics and storytelling.</p>
+                    </div>
+                    <div class="timeline-icon">
+                        <i class="fas fa-video"></i>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">2020 - 2021</div>
+                        <h3 class="timeline-title">First Steps in Design</h3>
+                        <h4 class="timeline-subtitle">Self-Taught Journey</h4>
+                        <p class="timeline-description">Began my training in design principles, color theory, and typography. The night is darkest just before the dawn.</p>
+                    </div>
+                    <div class="timeline-icon">
+                        <i class="fas fa-paint-brush"></i>
                     </div>
                 </div>
             </div>
@@ -390,5 +460,63 @@
             </div>
         </div>
     </footer>
+
+    <!-- 3D Background Script -->
+    <script>
+        // Initialize Three.js scene for 3D particles
+        document.addEventListener('DOMContentLoaded', function() {
+            const container = document.getElementById('particles-3d');
+            if (!container) return;
+            
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            container.appendChild(renderer.domElement);
+            
+            // Create particles
+            const particlesGeometry = new THREE.BufferGeometry();
+            const particleCount = 1000;
+            
+            const posArray = new Float32Array(particleCount * 3);
+            for(let i = 0; i < particleCount * 3; i++) {
+                posArray[i] = (Math.random() - 0.5) * 10;
+            }
+            
+            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+            
+            const particlesMaterial = new THREE.PointsMaterial({
+                size: 0.02,
+                color: 0xf5a623,
+                transparent: true,
+                opacity: 0.8,
+                blending: THREE.AdditiveBlending
+            });
+            
+            const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+            scene.add(particlesMesh);
+            
+            camera.position.z = 3;
+            
+            // Animation loop
+            function animate() {
+                requestAnimationFrame(animate);
+                
+                particlesMesh.rotation.x += 0.0005;
+                particlesMesh.rotation.y += 0.0005;
+                
+                renderer.render(scene, camera);
+            }
+            
+            animate();
+            
+            // Handle window resize
+            window.addEventListener('resize', function() {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+        });
+    </script>
 </body>
 </html>

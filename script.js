@@ -12,6 +12,23 @@ document.addEventListener("DOMContentLoaded", () => {
         if (cursorFollower) cursorFollower.remove();
     }
 
+    const loadSplineScene = () => {
+        const script = document.createElement('script');
+        script.src = 'https://prod.spline.design/Xn87K2bzQCsNM9e0/scene.splinecode';
+        script.async = true;
+        document.body.appendChild(script);
+        
+        script.onload = () => {
+            const app = new Spline.Application();
+            app.start(document.getElementById('spline-container'));
+        };
+    };
+    
+    // Only load on larger screens (optional)
+    if (window.innerWidth > 768) {
+        loadSplineScene();
+    }
+
     createRain();
 
 
