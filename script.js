@@ -329,3 +329,26 @@ function createRain() {
     
     console.log('Rain effect created successfully');
 }
+
+// In the DOMContentLoaded event, update the smooth scrolling for all navigation links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        const targetId = this.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+        
+        if (targetElement) {
+            window.scrollTo({
+                top: targetElement.offsetTop - 80,
+                behavior: 'smooth'
+            });
+            
+            // Close mobile menu if open
+            if (nav.classList.contains('active')) {
+                menuToggle.classList.remove('active');
+                nav.classList.remove('active');
+            }
+        }
+    });
+});
