@@ -334,16 +334,16 @@ function createRain() {
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
         e.preventDefault();
-        
+
         const targetId = this.getAttribute('href');
         const targetElement = document.querySelector(targetId);
-        
+
         if (targetElement) {
             window.scrollTo({
                 top: targetElement.offsetTop - 80,
                 behavior: 'smooth'
             });
-            
+
             // Close mobile menu if open
             if (nav.classList.contains('active')) {
                 menuToggle.classList.remove('active');
@@ -351,4 +351,177 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             }
         }
     });
+});
+
+/* ===== SCROLL ANIMATIONS ===== */
+
+// Initialize scroll animations
+function initScrollAnimations() {
+    // Check if user prefers reduced motion
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (prefersReducedMotion) {
+        // Show all elements immediately for users who prefer reduced motion
+        document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right, .slide-in-up, .text-reveal, .scale-rotate').forEach(el => {
+            el.classList.add('animate');
+        });
+        return;
+    }
+
+    // Intersection Observer options
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    // Section fade-in animations
+    const sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate');
+                sectionObserver.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    // Observe all sections with fade-in class
+    document.querySelectorAll('.fade-in').forEach(section => {
+        sectionObserver.observe(section);
+    });
+
+    // Timeline slide-in animations
+    const timelineObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate');
+                timelineObserver.unobserve(entry.target);
+            }
+        });
+    }, { ...observerOptions, threshold: 0.2 });
+
+    document.querySelectorAll('.slide-in-left, .slide-in-right').forEach(item => {
+        timelineObserver.observe(item);
+    });
+
+    // Portfolio and tech stack slide-up animations
+    const portfolioObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate');
+                portfolioObserver.unobserve(entry.target);
+            }
+        });
+    }, { ...observerOptions, threshold: 0.15 });
+
+    document.querySelectorAll('.slide-in-up, .scale-rotate').forEach(item => {
+        portfolioObserver.observe(item);
+    });
+
+    // Text reveal animations for headings
+    const textObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                setTimeout(() => {
+                    entry.target.classList.add('animate');
+                }, 200);
+                textObserver.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('.text-reveal').forEach(heading => {
+        textObserver.observe(heading);
+    });
+
+    // Staggered animations for skills and tech items
+    const skillObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const items = entry.target.querySelectorAll('.skill-item, .tech-item');
+                items.forEach((item, index) => {
+                    setTimeout(() => {
+                        item.classList.add('animate');
+                    }, index * 100);
+                });
+                skillObserver.unobserve(entry.target);
+            }
+        });
+    }, { ...observerOptions, threshold: 0.3 });
+
+    // Observe skills and tech sections
+    const skillsSection = document.querySelector('.skills-section');
+    const techSection = document.querySelector('.tech-stack-section');
+
+    if (skillsSection) skillObserver.observe(skillsSection);
+    if (techSection) skillObserver.observe(techSection);
+}
+
+// Initialize parallax effects
+function initParallax() {
+    const parallaxElements = document.querySelectorAll('.parallax-up, .parallax-down');
+
+    if (parallaxElements.length === 0) return;
+
+    let ticking = false;
+
+    function updateParallax() {
+        const scrolled = window.pageYOffset;
+
+        parallaxElements.forEach(element => {
+            const rate = element.classList.contains('parallax-up') ? -0.5 : 0.5;
+            const yPos = -(scrolled * rate);
+            element.style.transform = `translateY(${yPos}px)`;
+        });
+
+        ticking = false;
+    }
+
+    function requestTick() {
+        if (!ticking) {
+            requestAnimationFrame(updateParallax);
+            ticking = true;
+        }
+    }
+
+    window.addEventListener('scroll', requestTick, { passive: true });
+}
+
+// Initialize scroll progress indicator
+function initScrollProgress() {
+    const progressBar = document.createElement('div');
+    progressBar.className = 'scroll-progress';
+    document.body.appendChild(progressBar);
+
+    function updateProgress() {
+        const windowHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const scrolled = (window.pageYOffset / windowHeight) * 100;
+        progressBar.style.transform = `scaleX(${scrolled / 100})`;
+    }
+
+    window.addEventListener('scroll', updateProgress, { passive: true });
+    updateProgress(); // Initial call
+}
+
+// Performance optimization: Throttle scroll events
+function throttle(func, limit) {
+    let inThrottle;
+    return function() {
+        const args = arguments;
+        const context = this;
+        if (!inThrottle) {
+            func.apply(context, args);
+            inThrottle = true;
+            setTimeout(() => inThrottle = false, limit);
+        }
+    }
+}
+
+// Initialize all scroll animations when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    // Existing code...
+
+    // Initialize new scroll animations
+    initScrollAnimations();
+    initParallax();
+    initScrollProgress();
 });
