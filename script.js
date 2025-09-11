@@ -164,17 +164,22 @@ document.addEventListener("DOMContentLoaded", () => {
     
     // Form submission
     const contactForm = document.querySelector('.contact-form');
-    
+
     if (contactForm) {
         contactForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            
+
             // Here you would typically send the form data to a server
             // For demo purposes, we'll just show an alert
             alert('Thank you for your message! I will get back to you soon.');
             contactForm.reset();
         });
     }
+
+    // Initialize new scroll animations
+    initScrollAnimations();
+    initParallax();
+    initScrollProgress();
 });
 
 function initCustomCursor() {
@@ -330,28 +335,35 @@ function createRain() {
     console.log('Rain effect created successfully');
 }
 
-// In the DOMContentLoaded event, update the smooth scrolling for all navigation links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-        e.preventDefault();
+// Smooth scrolling for navigation links (consolidated)
+function initSmoothScrolling() {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
 
-        const targetId = this.getAttribute('href');
-        const targetElement = document.querySelector(targetId);
+            const targetId = this.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
 
-        if (targetElement) {
-            window.scrollTo({
-                top: targetElement.offsetTop - 80,
-                behavior: 'smooth'
-            });
+            if (targetElement) {
+                const header = document.querySelector('header');
+                const headerHeight = header ? header.offsetHeight : 80;
 
-            // Close mobile menu if open
-            if (nav.classList.contains('active')) {
-                menuToggle.classList.remove('active');
-                nav.classList.remove('active');
+                window.scrollTo({
+                    top: targetElement.offsetTop - headerHeight,
+                    behavior: 'smooth'
+                });
+
+                // Close mobile menu if open
+                const menuToggle = document.querySelector('.menu-toggle');
+                const nav = document.querySelector('nav');
+                if (nav && nav.classList.contains('active')) {
+                    menuToggle.classList.remove('active');
+                    nav.classList.remove('active');
+                }
             }
-        }
+        });
     });
-});
+}
 
 /* ===== SCROLL ANIMATIONS ===== */
 
@@ -515,13 +527,3 @@ function throttle(func, limit) {
         }
     }
 }
-
-// Initialize all scroll animations when DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-    // Existing code...
-
-    // Initialize new scroll animations
-    initScrollAnimations();
-    initParallax();
-    initScrollProgress();
-});
