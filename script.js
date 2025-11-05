@@ -475,14 +475,23 @@ function initParallax() {
     if (parallaxElements.length === 0) return;
 
     let ticking = false;
+    let lastScrollY = window.pageYOffset;
 
     function updateParallax() {
         const scrolled = window.pageYOffset;
+        
+        // Only update if scroll position changed significantly
+        if (Math.abs(scrolled - lastScrollY) < 5) {
+            ticking = false;
+            return;
+        }
+        
+        lastScrollY = scrolled;
 
         parallaxElements.forEach(element => {
-            const rate = element.classList.contains('parallax-up') ? -0.5 : 0.5;
+            const rate = element.classList.contains('parallax-up') ? -0.3 : 0.3;
             const yPos = -(scrolled * rate);
-            element.style.transform = `translateY(${yPos}px)`;
+            element.style.transform = `translate3d(0, ${yPos}px, 0)`;
         });
 
         ticking = false;

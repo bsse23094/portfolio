@@ -25,7 +25,6 @@
 
 html {
     scroll-behavior: smooth;
-    overflow-x: hidden;
 }
 
 body {
@@ -1243,7 +1242,6 @@ nav {
         transform 0.15s ease,
         width 0.2s ease,
         height 0.2s ease;
-    will-change: transform;
     box-shadow: 0 0 5px var(--secondary-color);
 }
     
@@ -1260,7 +1258,6 @@ nav {
         transform 0.3s ease,
         width 0.3s ease,
         height 0.3s ease;
-    will-change: transform;
     box-shadow: 0 0 10px var(--secondary-color);
 }
     
@@ -1581,48 +1578,48 @@ nav {
     opacity: 0;
     transform: translateY(30px);
     transition: opacity 0.8s ease, transform 0.8s ease;
-    will-change: opacity, transform;
 }
 
 .fade-in.animate {
     opacity: 1;
     transform: translateY(0);
+    will-change: auto;
 }
 
 .slide-in-left {
     opacity: 0;
     transform: translateX(-100px);
     transition: opacity 0.8s ease, transform 0.8s ease;
-    will-change: opacity, transform;
 }
 
 .slide-in-left.animate {
     opacity: 1;
     transform: translateX(0);
+    will-change: auto;
 }
 
 .slide-in-right {
     opacity: 0;
     transform: translateX(100px);
     transition: opacity 0.8s ease, transform 0.8s ease;
-    will-change: opacity, transform;
 }
 
 .slide-in-right.animate {
     opacity: 1;
     transform: translateX(0);
+    will-change: auto;
 }
 
 .slide-in-up {
     opacity: 0;
     transform: translateY(50px);
     transition: opacity 0.8s ease, transform 0.8s ease;
-    will-change: opacity, transform;
 }
 
 .slide-in-up.animate {
     opacity: 1;
     transform: translateY(0);
+    will-change: auto;
 }
 
 .text-reveal {
@@ -1630,25 +1627,25 @@ nav {
     transform: translateY(20px);
     filter: blur(10px);
     transition: opacity 0.8s ease, transform 0.8s ease, filter 0.8s ease;
-    will-change: opacity, transform, filter;
 }
 
 .text-reveal.animate {
     opacity: 1;
     transform: translateY(0);
     filter: blur(0);
+    will-change: auto;
 }
 
 .scale-rotate {
     opacity: 0;
     transform: scale(0.8) rotate(-5deg);
     transition: opacity 0.8s ease, transform 0.8s ease;
-    will-change: opacity, transform;
 }
 
 .scale-rotate.animate {
     opacity: 1;
     transform: scale(1) rotate(0deg);
+    will-change: auto;
 }
 
 /* Staggered Animation Delays */
@@ -1662,11 +1659,11 @@ nav {
 
 /* Parallax Classes */
 .parallax-up {
-    will-change: transform;
+    will-change: auto;
 }
 
 .parallax-down {
-    will-change: transform;
+    will-change: auto;
 }
 
 /* Scroll Progress Indicator */
@@ -1679,7 +1676,7 @@ nav {
     background: linear-gradient(to right, var(--secondary-color), var(--accent-color));
     transform-origin: left;
     z-index: 1001;
-    will-change: transform;
+    will-change: auto;
 }
 
 /* Accessibility: Respect user's motion preferences */
