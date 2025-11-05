@@ -906,6 +906,190 @@ nav {
     background-color: transparent;
 }
 
+/* Featured Projects Grid */
+.featured-projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 40px;
+    margin-bottom: 60px;
+}
+
+.featured-project-card {
+    background: rgba(26, 26, 46, 0.4);
+    border: 1px solid rgba(245, 166, 35, 0.2);
+    border-radius: var(--border-radius-lg);
+    overflow: hidden;
+    transition: all 0.4s ease;
+    backdrop-filter: blur(10px);
+}
+
+.featured-project-card:hover {
+    transform: translateY(-10px);
+    border-color: rgba(245, 166, 35, 0.6);
+    box-shadow: 0 15px 50px rgba(245, 166, 35, 0.3);
+}
+
+.featured-project-image {
+    position: relative;
+    width: 100%;
+    height: 250px;
+    overflow: hidden;
+}
+
+.featured-project-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.featured-project-card:hover .featured-project-image img {
+    transform: scale(1.1);
+}
+
+.featured-overlay-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: linear-gradient(135deg, var(--secondary-color), var(--accent-color));
+    color: var(--dark-color);
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 15px rgba(245, 166, 35, 0.4);
+}
+
+.featured-project-content {
+    padding: 30px;
+}
+
+.featured-tech-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.tech-pill {
+    background: rgba(245, 166, 35, 0.15);
+    border: 1px solid rgba(245, 166, 35, 0.4);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    color: var(--secondary-color);
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.featured-project-card:hover .tech-pill {
+    background: rgba(245, 166, 35, 0.25);
+    border-color: var(--secondary-color);
+}
+
+.featured-project-title {
+    font-size: 1.6rem;
+    color: var(--secondary-color);
+    margin-bottom: 15px;
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 1.5px;
+    line-height: 1.3;
+}
+
+.featured-project-description {
+    color: var(--light-color);
+    line-height: 1.7;
+    font-size: 0.95rem;
+    margin-bottom: 20px;
+    opacity: 0.9;
+}
+
+.featured-highlights {
+    margin-bottom: 25px;
+}
+
+.highlight {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+    color: var(--light-color);
+    font-size: 0.9rem;
+}
+
+.highlight i {
+    color: var(--secondary-color);
+    font-size: 1rem;
+    min-width: 16px;
+}
+
+.featured-project-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.btn-featured {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border-radius: var(--border-radius);
+    font-size: 0.9rem;
+    font-weight: 600;
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 1px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.btn-demo {
+    background: var(--secondary-color);
+    color: var(--dark-color);
+    border-color: var(--secondary-color);
+}
+
+.btn-demo:hover {
+    background: transparent;
+    color: var(--secondary-color);
+    box-shadow: 0 0 20px rgba(245, 166, 35, 0.4);
+}
+
+.btn-details {
+    background: transparent;
+    color: var(--secondary-color);
+    border-color: var(--secondary-color);
+}
+
+.btn-details:hover {
+    background: var(--secondary-color);
+    color: var(--dark-color);
+    box-shadow: 0 0 20px rgba(245, 166, 35, 0.4);
+}
+
+.view-all-section {
+    margin-top: 60px;
+}
+
+.btn-view-all {
+    font-size: 1.1rem;
+    padding: 15px 40px;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.view-all-subtitle {
+    margin-top: 15px;
+    color: var(--light-color);
+    opacity: 0.7;
+    font-size: 0.95rem;
+}
+
+/* Old portfolio styles (kept for projects.html compatibility) */
 .portfolio-filter {
     display: flex;
     justify-content: center;
@@ -960,6 +1144,10 @@ nav {
     transform-style: preserve-3d;
 }
 
+.portfolio-item-featured {
+    height: 350px;
+}
+
 .portfolio-item:hover {
     box-shadow: 0 0 20px rgba(245, 166, 35, 0.5);
     transform: translateY(-5px) rotateX(5deg) rotateY(5deg);
@@ -984,13 +1172,15 @@ nav {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.9);
+    background: rgba(0, 0, 0, 0.95);
     display: flex;
     align-items: center;
     justify-content: center;
     opacity: 0;
     transition: var(--transition);
     transform: translateZ(20px);
+    overflow-y: auto;
+    padding: 20px;
 }
 
 .portfolio-item:hover .portfolio-overlay {
@@ -1007,6 +1197,7 @@ nav {
     color: white;
     transform: translateY(20px);
     transition: var(--transition);
+    max-width: 100%;
 }
 
 .portfolio-item:hover .overlay-content {
@@ -1015,13 +1206,71 @@ nav {
 
 .overlay-content h4 {
     font-size: 1.5rem;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     color: var(--secondary-color);
 }
 
 .overlay-content p {
     margin-bottom: 20px;
     font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+.project-tech-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+.tech-badge {
+    background: rgba(245, 166, 35, 0.2);
+    border: 1px solid var(--secondary-color);
+    padding: 4px 12px;
+    border-radius: 15px;
+    font-size: 0.75rem;
+    color: var(--secondary-color);
+    font-weight: 500;
+}
+
+.project-highlights {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.highlight-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.85rem;
+}
+
+.highlight-item i {
+    color: var(--secondary-color);
+    font-size: 0.9rem;
+}
+
+.project-links-featured {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.project-links-featured .btn {
+    font-size: 0.85rem;
+    padding: 8px 16px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.project-links-featured .btn i {
+    font-size: 0.8rem;
 }
 
 /* Contact Section */
@@ -1375,6 +1624,28 @@ nav {
     
     .portfolio-grid {
         grid-template-columns: 1fr;
+    }
+
+    .featured-projects-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .featured-project-content {
+        padding: 25px;
+    }
+
+    .featured-project-title {
+        font-size: 1.4rem;
+    }
+
+    .featured-project-actions {
+        flex-direction: column;
+    }
+
+    .btn-featured {
+        width: 100%;
+        justify-content: center;
     }
 }
 

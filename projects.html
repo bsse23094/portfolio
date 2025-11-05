@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Case Files | The Dark Developer</title>
+    <link rel="icon" type="image/jpeg" href="BATLOGO.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@300;400;500;700&display=swap">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .projects-hero {
+            min-height: 50vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #0a0a14 0%, #1a1a2e 100%);
+            position: relative;
+            overflow: hidden;
+            animation: heroGlow 8s ease-in-out infinite alternate;
+        }
+
+        @keyframes heroGlow {
+            0% {
+                box-shadow: inset 0 0 100px rgba(245, 166, 35, 0.1);
+            }
+            100% {
+                box-shadow: inset 0 0 150px rgba(245, 166, 35, 0.2);
+            }
+        }
+
+        .projects-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(245, 166, 35, 0.15) 0%, transparent 70%);
+            pointer-events: none;
+            animation: pulseGlow 4s ease-in-out infinite;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% {
+                opacity: 0.5;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            background: rgba(26, 26, 46, 0.95);
+            border: 2px solid var(--secondary-color);
+            padding: 12px 24px;
+            border-radius: var(--border-radius);
+            color: var(--secondary-color);
+            text-decoration: none;
+            transition: all 0.4s ease;
+            font-family: 'Bebas Neue', sans-serif;
+            letter-spacing: 1px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .back-button.hidden {
+            opacity: 0;
+            transform: translateX(-100px);
+            pointer-events: none;
+        }
+
+        .back-button:hover {
+            background: var(--secondary-color);
+            color: var(--dark-color);
+            box-shadow: 0 0 25px rgba(245, 166, 35, 0.6);
+            transform: translateX(0) scale(1.05);
+        }
+
+        .back-button i {
+            margin-right: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .back-button:hover i {
+            transform: translateX(-5px);
+        }
+
+        .project-detail-card {
+            background: rgba(26, 26, 46, 0.6);
+            border: 1px solid rgba(245, 166, 35, 0.2);
+            border-radius: var(--border-radius-lg);
+            padding: 30px;
+            margin-bottom: 40px;
+            backdrop-filter: blur(10px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            transform: translateY(50px);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .project-detail-card:nth-child(1) { animation-delay: 0.1s; }
+        .project-detail-card:nth-child(2) { animation-delay: 0.2s; }
+        .project-detail-card:nth-child(3) { animation-delay: 0.3s; }
+        .project-detail-card:nth-child(4) { animation-delay: 0.4s; }
+        .project-detail-card:nth-child(5) { animation-delay: 0.5s; }
+        .project-detail-card:nth-child(6) { animation-delay: 0.6s; }
+        .project-detail-card:nth-child(7) { animation-delay: 0.7s; }
+
+        .project-detail-card:hover {
+            border-color: rgba(245, 166, 35, 0.6);
+            box-shadow: 0 15px 50px rgba(245, 166, 35, 0.25);
+            transform: translateY(-10px) scale(1.02);
+        }
+
+        .project-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 30px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .project-thumbnail {
+            width: 300px;
+            height: 200px;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            border: 2px solid rgba(245, 166, 35, 0.3);
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .project-thumbnail::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(245, 166, 35, 0.3), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .project-detail-card:hover .project-thumbnail::before {
+            left: 100%;
+        }
+
+        .project-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .project-detail-card:hover .project-thumbnail img {
+            transform: scale(1.15);
+        }
+
+        .project-info {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .project-title {
+            font-size: 2rem;
+            color: var(--secondary-color);
+            margin-bottom: 10px;
+            font-family: 'Bebas Neue', sans-serif;
+            letter-spacing: 1.5px;
+            text-shadow: 0 0 20px rgba(245, 166, 35, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .project-detail-card:hover .project-title {
+            text-shadow: 0 0 30px rgba(245, 166, 35, 0.6);
+            transform: translateX(5px);
+        }
+
+        .project-category {
+            display: inline-block;
+            padding: 6px 16px;
+            background: rgba(245, 166, 35, 0.15);
+            border: 1px solid var(--secondary-color);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+            font-family: 'Bebas Neue', sans-serif;
+            transition: all 0.3s ease;
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% {
+                box-shadow: 0 0 5px rgba(245, 166, 35, 0.3);
+            }
+            50% {
+                box-shadow: 0 0 15px rgba(245, 166, 35, 0.6);
+            }
+        }
+
+        .project-category:hover {
+            background: rgba(245, 166, 35, 0.3);
+            transform: scale(1.1);
+        }
+
+        .project-description {
+            color: var(--light-color);
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .project-technologies {
+            margin-bottom: 20px;
+        }
+
+        .project-technologies h4 {
+            color: var(--secondary-color);
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+            font-family: 'Bebas Neue', sans-serif;
+        }
+
+        .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .tech-tag {
+            background: rgba(245, 166, 35, 0.15);
+            padding: 6px 14px;
+            border-radius: 5px;
+            font-size: 0.85rem;
+            color: var(--light-color);
+            border: 1px solid rgba(245, 166, 35, 0.3);
+            transition: all 0.3s ease;
+            animation: fadeInScale 0.5s ease forwards;
+        }
+
+        @keyframes fadeInScale {
+            0% {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .tech-tag:nth-child(1) { animation-delay: 0.1s; }
+        .tech-tag:nth-child(2) { animation-delay: 0.15s; }
+        .tech-tag:nth-child(3) { animation-delay: 0.2s; }
+        .tech-tag:nth-child(4) { animation-delay: 0.25s; }
+        .tech-tag:nth-child(5) { animation-delay: 0.3s; }
+        .tech-tag:nth-child(6) { animation-delay: 0.35s; }
+
+        .tech-tag:hover {
+            background: rgba(245, 166, 35, 0.3);
+            border-color: var(--secondary-color);
+            transform: translateY(-3px) scale(1.1);
+            box-shadow: 0 5px 15px rgba(245, 166, 35, 0.3);
+        }
+
+        .project-features {
+            margin-bottom: 20px;
+        }
+
+        .project-features h4 {
+            color: var(--secondary-color);
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+            font-family: 'Bebas Neue', sans-serif;
+            text-shadow: 0 0 15px rgba(245, 166, 35, 0.4);
+        }
+
+        .project-features ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .project-features li {
+            color: var(--light-color);
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            opacity: 0;
+            animation: slideInLeft 0.5s ease forwards;
+        }
+
+        @keyframes slideInLeft {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .project-features li {
+            transform: translateX(-20px);
+        }
+
+        .project-features li:nth-child(1) { animation-delay: 0.2s; }
+        .project-features li:nth-child(2) { animation-delay: 0.3s; }
+        .project-features li:nth-child(3) { animation-delay: 0.4s; }
+        .project-features li:nth-child(4) { animation-delay: 0.5s; }
+        .project-features li:nth-child(5) { animation-delay: 0.6s; }
+        .project-features li:nth-child(6) { animation-delay: 0.7s; }
+        .project-features li:nth-child(7) { animation-delay: 0.8s; }
+
+        .project-features li::before {
+            content: '▸';
+            color: var(--secondary-color);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.3);
+            }
+        }
+
+        .project-links {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .project-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: transparent;
+            border: 2px solid var(--secondary-color);
+            border-radius: var(--border-radius);
+            color: var(--secondary-color);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-family: 'Bebas Neue', sans-serif;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-link::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: var(--secondary-color);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+            z-index: -1;
+        }
+
+        .project-link:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .project-link:hover {
+            color: var(--dark-color);
+            box-shadow: 0 0 20px rgba(245, 166, 35, 0.6);
+            transform: translateY(-3px);
+        }
+
+        .project-link i {
+            transition: transform 0.3s ease;
+        }
+
+        .project-link:hover i {
+            transform: scale(1.2) rotate(15deg);
+        }
+
+        @media (max-width: 768px) {
+            .project-header {
+                flex-direction: column;
+            }
+
+            .project-thumbnail {
+                width: 100%;
+            }
+
+            .back-button {
+                padding: 10px 18px;
+                font-size: 0.9rem;
+            }
+
+            .projects-hero {
+                min-height: 35vh;
+            }
+
+            .projects-hero .section-title {
+                font-size: 2.5rem !important;
+            }
+        }
+
+        /* Scroll Progress Bar */
+        .scroll-progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--secondary-color), var(--accent-color));
+            z-index: 1002;
+            transition: width 0.1s ease;
+            box-shadow: 0 0 10px rgba(245, 166, 35, 0.6);
+        }
+
+        /* Floating particles */
+        .floating-particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: var(--secondary-color);
+            border-radius: 50%;
+            opacity: 0.6;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) translateX(0);
+            }
+            25% {
+                transform: translateY(-20px) translateX(10px);
+            }
+            50% {
+                transform: translateY(-40px) translateX(-10px);
+            }
+            75% {
+                transform: translateY(-20px) translateX(5px);
+            }
+        }
+
+        .projects-hero .section-title {
+            animation: titleGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes titleGlow {
+            0%, 100% {
+                text-shadow: 0 0 20px rgba(245, 166, 35, 0.4),
+                             0 0 40px rgba(245, 166, 35, 0.2);
+            }
+            50% {
+                text-shadow: 0 0 30px rgba(245, 166, 35, 0.6),
+                             0 0 60px rgba(245, 166, 35, 0.4),
+                             0 0 80px rgba(245, 166, 35, 0.2);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="scroll-progress-bar"></div>
+    <div class="bat-signal"></div>
+    <div class="gotham-rain"></div>
+
+    <a href="index.html#portfolio" class="back-button">
+        <i class="fas fa-arrow-left"></i>Return to Main
+    </a>
+
+    <section class="projects-hero">
+        <div class="container">
+            <div class="section-header" style="text-align: center;">
+                <h1 class="section-title" style="font-size: 3.5rem; color: var(--secondary-color);">All Case Files</h1>
+                <div class="section-divider" style="margin: 20px auto;"></div>
+                <p class="section-subtitle">Complete Evidence Archive</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" style="padding: 80px 0;">
+        <div class="container">
+            
+            <!-- AI Study Buddy -->
+            <div class="project-detail-card">
+                <div class="project-header">
+                    <div class="project-thumbnail">
+                        <img src="studybuddy.png" alt="AI Study Buddy">
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">StudyBuddy: AI-Powered Learning Platform</h3>
+                        <span class="project-category">Web Development</span>
+                        <p class="project-description">
+                            An intelligent learning platform that leverages artificial intelligence to create personalized study experiences. 
+                            The platform adapts to individual learning styles, tracks progress in real-time, and provides interactive 
+                            assessments to maximize student engagement and knowledge retention.
+                        </p>
+                    </div>
+                </div>
+                <div class="project-technologies">
+                    <h4>Technologies Used</h4>
+                    <div class="tech-tags">
+                        <span class="tech-tag">Angular</span>
+                        <span class="tech-tag">CloudFare Workers</span>
+                        <span class="tech-tag">AI/ML</span>
+                        <span class="tech-tag">Api Integration</span>
+                        <span class="tech-tag">TypeScript</span>
+                        <span class="tech-tag">Github Pages</span>
+                    </div>
+                </div>
+                <div class="project-features">
+                    <h4>Key Features</h4>
+                    <ul>
+                        <li>Personalized study plans based on learning patterns and performance</li>
+                        <li>Interactive quizzes with instant feedback and explanations</li>
+                        <li>Real-time progress tracking with detailed analytics dashboard</li>
+                        <li>AI-powered content recommendations tailored to individual needs</li>
+                        <li>Gamification elements to boost engagement and motivation</li>
+                        <li>Collaborative study rooms for peer-to-peer learning</li>
+                    </ul>
+                </div>
+                <div class="project-links">
+                    <a href="https://bsse23094.github.io/studyBuddy/home" class="project-link" target="_blank">
+                        <i class="fas fa-external-link-alt"></i>Live Demo
+                    </a>
+                    <a href="https://github.com/bsse23094/studyBuddy" class="project-link">
+                        <i class="fab fa-github"></i>View Code
+                    </a>
+                </div>
+            </div>
+
+            <!-- Movie Streaming Platform -->
+            <div class="project-detail-card">
+                <div class="project-header">
+                    <div class="project-thumbnail">
+                        <img src="cinetex.png" alt="Cinetex Movie Platform">
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">Cinetex - Movie Streaming Platform</h3>
+                        <span class="project-category">Web Development</span>
+                        <p class="project-description">
+                            A full-featured movie streaming platform that provides users with an immersive entertainment experience. 
+                            Users can browse thousands of movies, create custom watchlists, rate films, and manage their favorites. 
+                            The platform features a sleek, responsive design with advanced search and filtering capabilities.
+                        </p>
+                    </div>
+                </div>
+                <div class="project-technologies">
+                    <h4>Technologies Used</h4>
+                    <div class="tech-tags">
+                        <span class="tech-tag">Angular</span>
+                        <span class="tech-tag">CSS3</span>
+                        <span class="tech-tag">HTML5</span>
+                        <span class="tech-tag">TMDB API</span>
+                        <span class="tech-tag">Local Storage</span>
+                        <span class="tech-tag">Responsive Design</span>
+                    </div>
+                </div>
+                <div class="project-features">
+                    <h4>Key Features</h4>
+                    <ul>
+                        <li>Extensive movie database with detailed information and trailers</li>
+                        <li>Advanced search functionality with multiple filters (genre, year, rating)</li>
+                        <li>Create and manage custom movie lists and watchlists</li>
+                        <li>Personal rating system with review capabilities</li>
+                        <li>Favorites collection for quick access to preferred content</li>
+                        <li>Responsive design optimized for all devices</li>
+                    </ul>
+                </div>
+                <div class="project-links">
+                    <a href="https://bsse23094.github.io/cinetex_/search" class="project-link" target="_blank">
+                        <i class="fas fa-external-link-alt"></i>Live Demo
+                    </a>
+                    <a href="https://github.com/bsse23094/cinetex_" class="project-link" target="_blank">
+                        <i class="fab fa-github"></i>View Code
+                    </a>
+                </div>
+            </div>
+
+            <!-- GitHub Issue Explorer -->
+            <div class="project-detail-card">
+                <div class="project-header">
+                    <div class="project-thumbnail">
+                        <img src="issue-beacon.png" alt="Issue Beacon">
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">Issue Beacon - GitHub Issue Explorer</h3>
+                        <span class="project-category">Web Development</span>
+                        <p class="project-description">
+                            A powerful web application designed to streamline GitHub issue management. This tool provides developers 
+                            with an intuitive interface to explore, filter, and manage issues across multiple repositories. Features 
+                            include advanced search, real-time updates, and comprehensive issue analytics.
+                        </p>
+                    </div>
+                </div>
+                <div class="project-technologies">
+                    <h4>Technologies Used</h4>
+                    <div class="tech-tags">
+                        <span class="tech-tag">Angular</span>
+                        <span class="tech-tag">GitHub API</span>
+                        <span class="tech-tag">REST API</span>
+                        <span class="tech-tag">TypeScript</span>
+                        <span class="tech-tag">Tailwind CSS</span>
+                        <span class="tech-tag">OAuth</span>
+                    </div>
+                </div>
+                <div class="project-features">
+                    <h4>Key Features</h4>
+                    <ul>
+                        <li>Seamless GitHub authentication and repository access</li>
+                        <li>Advanced filtering by status, labels, assignees, and milestones</li>
+                        <li>Real-time issue updates and notifications</li>
+                        <li>Interactive dashboard with issue statistics and trends</li>
+                        <li>Quick actions for commenting, labeling, and closing issues</li>
+                        <li>Export functionality for issue reports and analytics</li>
+                        <li>Dark mode support for comfortable viewing</li>
+                    </ul>
+                </div>
+                <div class="project-links">
+                    <a href="https://bsse23094.github.io/issue-beacon/" class="project-link" target="_blank">
+                        <i class="fas fa-external-link-alt"></i>Live Demo
+                    </a>
+                    <a href="https://github.com/bsse23094/issue-beacon" class="project-link" target="_blank">
+                        <i class="fab fa-github"></i>View Code
+                    </a>
+                </div>
+            </div>
+
+            <!-- Ideal Janitorial Services -->
+            <div class="project-detail-card">
+                <div class="project-header">
+                    <div class="project-thumbnail">
+                        <img src="ideal.png" alt="Ideal Janitorial Services">
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">Ideal Janitorial Services Website</h3>
+                        <span class="project-category">Web Development</span>
+                        <p class="project-description">
+                            A professional, conversion-optimized website for a renowned janitorial service company. The site features 
+                            clean design aesthetics, intuitive navigation, and strategic call-to-action placements to effectively 
+                            convert visitors into clients. Built with performance and SEO in mind.
+                        </p>
+                    </div>
+                </div>
+                <div class="project-technologies">
+                    <h4>Technologies Used</h4>
+                    <div class="tech-tags">
+                        <span class="tech-tag">HTML5</span>
+                        <span class="tech-tag">CSS3</span>
+                        <span class="tech-tag">JavaScript</span>
+                        <span class="tech-tag">Bootstrap</span>
+                        <span class="tech-tag">SEO Optimization</span>
+                    </div>
+                </div>
+                <div class="project-features">
+                    <h4>Key Features</h4>
+                    <ul>
+                        <li>Professional landing page with compelling value propositions</li>
+                        <li>Service showcase with detailed descriptions and pricing</li>
+                        <li>Contact forms with email integration for lead generation</li>
+                        <li>Testimonials section for social proof and credibility</li>
+                        <li>Mobile-responsive design for all device types</li>
+                        <li>Fast loading times and optimized performance</li>
+                        <li>SEO-optimized content for better search visibility</li>
+                    </ul>
+                </div>
+                <div class="project-links">
+                    <a href="https://idealjanitorialservices.org/" class="project-link" target="_blank">
+                        <i class="fas fa-external-link-alt"></i>Live Website
+                    </a>
+                </div>
+            </div>
+
+            <!-- Orionex Portfolio -->
+            <div class="project-detail-card">
+                <div class="project-header">
+                    <div class="project-thumbnail">
+                        <img src="orionex.png" alt="Orionex Agency">
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">Orionex Agency Portfolio</h3>
+                        <span class="project-category">Web Development</span>
+                        <p class="project-description">
+                            A sophisticated portfolio website designed for Orionex, a creative digital agency. The site showcases 
+                            the agency's work, services, and team with a modern, visually striking design that reflects their 
+                            creative expertise and professional capabilities.
+                        </p>
+                    </div>
+                </div>
+                <div class="project-technologies">
+                    <h4>Technologies Used</h4>
+                    <div class="tech-tags">
+                        <span class="tech-tag">HTML5</span>
+                        <span class="tech-tag">CSS3</span>
+                        <span class="tech-tag">JavaScript</span>
+                        <span class="tech-tag">GSAP Animations</span>
+                        <span class="tech-tag">Parallax Effects</span>
+                    </div>
+                </div>
+                <div class="project-features">
+                    <h4>Key Features</h4>
+                    <ul>
+                        <li>Stunning visual design with smooth animations</li>
+                        <li>Portfolio gallery with project case studies</li>
+                        <li>Service offerings with detailed breakdowns</li>
+                        <li>Team profiles highlighting expertise</li>
+                        <li>Interactive elements and micro-animations</li>
+                        <li>Contact integration for business inquiries</li>
+                    </ul>
+                </div>
+                <div class="project-links">
+                    <a href="https://bsse23094.github.io/orionex/" class="project-link" target="_blank">
+                        <i class="fas fa-external-link-alt"></i>Live Demo
+                    </a>
+                    <a href="https://github.com/bsse23094/orionex" class="project-link" target="_blank">
+                        <i class="fab fa-github"></i>View Code
+                    </a>
+                </div>
+            </div>
+
+            <!-- Human Rights Organization -->
+            <div class="project-detail-card">
+                <div class="project-header">
+                    <div class="project-thumbnail">
+                        <img src="hrs.png" alt="Human Rights Organization">
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">Human Rights Organization Website</h3>
+                        <span class="project-category">Web Development</span>
+                        <p class="project-description">
+                            A fully functional website for a Human Rights Organization, designed to amplify their mission and 
+                            facilitate community engagement. The platform includes content management, and news publishing capabilities.
+                        </p>
+                    </div>
+                </div>
+                <div class="project-technologies">
+                    <h4>Technologies Used</h4>
+                    <div class="tech-tags">
+                        <span class="tech-tag">HTML5</span>
+                        <span class="tech-tag">TailwindCSS</span>
+                        <span class="tech-tag">MySQL</span>
+                        <span class="tech-tag">JavaScript</span>
+                        <span class="tech-tag">Custom Plugins</span>
+                    </div>
+                </div>
+                <div class="project-features">
+                    <h4>Key Features</h4>
+                    <ul>
+                        <li>Content management system for easy updates</li>
+                        <li>Event calendar with registration functionality</li>
+                        <li>Secure donation payment gateway integration</li>
+                        <li>News and blog section with categorization</li>
+                        <li>Volunteer sign-up and management system</li>
+                        <li>Multi-language support for wider reach</li>
+                        <li>Accessibility features for inclusive design</li>
+                    </ul>
+                </div>
+                <div class="project-links">
+                    <a href="https://humanrightsitu.site/" class="project-link" target="_blank">
+                        <i class="fas fa-external-link-alt"></i>Live Website
+                    </a>
+                </div>
+            </div>
+
+            <!-- Restaurant Management System -->
+            <div class="project-detail-card">
+                <div class="project-header">
+                    <div class="project-thumbnail">
+                        <img src="skime.jpg" alt="Restaurant Management System">
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">Restaurant Management System</h3>
+                        <span class="project-category">Web Development</span>
+                        <p class="project-description">
+                            A comprehensive restaurant management system with a reactive web design. The platform streamlines 
+                            restaurant operations including table reservations, menu management, order processing, and customer 
+                            relationship management.
+                        </p>
+                    </div>
+                </div>
+                <div class="project-technologies">
+                    <h4>Technologies Used</h4>
+                    <div class="tech-tags">
+                        <span class="tech-tag">HTML5</span>
+                        <span class="tech-tag">CSS3</span>
+                        <span class="tech-tag">JavaScript</span>
+                        <span class="tech-tag">Bootstrap</span>
+                        <span class="tech-tag">LocalStorage</span>
+                    </div>
+                </div>
+                <div class="project-features">
+                    <h4>Key Features</h4>
+                    <ul>
+                        <li>Online reservation system with real-time availability</li>
+                        <li>Interactive digital menu with filtering options</li>
+                        <li>Order management and tracking system</li>
+                        <li>Customer feedback and rating system</li>
+                        <li>Responsive design for tablet and mobile devices</li>
+                        <li>Gallery showcase of dishes and ambiance</li>
+                        <li>Contact information and location integration</li>
+                    </ul>
+                </div>
+                <div class="project-links">
+                    <a href="https://bsse23094.github.io/RMS/" class="project-link" target="_blank">
+                        <i class="fas fa-external-link-alt"></i>Live Demo
+                    </a>
+                    <a href="https://github.com/bsse23094/RMS" class="project-link" target="_blank">
+                        <i class="fab fa-github"></i>View Code
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <footer class="footer gotham-footer" style="margin-top: 0;">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2024 The Dark Developer. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="index.html">Home</a>
+                    <a href="index.html#about">About</a>
+                    <a href="index.html#contact">Contact</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Scroll Progress Bar
+        const progressBar = document.querySelector('.scroll-progress-bar');
+        
+        function updateProgressBar() {
+            const windowHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrolled = (window.pageYOffset / windowHeight) * 100;
+            progressBar.style.width = scrolled + '%';
+        }
+
+        window.addEventListener('scroll', updateProgressBar, { passive: true });
+
+        // Back button scroll behavior
+        let lastScrollTop = 0;
+        const backButton = document.querySelector('.back-button');
+        let scrollTimeout;
+
+        window.addEventListener('scroll', function() {
+            clearTimeout(scrollTimeout);
+            
+            scrollTimeout = setTimeout(function() {
+                let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                
+                // Hide button when scrolling down, show when scrolling up
+                if (scrollTop > lastScrollTop && scrollTop > 100) {
+                    backButton.classList.add('hidden');
+                } else {
+                    backButton.classList.remove('hidden');
+                }
+                
+                lastScrollTop = scrollTop;
+            }, 50);
+        }, { passive: true });
+
+        // Animate hero title
+        const heroTitle = document.querySelector('.projects-hero .section-title');
+        if (heroTitle) {
+            heroTitle.style.opacity = '0';
+            heroTitle.style.transform = 'translateY(-30px)';
+            setTimeout(() => {
+                heroTitle.style.transition = 'all 1s ease';
+                heroTitle.style.opacity = '1';
+                heroTitle.style.transform = 'translateY(0)';
+            }, 100);
+        }
+
+        // Animate subtitle
+        const heroSubtitle = document.querySelector('.projects-hero .section-subtitle');
+        if (heroSubtitle) {
+            heroSubtitle.style.opacity = '0';
+            heroSubtitle.style.transform = 'translateY(20px)';
+            setTimeout(() => {
+                heroSubtitle.style.transition = 'all 1s ease';
+                heroSubtitle.style.opacity = '1';
+                heroSubtitle.style.transform = 'translateY(0)';
+            }, 300);
+        }
+
+        // Create floating particles
+        const heroSection = document.querySelector('.projects-hero');
+        for (let i = 0; i < 15; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'floating-particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.top = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 6 + 's';
+            heroSection.appendChild(particle);
+        }
+
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationPlayState = 'running';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all project cards
+        document.querySelectorAll('.project-detail-card').forEach(card => {
+            observer.observe(card);
+        });
+
+        // Add parallax effect to project thumbnails on hover
+        document.addEventListener('mousemove', (e) => {
+            const cards = document.querySelectorAll('.project-detail-card');
+            cards.forEach(card => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                if (x > 0 && x < rect.width && y > 0 && y < rect.height) {
+                    const moveX = (x - rect.width / 2) / 30;
+                    const moveY = (y - rect.height / 2) / 30;
+                    const thumbnail = card.querySelector('.project-thumbnail');
+                    if (thumbnail) {
+                        thumbnail.style.transition = 'transform 0.1s ease';
+                        thumbnail.style.transform = `translate(${moveX}px, ${moveY}px)`;
+                    }
+                }
+            });
+        });
+
+        // Reset transform when mouse leaves card
+        document.querySelectorAll('.project-detail-card').forEach(card => {
+            card.addEventListener('mouseleave', () => {
+                const thumbnail = card.querySelector('.project-thumbnail');
+                if (thumbnail) {
+                    thumbnail.style.transition = 'transform 0.3s ease';
+                    thumbnail.style.transform = 'translate(0, 0)';
+                }
+            });
+        });
+
+        // Smooth scroll for footer links
+        document.querySelectorAll('.footer-links a').forEach(link => {
+            link.addEventListener('click', (e) => {
+                if (link.getAttribute('href').includes('#')) {
+                    e.preventDefault();
+                    const targetId = link.getAttribute('href').split('#')[1];
+                    if (targetId) {
+                        window.location.href = link.getAttribute('href');
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
