@@ -170,7 +170,6 @@ ul {
     position: relative;
     display: inline-block;
     color: var(--secondary-color);
-    text-shadow: 0 0 10px rgba(245, 166, 35, 0.5);
     letter-spacing: -0.5px;
 }
 
@@ -183,7 +182,6 @@ ul {
     width: 70px;
     height: 3px;
     background: linear-gradient(to right, var(--secondary-color), var(--accent-color));
-    box-shadow: 0 0 10px var(--secondary-color);
 }
 
 .section-subtitle {
@@ -198,7 +196,6 @@ ul {
     width: 80px;
     background: linear-gradient(to right, var(--secondary-color), var(--accent-color));
     margin: 15px auto;
-    box-shadow: 0 0 10px var(--secondary-color);
 }
 
 .text-center {
@@ -737,7 +734,6 @@ nav {
     width: 2px;
     height: 100%;
     background: linear-gradient(to bottom, transparent 0%, var(--secondary-color) 10%, var(--secondary-color) 90%, transparent 100%);
-    box-shadow: 0 0 10px var(--secondary-color);
 }
 
 .timeline-item {
@@ -782,7 +778,6 @@ nav {
     animation: lightningFlash 15s infinite;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 0 10px var(--secondary-color);
     z-index: 1;
 }
 
