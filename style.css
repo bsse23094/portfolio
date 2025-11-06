@@ -522,11 +522,15 @@ nav {
     transform-origin: top;
     z-index: 2;
     pointer-events: none;
+    top: -100px;
 }
 
 @keyframes falling {
+    from {
+        transform: translateY(0);
+    }
     to {
-        transform: translateY(100vh) rotate(5deg);
+        transform: translateY(calc(100vh + 100px)) rotate(5deg);
     }
 }
 
