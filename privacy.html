@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - Dark Knight Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .policy-hero {
+            min-height: 40vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #0a0a14 0%, #1a1a2e 100%);
+            position: relative;
+            overflow: hidden;
+            animation: heroGlow 8s ease-in-out infinite alternate;
+            padding: 40px 0;
+        }
+
+        @keyframes heroGlow {
+            0% {
+                box-shadow: inset 0 0 100px rgba(245, 166, 35, 0.1);
+            }
+            100% {
+                box-shadow: inset 0 0 150px rgba(245, 166, 35, 0.2);
+            }
+        }
+
+        .policy-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(245, 166, 35, 0.15) 0%, transparent 70%);
+            pointer-events: none;
+            animation: pulseGlow 4s ease-in-out infinite;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% {
+                opacity: 0.5;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+
+        .back-button {
+            position: fixed;
+            top: 18px;
+            left: 18px;
+            z-index: 1000;
+            background: rgba(26, 26, 46, 0.95);
+            border: 2px solid var(--secondary-color);
+            padding: 10px 20px;
+            border-radius: 25px;
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-family: 'Bebas Neue', sans-serif;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .back-button.hidden {
+            opacity: 0;
+            transform: translateX(-100px);
+            pointer-events: none;
+        }
+
+        .back-button:hover {
+            background: var(--secondary-color);
+            color: var(--dark-color);
+            transform: translateX(-5px);
+            box-shadow: 0 6px 20px rgba(245, 166, 35, 0.4);
+        }
+
+        .back-button:hover i {
+            transform: translateX(-5px);
+        }
+
+        .policy-content {
+            background: rgba(26, 26, 46, 0.6);
+            border: 1px solid rgba(245, 166, 35, 0.2);
+            border-radius: var(--border-radius-lg);
+            padding: 40px;
+            margin: 40px 0;
+            backdrop-filter: blur(10px);
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .policy-content h2 {
+            color: var(--secondary-color);
+            font-size: 1.8rem;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-family: 'Bebas Neue', sans-serif;
+            letter-spacing: 1px;
+        }
+
+        .policy-content h2:first-child {
+            margin-top: 0;
+        }
+
+        .policy-content h3 {
+            color: var(--secondary-color);
+            font-size: 1.3rem;
+            margin-top: 20px;
+            margin-bottom: 12px;
+            font-family: 'Bebas Neue', sans-serif;
+        }
+
+        .policy-content p {
+            color: var(--light-color);
+            line-height: 1.8;
+            margin-bottom: 16px;
+            font-size: 0.95rem;
+        }
+
+        .policy-content ul {
+            color: var(--light-color);
+            line-height: 1.8;
+            margin-bottom: 16px;
+            margin-left: 20px;
+        }
+
+        .policy-content ul li {
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        .policy-content strong {
+            color: var(--secondary-color);
+            font-weight: 600;
+        }
+
+        .last-updated {
+            color: var(--gray-color);
+            font-style: italic;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+
+        .scroll-progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--secondary-color), var(--accent-color));
+            z-index: 9999;
+            transform-origin: left;
+            transform: scaleX(0);
+            transition: transform 0.1s ease;
+        }
+
+        .floating-particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--secondary-color);
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0.6;
+            animation: float 15s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) translateX(0);
+            }
+            25% {
+                transform: translateY(-30px) translateX(20px);
+            }
+            50% {
+                transform: translateY(-60px) translateX(-20px);
+            }
+            75% {
+                transform: translateY(-30px) translateX(10px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="scroll-progress-bar"></div>
+    <div class="bat-signal"></div>
+    <div class="gotham-rain"></div>
+
+    <a href="index.html" class="back-button">
+        <i class="fas fa-arrow-left"></i>Return to Main
+    </a>
+
+    <section class="policy-hero">
+        <div class="container">
+            <div class="section-header" style="text-align: center;">
+                <h1 class="section-title" style="font-size: 3rem; color: var(--secondary-color); letter-spacing: -1px;">Privacy Policy</h1>
+                <div class="section-divider" style="margin: 15px auto;"></div>
+                <p class="section-subtitle" style="font-size: 0.95rem;">Your Data Security in the Digital Shadows</p>
+            </div>
+        </div>
+        
+        <!-- Floating particles -->
+        <div class="floating-particle" style="top: 10%; left: 15%; animation-delay: 0s;"></div>
+        <div class="floating-particle" style="top: 60%; left: 80%; animation-delay: 2s;"></div>
+        <div class="floating-particle" style="top: 30%; left: 70%; animation-delay: 4s;"></div>
+        <div class="floating-particle" style="top: 80%; left: 20%; animation-delay: 6s;"></div>
+    </section>
+
+    <section class="section" style="padding: 40px 0 70px;">
+        <div class="container">
+            <div class="policy-content">
+                <p class="last-updated">Last Updated: November 6, 2025</p>
+
+                <h2>Introduction</h2>
+                <p>Welcome to the Dark Knight Portfolio. This Privacy Policy outlines how we collect, use, and protect your information when you visit our website. Your privacy is of paramount importance to us, and we are committed to safeguarding your personal data.</p>
+
+                <h2>Information We Collect</h2>
+                <h3>Personal Information</h3>
+                <p>When you contact us through our website, we may collect the following personal information:</p>
+                <ul>
+                    <li>Name</li>
+                    <li>Email address</li>
+                    <li>Phone number (if provided)</li>
+                    <li>Message content</li>
+                    <li>Any other information you choose to provide</li>
+                </ul>
+
+                <h3>Automated Information</h3>
+                <p>We automatically collect certain information about your device when you visit our website, including:</p>
+                <ul>
+                    <li>IP address</li>
+                    <li>Browser type and version</li>
+                    <li>Operating system</li>
+                    <li>Referring website</li>
+                    <li>Pages viewed and time spent on pages</li>
+                    <li>Date and time of visit</li>
+                </ul>
+
+                <h2>How We Use Your Information</h2>
+                <p>We use the information we collect for the following purposes:</p>
+                <ul>
+                    <li><strong>Communication:</strong> To respond to your inquiries and communicate with you about potential opportunities</li>
+                    <li><strong>Website Improvement:</strong> To analyze website usage and improve our content and user experience</li>
+                    <li><strong>Security:</strong> To protect against fraudulent or unauthorized activity</li>
+                    <li><strong>Legal Compliance:</strong> To comply with applicable laws and regulations</li>
+                </ul>
+
+                <h2>Data Storage and Security</h2>
+                <p>We implement appropriate technical and organizational measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction. However, please note that no method of transmission over the internet is 100% secure.</p>
+                <p>Your data is stored securely and is only accessible by authorized personnel who need it to perform their duties.</p>
+
+                <h2>Cookies and Tracking Technologies</h2>
+                <p>Our website may use cookies and similar tracking technologies to enhance your browsing experience. You can control cookie settings through your browser preferences. Please note that disabling cookies may affect the functionality of certain features on our website.</p>
+
+                <h2>Third-Party Services</h2>
+                <p>We may use third-party services for analytics, hosting, or other purposes. These third parties may have access to your information only to perform specific tasks on our behalf and are obligated not to disclose or use it for any other purpose.</p>
+                <p>Third-party services we may use include:</p>
+                <ul>
+                    <li>Google Analytics for website analytics</li>
+                    <li>Web hosting providers</li>
+                    <li>Email service providers</li>
+                </ul>
+
+                <h2>Your Rights</h2>
+                <p>You have the following rights regarding your personal information:</p>
+                <ul>
+                    <li><strong>Access:</strong> Request access to the personal data we hold about you</li>
+                    <li><strong>Correction:</strong> Request correction of any inaccurate or incomplete data</li>
+                    <li><strong>Deletion:</strong> Request deletion of your personal data</li>
+                    <li><strong>Objection:</strong> Object to the processing of your personal data</li>
+                    <li><strong>Portability:</strong> Request transfer of your data to another service provider</li>
+                </ul>
+
+                <h2>Children's Privacy</h2>
+                <p>Our website is not intended for children under the age of 13. We do not knowingly collect personal information from children. If you believe we have collected information from a child, please contact us immediately.</p>
+
+                <h2>Changes to This Privacy Policy</h2>
+                <p>We may update this Privacy Policy from time to time. Any changes will be posted on this page with an updated revision date. We encourage you to review this Privacy Policy periodically.</p>
+
+                <h2>Contact Information</h2>
+                <p>If you have any questions about this Privacy Policy or our data practices, please contact us through the contact form on our website or at the email address provided in the footer.</p>
+
+                <h2>Consent</h2>
+                <p>By using our website, you consent to our Privacy Policy and agree to its terms.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="gotham-footer">
+        <div class="gotham-skyline"></div>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>The Dark Knight</h3>
+                    <p>Protecting Gotham's digital realm, one line of code at a time.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html#about">Origins</a></li>
+                        <li><a href="index.html#experience">Chronicles</a></li>
+                        <li><a href="index.html#portfolio">Case Files</a></li>
+                        <li><a href="index.html#contact">Signal Me</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Legal</h3>
+                    <ul class="footer-links">
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="terms.html">Terms & Conditions</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Dark Knight Portfolio. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Scroll progress bar
+        window.addEventListener('scroll', () => {
+            const scrollProgress = document.querySelector('.scroll-progress-bar');
+            const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrolled = (window.scrollY / scrollHeight) * 100;
+            scrollProgress.style.transform = `scaleX(${scrolled / 100})`;
+        });
+
+        // Hide back button on scroll down
+        let lastScroll = 0;
+        const backButton = document.querySelector('.back-button');
+
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll > lastScroll && currentScroll > 100) {
+                backButton.classList.add('hidden');
+            } else {
+                backButton.classList.remove('hidden');
+            }
+            
+            lastScroll = currentScroll;
+        }, { passive: true });
+    </script>
+</body>
+</html>
