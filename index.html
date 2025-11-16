@@ -2,10 +2,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Dark Developer | Ahmed Ayyan | Gotham's Creative Vigilante</title>
-    <link rel="icon" type="image/jpeg" href="BATLOGO.png">
+    <title>Ahmed Ayyan | Developer Portfolio</title>
+    <link rel="icon" type="image/png" href="batlogo updated.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@300;400;500;700&display=swap">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Elms+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/css/3d.css">
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
@@ -14,23 +17,30 @@
 </head>
 <body>
 
-    <div class="bat-signal"></div>
-    <div class="gotham-rain"></div>
-    <div class="cursor"></div>
-    <div class="cursor-follower"></div>
+    <div class="particles-container"></div>
     
-    <header class="gotham-header">
-        <div class="container">
+    <header class="floating-nav">
+        <div class="nav-container">
             <div class="logo">
-                <img src="BATLOGO.png" alt="Batman Logo" class="logo-img">
+                <img src="BATLOGO.png" alt="Logo" class="logo-img">
             </div>
-            <nav>
-                <a href="#about" class="nav-link">Origins</a>
-                <a href="#experience" class="nav-link">Chronicles</a>
-                <a href="#skills" class="nav-link">Utility Belt</a>
-                <a href="#tech-stack" class="nav-link">Tech Arsenal</a>
-                <a href="#portfolio" class="nav-link">Case Files</a>
-                <a href="#contact" class="nav-link">Signal Me</a>
+            <nav class="nav-menu">
+                <a href="#about" class="nav-item">
+                    <i class="nav-icon fas fa-user"></i>
+                    <span class="nav-text">About</span>
+                </a>
+                <a href="#resume" class="nav-item">
+                    <i class="nav-icon fas fa-briefcase"></i>
+                    <span class="nav-text">Resume</span>
+                </a>
+                <a href="#portfolio" class="nav-item">
+                    <i class="nav-icon fas fa-folder"></i>
+                    <span class="nav-text">Projects</span>
+                </a>
+                <a href="#contact" class="nav-item">
+                    <i class="nav-icon fas fa-envelope"></i>
+                    <span class="nav-text">Contact</span>
+                </a>
             </nav>
             <div class="menu-toggle">
                 <div class="hamburger"></div>
@@ -38,63 +48,434 @@
         </div>
     </header>
 
-    <section class="hero gotham-hero">
-        <div id="spline-container" class="spline-background"></div>
+    <section class="hero">
         <div class="hero-content">
-            <h1 class="hero-title">
-                <span class="title-line">Ahmed Ayyan</span>
-                <span class="title-line">Gotham's Dark Developer</span>
-            </h1>
-            <p class="hero-subtitle">Fighting bad code one line at a time</p>
-            <a href="#portfolio" class="btn btn-primary">View My Cases</a>
+            <p class="hero-greeting">Hi, I am</p>
+            <h1 class="hero-title">Ahmed Ayyan</h1>
+            <div class="hero-roles">
+                <span class="role-prefix">I'm a </span>
+                <span class="typing-text"></span>
+                <span class="cursor-blink">|</span>
+            </div>
+            <a href="#portfolio" class="btn btn-primary">View My Work</a>
         </div>
         <div class="scroll-down">
-            <span>Descend</span>
             <div class="arrow"></div>
         </div>
-        <div class="batwing-animation"></div>
-        <div class="gotham-building-silhouette"></div>
-        <div class="gotham-lightning"></div>
-        <div class="gotham-fog"></div>
-        <div class="particles-3d" id="particles-3d"></div>
     </section>
 
-    <section id="about" class="section about-section gotham-section fade-in">
+    <section id="about" class="section about-section fade-in">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title text-reveal">Origins Story</h2>
-                <div class="section-divider"></div>
+                <h2 class="section-title">About</h2>
             </div>
             <div class="about-content">
                 <div class="about-text">
-                    <p class="lead">Like Bruce Wayne mastering multiple disciplines to become Batman, I've trained in both design and development to become a complete digital vigilante.</p>
-                    <p>By night, I develop responsive web applications and fight against poor user experiences. By day, I'm a Software Engineering student at Information Technology University, honing my skills to better serve Gotham's digital needs.</p>
+                    <p class="about-intro">I'm a Software Engineering student at Information Technology University, passionate about creating seamless digital experiences that blend design and functionality.</p>
+                    <p class="about-description">My work focuses on building responsive web applications with clean, modern interfaces. I believe in writing code that's not only functional but also maintainable and scalable.</p>
                     <div class="about-stats">
                         <div class="stat-item">
                             <div class="stat-number" data-count="20">0</div>
-                            <div class="stat-label">Projects Completed</div>
+                            <div class="stat-label">Projects</div>
                         </div>
                         <div class="stat-item">
                             <div class="stat-number" data-count="1">0</div>
-                            <div class="stat-label">Years in the Shadows</div>
+                            <div class="stat-label">Year</div>
                         </div>
                         <div class="stat-item">
                             <div class="stat-number" data-count="5">0</div>
-                            <div class="stat-label">Satisfied Clients</div>
+                            <div class="stat-label">Clients</div>
                         </div>
-                    </div>
-                </div>
-                <div class="about-image">
-                    <div class="image-wrapper">
-                        <div class="image-overlay"></div>
-                        <img src="ahmed_batman.jpg" alt="Ahmed Ayyan as Batman" class="profile-img">
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="experience" class="section experience-section gotham-section fade-in">
+    <!-- Technologies Slider -->
+    <section class="tech-slider-section">
+        <div class="tech-slider-header">TECHNOLOGIES I WORK WITH</div>
+        <div class="tech-slider-wrapper">
+            <div class="tech-slider">
+                <!-- Frontend -->
+                <div class="tech-slide">
+                    <i class="fab fa-html5"></i>
+                </div>
+                <div class="tech-slide">
+                    <i class="fab fa-css3-alt"></i>
+                </div>
+                <div class="tech-slide">
+                    <i class="fab fa-js"></i>
+                </div>
+                <div class="tech-slide">
+                    <i class="fab fa-react"></i>
+                </div>
+                <div class="tech-slide">
+                    <i class="fab fa-angular"></i>
+                </div>
+                <div class="tech-slide">
+                    <i class="fab fa-bootstrap"></i>
+                </div>
+                <!-- Backend -->
+                <div class="tech-slide">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <div class="tech-slide">
+                    <i class="fab fa-php"></i>
+                </div>
+                <!-- Databases -->
+                <div class="tech-slide">
+                    <i class="fas fa-database"></i>
+                </div>
+                <!-- CMS -->
+                <div class="tech-slide">
+                    <i class="fab fa-wordpress"></i>
+                </div>
+                <div class="tech-slide">
+                    <i class="fab fa-shopify"></i>
+                </div>
+                <!-- Cloud & Hosting -->
+                <div class="tech-slide">
+                    <i class="fab fa-google"></i>
+                </div>
+                <!-- Tools -->
+                <div class="tech-slide">
+                    <i class="fab fa-git-alt"></i>
+                </div>
+                <div class="tech-slide">
+                    <i class="fab fa-github"></i>
+                </div>
+                <div class="tech-slide">
+                    <i class="fab fa-figma"></i>
+                </div>
+                <!-- Languages -->
+                <div class="tech-slide">
+                    <i class="fab fa-java"></i>
+                </div>
+                <div class="tech-slide">
+                    <i class="fab fa-python"></i>
+                </div>
+                <div class="tech-slide">
+                    <i class="fab fa-npm"></i>
+                </div>
+                
+                <!-- Duplicate for infinite loop -->
+                <div class="tech-slide">
+                    <i class="fab fa-html5"></i>
+                </div>
+                <div class="tech-slide">
+                    <i class="fab fa-css3-alt"></i>
+                </div>
+                <div class="tech-slide">
+                    <i class="fab fa-js"></i>
+                </div>
+                <div class="tech-slide">
+                    <i class="fab fa-react"></i>
+                </div>
+                <div class="tech-slide">
+                    <i class="fab fa-angular"></i>
+                </div>
+                <div class="tech-slide">
+                    <i class="fab fa-bootstrap"></i>
+                </div>
+                <div class="tech-slide">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <div class="tech-slide">
+                    <i class="fab fa-php"></i>
+                </div>
+                <div class="tech-slide">
+                    <i class="fas fa-database"></i>
+                </div>
+                <div class="tech-slide">
+                    <i class="fab fa-wordpress"></i>
+                </div>
+                <div class="tech-slide">
+                    <i class="fab fa-shopify"></i>
+                </div>
+                <div class="tech-slide">
+                    <i class="fab fa-google"></i>
+                </div>
+                <div class="tech-slide">
+                    <i class="fab fa-git-alt"></i>
+                </div>
+                <div class="tech-slide">
+                    <i class="fab fa-github"></i>
+                </div>
+                <div class="tech-slide">
+                    <i class="fab fa-figma"></i>
+                </div>
+                <div class="tech-slide">
+                    <i class="fab fa-java"></i>
+                </div>
+                <div class="tech-slide">
+                    <i class="fab fa-python"></i>
+                </div>
+                <div class="tech-slide">
+                    <i class="fab fa-npm"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tagline Section -->
+    <section class="tagline-section">
+        <div class="tagline-content">
+            <p class="tagline-text">I juggle frontends and backends like a sleep-deprived circus act, crafting interfaces that flirt with users while my APIs quietly keep the universe from collapsing. Powered by caffeine, chaos, and questionable life choices, yet everything still works somehow.</p>
+        </div>
+    </section>
+
+    <!-- Professional Resume Section -->
+    <section id="resume" class="section resume-section fade-in">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Professional Experience</h2>
+                <p class="section-subtitle">A comprehensive overview of my skills, experience, and achievements</p>
+            </div>
+            
+            <div class="resume-card-container">
+                <!-- Left Sidebar - 30% -->
+                <div class="resume-sidebar">
+                    <!-- Profile Picture -->
+                    <div class="resume-profile">
+                        <div class="resume-profile-img">
+                            <img src="ahmed_batman.jpg" alt="Ahmed Ayyan">
+                        </div>
+                    </div>
+                    
+                    <!-- Contact -->
+                    <div class="resume-sidebar-section">
+                        <h3 class="resume-sidebar-title">
+                            <i class="fas fa-envelope"></i>
+                            Contact
+                        </h3>
+                        <div class="resume-contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>ahmedayyan555@gmail.com</span>
+                        </div>
+                        <div class="resume-contact-item">
+                            <i class="fas fa-phone"></i>
+                            <span>+92 300 9586306</span>
+                        </div>
+                        <div class="resume-contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Lahore, Pakistan</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Links -->
+                    <div class="resume-sidebar-section">
+                        <h3 class="resume-sidebar-title">
+                            <i class="fas fa-link"></i>
+                            Links
+                        </h3>
+                        <div class="resume-contact-item">
+                            <i class="fab fa-github"></i>
+                            <span>github.com/bsse23094</span>
+                        </div>
+                        <div class="resume-contact-item">
+                            <i class="fab fa-linkedin"></i>
+                            <span>linkedin.com/in/ahmed-ayyan-8b25b72b0/</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Technical Skills -->
+                    <div class="resume-sidebar-section">
+                        <h3 class="resume-sidebar-title">
+                            <i class="fas fa-code"></i>
+                            Technical Skills
+                        </h3>
+                        <div class="resume-skill-item">
+                            <div class="resume-skill-header">
+                                <span>JavaScript/TypeScript</span>
+                                <span>95%</span>
+                            </div>
+                            <div class="resume-skill-bar">
+                                <div class="resume-skill-fill" style="width: 95%"></div>
+                            </div>
+                        </div>
+                        <div class="resume-skill-item">
+                            <div class="resume-skill-header">
+                                <span>Angular/React/Next.js</span>
+                                <span>95%</span>
+                            </div>
+                            <div class="resume-skill-bar">
+                                <div class="resume-skill-fill" style="width: 95%"></div>
+                            </div>
+                        </div>
+                        <div class="resume-skill-item">
+                            <div class="resume-skill-header">
+                                <span>Node.js/Express</span>
+                                <span>90%</span>
+                            </div>
+                            <div class="resume-skill-bar">
+                                <div class="resume-skill-fill" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        <div class="resume-skill-item">
+                            <div class="resume-skill-header">
+                                <span>MongoDB/PostgreSQL</span>
+                                <span>85%</span>
+                            </div>
+                            <div class="resume-skill-bar">
+                                <div class="resume-skill-fill" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div class="resume-skill-item">
+                            <div class="resume-skill-header">
+                                <span>Tailwind CSS</span>
+                                <span>95%</span>
+                            </div>
+                            <div class="resume-skill-bar">
+                                <div class="resume-skill-fill" style="width: 95%"></div>
+                            </div>
+                        </div>
+                        <div class="resume-skill-item">
+                            <div class="resume-skill-header">
+                                <span>Git/GitHub</span>
+                                <span>90%</span>
+                            </div>
+                            <div class="resume-skill-bar">
+                                <div class="resume-skill-fill" style="width: 90%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Soft Skills -->
+                    <div class="resume-sidebar-section">
+                        <h3 class="resume-sidebar-title">
+                            <i class="fas fa-lightbulb"></i>
+                            Soft Skills
+                        </h3>
+                        <div class="resume-soft-skills">
+                            <span class="resume-soft-skill-tag">Problem Solving</span>
+                            <span class="resume-soft-skill-tag">Team Collaboration</span>
+                            <span class="resume-soft-skill-tag">Communication</span>
+                            <span class="resume-soft-skill-tag">Adaptability</span>
+                            <span class="resume-soft-skill-tag">Time Management</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Download CV Button -->
+                    <button class="resume-download-btn">
+                        <i class="fas fa-download"></i>
+                        Download Resume
+                    </button>
+                </div>
+                
+                <!-- Right Content - 70% -->
+                <div class="resume-content">
+                    <!-- Introduction -->
+                    <div class="resume-content-section">
+                        <h3 class="resume-content-title">Introduction</h3>
+                        <p class="resume-intro-text">
+                            I'm a Software Engineering student at Information Technology University, passionate about creating seamless digital experiences that blend design and functionality. My work focuses on building responsive web applications with clean, modern interfaces. I believe in writing code that's not only functional but also maintainable and scalable, while continuously learning new technologies and best practices.
+                        </p>
+                    </div>
+                    
+                    <!-- Work Experience -->
+                    <div class="resume-content-section">
+                        <h3 class="resume-content-title">
+                            <i class="fas fa-briefcase"></i>
+                            Work Experience
+                        </h3>
+                        
+                        <div class="resume-job">
+                            <div class="resume-job-header">
+                                <div>
+                                    <h4 class="resume-job-title">Angular Front-End Developer</h4>
+                                    <p class="resume-job-company">CyberSoft Technologies • Remote • 2025 - Present</p>
+                                </div>
+                            </div>
+                            <ul class="resume-job-list">
+                                <li>Developing enterprise-level applications with Angular framework</li>
+                                <li>Implementing best practices in design principles and color theory</li>
+                                <li>Collaborating with backend developers to integrate RESTful APIs</li>
+                                <li>Maintaining code quality through unit testing and code reviews</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="resume-job">
+                            <div class="resume-job-header">
+                                <div>
+                                    <h4 class="resume-job-title">Front-End Developer</h4>
+                                    <p class="resume-job-company">Freelance • Remote • 2024 - 2025</p>
+                                </div>
+                            </div>
+                            <ul class="resume-job-list">
+                                <li>Developed responsive web applications using React and Angular</li>
+                                <li>Created WordPress websites with custom themes and plugins</li>
+                                <li>Delivered user-centric interfaces improving engagement by 40%</li>
+                                <li>Managed multiple client projects simultaneously</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Education -->
+                    <div class="resume-content-section">
+                        <h3 class="resume-content-title">
+                            <i class="fas fa-graduation-cap"></i>
+                            Education
+                        </h3>
+                        
+                        <div class="resume-education">
+                            <h4 class="resume-education-title">Bachelor of Science in Software Engineering</h4>
+                            <p class="resume-education-school">Information Technology University • 2023 - Present</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Certifications -->
+                    <div class="resume-content-section">
+                        <h3 class="resume-content-title">
+                            <i class="fas fa-award"></i>
+                            Certifications
+                        </h3>
+                        
+                        <div class="resume-certifications">
+                            <div class="resume-cert-item">
+                                <i class="fas fa-certificate"></i>
+                                <span>Google Cloud CI/CD Pipelines</span>
+                            </div>
+                            <div class="resume-cert-item">
+                                <i class="fas fa-certificate"></i>
+                                <span>Jira</span>
+                            </div>
+                            <!-- <div class="resume-cert-item">
+                                <i class="fas fa-certificate"></i>
+                                <span>React Advanced Certification</span>
+                            </div>
+                            <div class="resume-cert-item">
+                                <i class="fas fa-certificate"></i>
+                                <span>Node.js Application Developer</span>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Roles Slider Section -->
+    <section class="roles-slider-section">
+        <div class="roles-slider-wrapper">
+            <div class="roles-slider">
+                <span class="role-slide">full stack developer</span>
+                <span class="role-separator">*</span>
+                <span class="role-slide">ui/ux designer</span>
+                <span class="role-separator">*</span>
+                <span class="role-slide">front end developer</span>
+                <span class="role-separator">*</span>
+                <span class="role-slide">full stack developer</span>
+                <span class="role-separator">*</span>
+                <span class="role-slide">ui/ux designer</span>
+                <span class="role-separator">*</span>
+                <span class="role-slide">front end developer</span>
+                <span class="role-separator">*</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="experience" class="section experience-section gotham-section fade-in" style="display: none;">
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title text-reveal">Chronicles</h2>
@@ -142,7 +523,7 @@
         </div>
     </section>
 
-    <section id="skills" class="section skills-section gotham-section fade-in">
+    <section id="skills" class="section skills-section gotham-section fade-in" style="display: none;">
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title text-reveal">My Utility Belt</h2>
@@ -253,157 +634,64 @@
     </section>
 
     <!-- New Tech Stack Section -->
-    <section id="tech-stack" class="section tech-stack-section gotham-section fade-in">
+    <section id="tech-stack" class="section tech-arsenal-section fade-in">
         <div class="container">
-            <div class="section-header">
-                <h2 class="section-title text-reveal">Tech Arsenal</h2>
-                <div class="section-divider"></div>
-                <p class="section-subtitle">My complete collection of tools and technologies</p>
-            </div>
-            
-            <div class="tech-stack-container">
-                <div class="tech-category">
-                    <h3><i class="fas fa-desktop"></i> Frontend</h3>
-                    <div class="tech-icons">
-                        <div class="tech-item slide-in-up" data-delay="0">
+            <div class="tech-circles-container">
+                <div class="tech-circle-system">
+                    <!-- Central Label -->
+                    <div class="tech-central-label">
+                        <h2 class="tech-stack-heading">My<br>Tech Stack</h2>
+                    </div>
+                    
+                    <!-- Single Harmonious Circle - All Technologies -->
+                    <div class="tech-orbit tech-orbit-single">
+                        <!-- Frontend -->
+                        <div class="tech-orbit-icon">
                             <i class="fab fa-html5"></i>
-                            <span>HTML5</span>
                         </div>
-                        <div class="tech-item slide-in-up" data-delay="50">
+                        <div class="tech-orbit-icon">
                             <i class="fab fa-css3-alt"></i>
-                            <span>CSS3</span>
                         </div>
-                        <div class="tech-item slide-in-up" data-delay="100">
-                            <i class="fab fa-js-square"></i>
-                            <span>JavaScript</span>
+                        <div class="tech-orbit-icon">
+                            <i class="fab fa-js"></i>
                         </div>
-                        <div class="tech-item slide-in-up" data-delay="150">
+                        <div class="tech-orbit-icon">
                             <i class="fab fa-react"></i>
-                            <span>ReactJS</span>
                         </div>
-                        <div class="tech-item slide-in-up" data-delay="200">
+                        <div class="tech-orbit-icon">
                             <i class="fab fa-angular"></i>
-                            <span>Angular</span>
                         </div>
-                        <div class="tech-item slide-in-up" data-delay="250">
+                        <div class="tech-orbit-icon">
                             <i class="fab fa-bootstrap"></i>
-                            <span>Bootstrap</span>
                         </div>
-                    </div>
-                </div>
-                
-                <div class="tech-category">
-                    <h3><i class="fas fa-server"></i> Backend</h3>
-                    <div class="tech-icons">
-                        <div class="tech-item slide-in-up" data-delay="0">
+                        <!-- Backend -->
+                        <div class="tech-orbit-icon">
                             <i class="fab fa-node-js"></i>
-                            <span>Node.js</span>
                         </div>
-                        <div class="tech-item slide-in-up" data-delay="50">
-                            <i class="fas fa-code"></i>
-                            <span>ExpressJS</span>
-                        </div>
-                        <div class="tech-item slide-in-up" data-delay="100">
+                        <div class="tech-orbit-icon">
                             <i class="fab fa-php"></i>
-                            <span>PHP</span>
                         </div>
-                    </div>
-                </div>
-                
-                <div class="tech-category">
-                    <h3><i class="fas fa-database"></i> Databases</h3>
-                    <div class="tech-icons">
-                        <div class="tech-item slide-in-up" data-delay="0">
-                            <i class="fas fa-database"></i>
-                            <span>MySQL</span>
-                        </div>
-                        <div class="tech-item slide-in-up" data-delay="50">
-                            <i class="fas fa-database"></i>
-                            <span>MongoDB</span>
-                        </div>
-                        <div class="tech-item slide-in-up" data-delay="100">
-                            <i class="fas fa-database"></i>
-                            <span>SQL</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="tech-category">
-                    <h3><i class="fab fa-wordpress"></i> CMS & Platforms</h3>
-                    <div class="tech-icons">
-                        <div class="tech-item slide-in-up" data-delay="0">
-                            <i class="fab fa-wordpress"></i>
-                            <span>WordPress</span>
-                        </div>
-                        <div class="tech-item slide-in-up" data-delay="50">
-                            <i class="fab fa-shopify"></i>
-                            <span>Shopify</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="tech-category">
-                    <h3><i class="fas fa-cloud"></i> Deployment & Hosting</h3>
-                    <div class="tech-icons">
-                        <div class="tech-item slide-in-up" data-delay="0">
-                            <i class="fas fa-cloud"></i>
-                            <span>Vercel</span>
-                        </div>
-                        <div class="tech-item slide-in-up" data-delay="50">
-                            <i class="fas fa-server"></i>
-                            <span>Render</span>
-                        </div>
-                        <div class="tech-item slide-in-up" data-delay="100">
-                            <i class="fas fa-server"></i>
-                            <span>GoDaddy</span>
-                        </div>
-                        <div class="tech-item slide-in-up" data-delay="150">
-                            <i class="fab fa-google"></i>
-                            <span>Firebase</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="tech-category">
-                    <h3><i class="fas fa-tools"></i> Tools & Platforms</h3>
-                    <div class="tech-icons">
-                        <div class="tech-item slide-in-up" data-delay="0">
-                            <i class="fab fa-git-alt"></i>
-                            <span>Git</span>
-                        </div>
-                        <div class="tech-item slide-in-up" data-delay="50">
-                            <i class="fab fa-github"></i>
-                            <span>GitHub</span>
-                        </div>
-                        <div class="tech-item slide-in-up" data-delay="100">
-                            <i class="fab fa-figma"></i>
-                            <span>Figma</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="tech-category">
-                    <h3><i class="fas fa-code"></i> Programming Languages</h3>
-                    <div class="tech-icons">
-                        <div class="tech-item slide-in-up" data-delay="0">
-                            <i class="fas fa-code"></i>
-                            <span>C++</span>
-                        </div>
-                        <div class="tech-item slide-in-up" data-delay="50">
-                            <i class="fas fa-code"></i>
-                            <span>C</span>
-                        </div>
-                        <div class="tech-item slide-in-up" data-delay="100">
-                            <i class="fab fa-java"></i>
-                            <span>Java</span>
-                        </div>
-                        <div class="tech-item slide-in-up" data-delay="150">
+                        <div class="tech-orbit-icon">
                             <i class="fab fa-python"></i>
-                            <span>Python</span>
                         </div>
-                        <div class="tech-item slide-in-up" data-delay="200">
-                            <i class="fas fa-code"></i>
-                            <span>C#</span>
+                        <div class="tech-orbit-icon">
+                            <i class="fas fa-database"></i>
+                        </div>
+                        <!-- Tools & CMS -->
+                        <div class="tech-orbit-icon">
+                            <i class="fab fa-wordpress"></i>
+                        </div>
+                        <div class="tech-orbit-icon">
+                            <i class="fab fa-shopify"></i>
+                        </div>
+                        <div class="tech-orbit-icon">
+                            <i class="fab fa-git-alt"></i>
+                        </div>
+                        <div class="tech-orbit-icon">
+                            <i class="fab fa-github"></i>
+                        </div>
+                        <div class="tech-orbit-icon">
+                            <i class="fab fa-figma"></i>
                         </div>
                     </div>
                 </div>
@@ -414,14 +702,68 @@
     <section id="portfolio" class="section portfolio-section gotham-section fade-in">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title text-reveal">Featured Case Files</h2>
+                <h2 class="section-title text-reveal">Featured Projects</h2>
                 <div class="section-divider"></div>
-                <p class="section-subtitle">Top priority investigations showcasing my development expertise</p>
+                <p class="section-subtitle">Showcasing my development expertise through innovative solutions</p>
             </div>
             
             <div class="featured-projects-grid">
 
-                <!-- Featured Project 1: AI Study Buddy -->
+                <!-- Featured Project 1: CodeGen Landing Page Builder -->
+                <div class="featured-project-card slide-in-up">
+                    <div class="featured-project-image">
+                        <img src="Codegen.png" alt="CodeGen Landing Page Builder">
+                        <div class="featured-overlay-badge">Featured</div>
+                    </div>
+                    <div class="featured-project-content">
+                        <div class="featured-tech-stack">
+                            <span class="tech-pill">
+                                <i class="fab fa-angular"></i>
+                                Angular 19
+                            </span>
+                            <span class="tech-pill">
+                                <i class="fas fa-code"></i>
+                                TypeScript 5.7
+                            </span>
+                            <span class="tech-pill">
+                                <i class="fas fa-palette"></i>
+                                Drag & Drop
+                            </span>
+                            <span class="tech-pill">
+                                <i class="fab fa-react"></i>
+                                Code Export
+                            </span>
+                        </div>
+                        <h3 class="featured-project-title">CodeGen - Visual Landing Page Builder</h3>
+                        <p class="featured-project-description">
+                            A powerful, user-friendly visual landing page builder with drag-and-drop interface. Create stunning landing pages with customizable themes, 15+ pre-built components, and export to clean HTML/CSS or React code. Features 50-level undo/redo, auto-save, and real-time preview.
+                        </p>
+                        <div class="featured-highlights">
+                            <div class="highlight">
+                                <i class="fas fa-check"></i>
+                                <span>Drag & Drop Builder</span>
+                            </div>
+                            <div class="highlight">
+                                <i class="fas fa-check"></i>
+                                <span>15+ Components</span>
+                            </div>
+                            <div class="highlight">
+                                <i class="fas fa-check"></i>
+                                <span>HTML/React Export</span>
+                            </div>
+                        </div>
+                        <div class="featured-project-actions">
+                            <a href="https://bsse23094.github.io/codeGen/" class="btn-featured btn-demo" target="_blank">
+                                <i class="fas fa-external-link-alt"></i> Live Demo
+                            </a>
+                            <a href="projects.html" class="btn-featured btn-details">
+                                <i class="fas fa-info-circle"></i> Full Details
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Featured Project 2: AI Study Buddy -->
                 <div class="featured-project-card slide-in-up">
                     <div class="featured-project-image">
                         <img src="studybuddy.png" alt="AI Powered Learning Platform">
@@ -429,10 +771,22 @@
                     </div>
                     <div class="featured-project-content">
                         <div class="featured-tech-stack">
-                            <span class="tech-pill">Angular</span>
-                            <span class="tech-pill">OpenRouter</span>
-                            <span class="tech-pill">AI/ML</span>
-                            <span class="tech-pill">CloudFare Workers</span>
+                            <span class="tech-pill">
+                                <i class="fab fa-angular"></i>
+                                Angular
+                            </span>
+                            <span class="tech-pill">
+                                <i class="fas fa-route"></i>
+                                OpenRouter
+                            </span>
+                            <span class="tech-pill">
+                                <i class="fas fa-brain"></i>
+                                AI/ML
+                            </span>
+                            <span class="tech-pill">
+                                <i class="fab fa-cloudflare"></i>
+                                CloudFare Workers
+                            </span>
                         </div>
                         <h3 class="featured-project-title">AI-Powered Learning Platform</h3>
                         <p class="featured-project-description">
@@ -465,7 +819,7 @@
                     </div>
                 </div>
 
-                <!-- Featured Project 2: Movie Streaming -->
+                <!-- Featured Project 3: Movie Streaming -->
                 <div class="featured-project-card slide-in-up">
                     <div class="featured-project-image">
                         <img src="cinetex.png" alt="Movie Streaming Platform">
@@ -473,10 +827,22 @@
                     </div>
                     <div class="featured-project-content">
                         <div class="featured-tech-stack">
-                            <span class="tech-pill">Angular</span>
-                            <span class="tech-pill">TMDB API</span>
-                            <span class="tech-pill">HTML5</span>
-                            <span class="tech-pill">CSS3</span>
+                            <span class="tech-pill">
+                                <i class="fab fa-angular"></i>
+                                Angular
+                            </span>
+                            <span class="tech-pill">
+                                <i class="fas fa-database"></i>
+                                TMDB API
+                            </span>
+                            <span class="tech-pill">
+                                <i class="fab fa-html5"></i>
+                                HTML5
+                            </span>
+                            <span class="tech-pill">
+                                <i class="fab fa-css3-alt"></i>
+                                CSS3
+                            </span>
                         </div>
                         <h3 class="featured-project-title">Cinetex - Movie Streaming Platform</h3>
                         <p class="featured-project-description">
@@ -509,7 +875,7 @@
                     </div>
                 </div>
 
-                <!-- Featured Project 3: GitHub Explorer -->
+                <!-- Featured Project 4: GitHub Explorer -->
                 <div class="featured-project-card slide-in-up">
                     <div class="featured-project-image">
                         <img src="issue-beacon.png" alt="GitHub Issue Explorer">
@@ -517,10 +883,22 @@
                     </div>
                     <div class="featured-project-content">
                         <div class="featured-tech-stack">
-                            <span class="tech-pill">Angular</span>
-                            <span class="tech-pill">GitHub API</span>
-                            <span class="tech-pill">TypeScript</span>
-                            <span class="tech-pill">Tailwind</span>
+                            <span class="tech-pill">
+                                <i class="fab fa-angular"></i>
+                                Angular
+                            </span>
+                            <span class="tech-pill">
+                                <i class="fab fa-github"></i>
+                                GitHub API
+                            </span>
+                            <span class="tech-pill">
+                                <i class="fas fa-code"></i>
+                                TypeScript
+                            </span>
+                            <span class="tech-pill">
+                                <i class="fas fa-wind"></i>
+                                Tailwind
+                            </span>
                         </div>
                         <h3 class="featured-project-title">Issue Beacon - GitHub Explorer</h3>
                         <p class="featured-project-description">
@@ -556,103 +934,85 @@
             </div>
             
             <div class="text-center view-all-section">
-                <a href="projects.html" class="btn btn-primary btn-view-all">
-                    <i class="fas fa-folder-open"></i> Access All Case Files
+                <a href="projects-new.html" class="btn btn-primary btn-view-all">
+                    <i class="fas fa-folder-open"></i> View All Projects
                 </a>
-                <p class="view-all-subtitle">View detailed information on all 7 projects</p>
+                <p class="view-all-subtitle">Explore detailed information on all my projects</p>
             </div>
         </div>
     </section>
 
-    <section id="contact" class="section contact-section gotham-section fade-in">
+    <section id="contact" class="section contact-section fade-in">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title text-reveal">Send The Signal</h2>
-                <div class="section-divider"></div>
-                <p class="section-subtitle">Light up the Bat-Signal and I'll respond</p>
+                <h2 class="section-title">Get In Touch</h2>
+                <p class="section-subtitle">I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision.</p>
             </div>
             
-            <div class="contact-container">
-                <div class="contact-info">
-                    <div class="info-item">
-                        <div class="info-icon">
-                            <i class="fas fa-envelope"></i>
-                        </div>
-                        <div class="info-content">
-                            <h4>Bat-Signal</h4>
-                            <a href="mailto:ahmedayyan555@gmail.com">ahmedayyan555@gmail.com</a>
-                        </div>
+            <div class="contact-cards-grid">
+                <div class="contact-card">
+                    <div class="contact-card-icon">
+                        <i class="fas fa-envelope"></i>
                     </div>
-                    
-                    <div class="info-item">
-                        <div class="info-icon">
-                            <i class="fas fa-phone"></i>
-                        </div>
-                        <div class="info-content">
-                            <h4>Bat-Phone</h4>
-                            <a href="tel:03009586306">0300-9586306</a>
-                        </div>
-                    </div>
-                    
-                    <div class="info-item">
-                        <div class="info-icon">
-                            <i class="fab fa-github"></i>
-                        </div>
-                        <div class="info-content">
-                            <h4>Bat-Computer</h4>
-                            <a href="https://github.com/bsse23094" target="_blank">github.com/bsse23094</a>
-                        </div>
-                    </div>
-                    
-                    <div class="info-item">
-                        <div class="info-icon">
-                            <i class="fab fa-linkedin"></i>
-                        </div>
-                        <div class="info-content">
-                            <h4>Bat-Profile</h4>
-                            <a href="https://www.linkedin.com/in/ahmed-ayyan-8b25b72b0/" target="_blank">LinkedIn Profile</a>
-                        </div>
-                    </div>
+                    <h3 class="contact-card-title">Email Me</h3>
+                    <p class="contact-card-subtitle">Drop me a line anytime</p>
+                    <a href="mailto:ahmedayyan555@gmail.com" class="contact-card-link">ahmedayyan555@gmail.com</a>
                 </div>
                 
-                <form class="contact-form">
-                    <div class="form-group">
-                        <input type="text" placeholder="Your Alias" required>
+                <div class="contact-card">
+                    <div class="contact-card-icon">
+                        <i class="fas fa-phone"></i>
                     </div>
-                    <div class="form-group">
-                        <input type="email" placeholder="Your Signal Frequency" required>
+                    <h3 class="contact-card-title">Call Me</h3>
+                    <p class="contact-card-subtitle">Mon-Fri from 9am to 6pm</p>
+                    <a href="tel:+923009586306" class="contact-card-link">+92 300 9586306</a>
+                </div>
+                
+                <div class="contact-card">
+                    <div class="contact-card-icon">
+                        <i class="fas fa-map-marker-alt"></i>
                     </div>
-                    <div class="form-group">
-                        <input type="text" placeholder="Case Subject">
-                    </div>
-                    <div class="form-group">
-                        <textarea placeholder="Your Encrypted Message" required></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Activate Signal</button>
-                </form>
+                    <h3 class="contact-card-title">Visit Me</h3>
+                    <p class="contact-card-subtitle">Come say hello</p>
+                    <a href="#" class="contact-card-link">Lahore, Pakistan</a>
+                </div>
+            </div>
+            
+            <div class="social-section">
+                <h3 class="social-section-title">Connect on Social Media</h3>
+                <div class="social-links-large">
+                    <a href="https://github.com/bsse23094" class="social-link-large" target="_blank">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/ahmed-ayyan-8b25b72b0/" class="social-link-large" target="_blank">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                </div>
             </div>
         </div>
     </section>
 
-    <footer class="footer gotham-footer fade-in">
+    <footer class="footer fade-in">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-logo">
-                    <img src="BATLOGO.png" alt="Batman Logo" class="footer-logo-img">
+                    <img src="batlogo updated.png" alt="Logo" class="footer-logo-img">
                 </div>
-                <p class="footer-text">The night is darkest just before the dawn. And I promise you, the dawn is coming.</p>
-                <div class="social-links">
-                    <a href="https://github.com/bsse23094" class="social-link"><i class="fab fa-github"></i></a>
-                    <a href="https://www.linkedin.com/in/ahmed-ayyan-8b25b72b0/" class="social-link"><i class="fab fa-linkedin"></i></a>
-                    <!-- <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a> -->
+                <p class="footer-text">Crafting digital experiences with passion and precision.</p>
+                <div class="footer-social-links">
+                    <a href="https://github.com/bsse23094" class="footer-social-link" target="_blank">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/ahmed-ayyan-8b25b72b0/" class="footer-social-link" target="_blank">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 The Dark Developer. All rights reserved.</p>
+                <p>&copy; 2025 Ahmed Ayyan. All rights reserved.</p>
                 <div class="footer-links">
-                    <a href="privacy.html">Bat-Privacy Policy</a>
-                    <a href="terms.html">Justice Terms</a>
+                    <a href="privacy-new.html">Privacy Policy</a>
+                    <a href="terms-new.html">Terms of Service</a>
                 </div>
             </div>
         </div>

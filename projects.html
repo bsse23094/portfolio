@@ -3,75 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>All Case Files | The Dark Developer</title>
+    <title>All Projects | Ahmed Ayyan</title>
     <link rel="icon" type="image/jpeg" href="BATLOGO.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@300;400;500;700&display=swap">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Elms+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <style>
         .projects-hero {
-            min-height: 40vh;
+            min-height: 50vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(135deg, #0a0a14 0%, #1a1a2e 100%);
+            background: #000000;
             position: relative;
             overflow: hidden;
-            animation: heroGlow 8s ease-in-out infinite alternate;
-            padding: 40px 0;
-        }
-
-        @keyframes heroGlow {
-            0% {
-                box-shadow: inset 0 0 100px rgba(245, 166, 35, 0.1);
-            }
-            100% {
-                box-shadow: inset 0 0 150px rgba(245, 166, 35, 0.2);
-            }
-        }
-
-        .projects-hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at 50% 50%, rgba(245, 166, 35, 0.15) 0%, transparent 70%);
-            pointer-events: none;
-            animation: pulseGlow 4s ease-in-out infinite;
-        }
-
-        @keyframes pulseGlow {
-            0%, 100% {
-                opacity: 0.5;
-            }
-            50% {
-                opacity: 1;
-            }
+            padding: 100px 0;
         }
 
         .back-button {
             position: fixed;
-            top: 18px;
-            left: 18px;
+            top: 20px;
+            left: 20px;
             z-index: 1000;
-            background: rgba(26, 26, 46, 0.95);
-            border: 2px solid var(--secondary-color);
-            padding: 10px 20px;
-            border-radius: 25px;
-            color: var(--secondary-color);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 12px 24px;
+            border-radius: 12px;
+            color: #ffffff;
             text-decoration: none;
-            font-family: 'Bebas Neue', sans-serif;
-            letter-spacing: 1px;
-            transition: all 0.3s ease;
+            font-family: 'Elms Sans', sans-serif;
+            letter-spacing: 0.5px;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             backdrop-filter: blur(10px);
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
             font-size: 0.9rem;
-            font-weight: 600;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            font-weight: 500;
             opacity: 1;
             transform: translateX(0);
         }
@@ -83,20 +53,64 @@
         }
 
         .back-button:hover {
-            background: var(--secondary-color);
-            color: var(--dark-color);
-            box-shadow: 0 0 25px rgba(245, 166, 35, 0.6);
-            transform: translateX(0) scale(1.05);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.1));
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateX(0) translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
 
         .back-button i {
-            margin-right: 8px;
             transition: transform 0.3s ease;
         }
 
         .back-button:hover i {
             transform: translateX(-5px);
         }
+
+        .projects-hero-content {
+            text-align: center;
+            z-index: 2;
+            position: relative;
+        }
+
+        .projects-hero h1 {
+            font-size: 4.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #ffffff;
+            letter-spacing: -1px;
+        }
+
+        .projects-hero p {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.6);
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        .projects-section {
+            padding: 100px 0;
+            background: #000000;
+        }
+
+        @media (max-width: 768px) {
+            .projects-hero h1 {
+                font-size: 3rem;
+            }
+
+            .projects-hero p {
+                font-size: 1rem;
+            }
+
+            .back-button {
+                top: 15px;
+                left: 15px;
+                padding: 10px 20px;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
 
         .project-detail-card {
             background: rgba(26, 26, 46, 0.6);
@@ -643,28 +657,24 @@
                              0 0 80px rgba(245, 166, 35, 0.2);
             }
         }
-    </style>
 </head>
 <body>
-    <div class="scroll-progress-bar"></div>
-    <div class="bat-signal"></div>
-    <div class="gotham-rain"></div>
+    <div class="particles-container"></div>
 
     <a href="index.html#portfolio" class="back-button">
-        <i class="fas fa-arrow-left"></i>Return to Main
+        <i class="fas fa-arrow-left"></i>Return to Portfolio
     </a>
 
     <section class="projects-hero">
         <div class="container">
-            <div class="section-header" style="text-align: center;">
-                <h1 class="section-title" style="font-size: 3rem; color: var(--secondary-color); letter-spacing: -1px;">All Case Files</h1>
-                <div class="section-divider" style="margin: 15px auto;"></div>
-                <p class="section-subtitle" style="font-size: 0.95rem;">Complete Evidence Archive</p>
+            <div class="projects-hero-content">
+                <h1>All Projects</h1>
+                <p>A comprehensive collection of my development work, showcasing expertise across various technologies and domains</p>
             </div>
         </div>
     </section>
 
-    <section class="section" style="padding: 80px 0;">
+    <section class="projects-section">
         <div class="container">
             
             <!-- AI Study Buddy -->
@@ -999,15 +1009,34 @@
         </div>
     </section>
 
-    <footer class="footer gotham-footer" style="margin-top: 0;">
+    <footer class="footer">
         <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="BATLOGO.png" alt="Logo" class="footer-logo-img">
+                </div>
+                <p class="footer-text">Crafting digital experiences with passion and precision.</p>
+                <div class="footer-social-links">
+                    <a href="https://github.com/bsse23094" class="footer-social-link" target="_blank">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/ahmed-ayyan-8b25b72b0/" class="footer-social-link" target="_blank">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                </div>
+            </div>
             <div class="footer-bottom">
-                <p>&copy; 2024 The Dark Developer. All rights reserved.</p>
+                <p>&copy; 2025 Ahmed Ayyan. All rights reserved.</p>
                 <div class="footer-links">
                     <a href="index.html">Home</a>
-                    <a href="index.html#about">About</a>
-                    <a href="index.html#contact">Contact</a>
+                    <a href="privacy.html">Privacy Policy</a>
+                    <a href="terms.html">Terms of Service</a>
                 </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
             </div>
         </div>
     </footer>

@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects | Ahmed Ayyan</title>
+    <link rel="icon" type="image/png" href="batlogo updated.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Elms+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Elms Sans', sans-serif;
+            background: #000000;
+            color: #ffffff;
+            line-height: 1.6;
+        }
+
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 12px 24px;
+            border-radius: 12px;
+            color: #ffffff;
+            text-decoration: none;
+            letter-spacing: 0.5px;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .back-button:hover {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.1));
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .back-button i {
+            transition: transform 0.3s ease;
+        }
+
+        .back-button:hover i {
+            transform: translateX(-5px);
+        }
+
+        .projects-hero {
+            min-height: 50vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: #000000;
+            padding: 150px 20px 80px;
+        }
+
+        .projects-hero h1 {
+            font-size: 5rem;
+            font-weight: 700;
+            color: #ffffff;
+            text-align: center;
+            letter-spacing: -1px;
+            margin-bottom: 20px;
+        }
+
+        .projects-hero p {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.6);
+            text-align: center;
+            max-width: 600px;
+        }
+
+        .projects-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 80px 20px 100px;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 35px;
+        }
+
+        .project-card {
+            background: linear-gradient(135deg, #0a0a0a 0%, #000000 100%);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, transparent 50%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+        }
+
+        .project-card::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+            pointer-events: none;
+        }
+
+        .project-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .project-card:hover::before {
+            opacity: 1;
+        }
+
+        .project-card:hover::after {
+            width: 300px;
+            height: 300px;
+        }
+
+        .project-image {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            filter: grayscale(100%);
+            transition: all 0.4s ease;
+        }
+
+        .project-card:hover .project-image {
+            filter: grayscale(0%);
+            transform: scale(1.05);
+        }
+
+        .project-content {
+            padding: 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .project-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+
+        .project-description {
+            color: rgba(255, 255, 255, 0.65);
+            font-size: 1rem;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 25px;
+        }
+
+        .tech-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .tech-pill:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.15);
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .tech-pill i {
+            font-size: 0.9rem;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 12px;
+        }
+
+        .project-link {
+            flex: 1;
+            padding: 12px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            text-align: center;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .project-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            color: #ffffff;
+        }
+
+        @media (max-width: 768px) {
+            .projects-hero {
+                padding: 120px 20px 60px;
+            }
+
+            .projects-hero h1 {
+                font-size: 3.5rem;
+            }
+
+            .projects-hero p {
+                font-size: 1rem;
+            }
+
+            .projects-container {
+                padding: 60px 20px 80px;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+
+            .project-content {
+                padding: 25px;
+            }
+
+            .project-title {
+                font-size: 1.5rem;
+            }
+
+            .back-button {
+                top: 15px;
+                left: 15px;
+                padding: 10px 20px;
+                font-size: 0.85rem;
+            }
+
+            .project-links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles-container"></div>
+
+    <a href="index.html" class="back-button">
+        <i class="fas fa-arrow-left"></i>Return to Home
+    </a>
+
+    <section class="projects-hero">
+        <h1>All Projects</h1>
+        <p>A comprehensive collection of my development work and creative solutions</p>
+    </section>
+
+    <div class="projects-container">
+        <div class="projects-grid">
+            <!-- CodeGen Landing Page Builder -->
+            <div class="project-card">
+                <img src="Codegen.png" alt="CodeGen Landing Page Builder" class="project-image">
+                <div class="project-content">
+                    <h3 class="project-title">CodeGen - Visual Landing Page Builder</h3>
+                    <p class="project-description">A powerful, user-friendly visual landing page builder built with Angular 19. Create stunning landing pages with a drag-and-drop interface, customizable themes, and export to clean HTML/CSS or React code. Features 15+ pre-built components, 4 beautiful preset themes, and 50-level undo/redo system.</p>
+                    <div class="project-tech">
+                        <span class="tech-pill"><i class="fab fa-angular"></i> Angular 19</span>
+                        <span class="tech-pill"><i class="fas fa-code"></i> TypeScript 5.7</span>
+                        <span class="tech-pill"><i class="fas fa-stream"></i> RxJS 7.8</span>
+                        <span class="tech-pill"><i class="fas fa-palette"></i> Drag & Drop</span>
+                        <span class="tech-pill"><i class="fab fa-react"></i> React Export</span>
+                        <span class="tech-pill"><i class="fas fa-file-archive"></i> JSZip</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://bsse23094.github.io/codeGen/" target="_blank" class="project-link">
+                            <i class="fas fa-external-link-alt"></i> Live Demo
+                        </a>
+                        <a href="https://github.com/bsse23094/codeGen" target="_blank" class="project-link">
+                            <i class="fab fa-github"></i> View Code
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Study Buddy -->
+            <div class="project-card">
+                <img src="studybuddy.png" alt="AI Study Buddy" class="project-image">
+                <div class="project-content">
+                    <h3 class="project-title">StudyBuddy: AI-Powered Learning Platform</h3>
+                    <p class="project-description">An intelligent learning platform that leverages artificial intelligence to create personalized study experiences. The platform adapts to individual learning styles, tracks progress in real-time, and provides interactive assessments to maximize student engagement and knowledge retention.</p>
+                    <div class="project-tech">
+                        <span class="tech-pill"><i class="fab fa-angular"></i> Angular</span>
+                        <span class="tech-pill"><i class="fas fa-cloud"></i> CloudFlare Workers</span>
+                        <span class="tech-pill"><i class="fas fa-brain"></i> AI/ML</span>
+                        <span class="tech-pill"><i class="fas fa-plug"></i> API Integration</span>
+                        <span class="tech-pill"><i class="fab fa-js"></i> TypeScript</span>
+                        <span class="tech-pill"><i class="fab fa-github"></i> GitHub Pages</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://bsse23094.github.io/studyBuddy/home" target="_blank" class="project-link">
+                            <i class="fas fa-external-link-alt"></i> Live Demo
+                        </a>
+                        <a href="https://github.com/bsse23094/studyBuddy" target="_blank" class="project-link">
+                            <i class="fab fa-github"></i> View Code
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Movie Streaming Platform -->
+            <div class="project-card">
+                <img src="cinetex.png" alt="Cinetex Movie Platform" class="project-image">
+                <div class="project-content">
+                    <h3 class="project-title">Cinetex - Movie Streaming Platform</h3>
+                    <p class="project-description">A full-featured movie streaming platform that provides users with an immersive entertainment experience. Users can browse thousands of movies, create custom watchlists, rate films, and manage their favorites. The platform features a sleek, responsive design with advanced search and filtering capabilities.</p>
+                    <div class="project-tech">
+                        <span class="tech-pill"><i class="fab fa-angular"></i> Angular</span>
+                        <span class="tech-pill"><i class="fab fa-css3-alt"></i> CSS3</span>
+                        <span class="tech-pill"><i class="fab fa-html5"></i> HTML5</span>
+                        <span class="tech-pill"><i class="fas fa-film"></i> TMDB API</span>
+                        <span class="tech-pill"><i class="fas fa-database"></i> Local Storage</span>
+                        <span class="tech-pill"><i class="fas fa-mobile-alt"></i> Responsive Design</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://bsse23094.github.io/cinetex_/search" target="_blank" class="project-link">
+                            <i class="fas fa-external-link-alt"></i> Live Demo
+                        </a>
+                        <a href="https://github.com/bsse23094/cinetex_" target="_blank" class="project-link">
+                            <i class="fab fa-github"></i> View Code
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GitHub Issue Explorer -->
+            <div class="project-card">
+                <img src="issue-beacon.png" alt="Issue Beacon" class="project-image">
+                <div class="project-content">
+                    <h3 class="project-title">Issue Beacon - GitHub Issue Explorer</h3>
+                    <p class="project-description">A powerful web application designed to streamline GitHub issue management. This tool provides developers with an intuitive interface to explore, filter, and manage issues across multiple repositories. Features include advanced search, real-time updates, and comprehensive issue analytics.</p>
+                    <div class="project-tech">
+                        <span class="tech-pill"><i class="fab fa-angular"></i> Angular</span>
+                        <span class="tech-pill"><i class="fab fa-github"></i> GitHub API</span>
+                        <span class="tech-pill"><i class="fas fa-plug"></i> REST API</span>
+                        <span class="tech-pill"><i class="fab fa-js"></i> TypeScript</span>
+                        <span class="tech-pill"><i class="fas fa-wind"></i> Tailwind CSS</span>
+                        <span class="tech-pill"><i class="fas fa-lock"></i> OAuth</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://bsse23094.github.io/issue-beacon/" target="_blank" class="project-link">
+                            <i class="fas fa-external-link-alt"></i> Live Demo
+                        </a>
+                        <a href="https://github.com/bsse23094/issue-beacon" target="_blank" class="project-link">
+                            <i class="fab fa-github"></i> View Code
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ideal Janitorial Services -->
+            <div class="project-card">
+                <img src="ideal.png" alt="Ideal Janitorial Services" class="project-image">
+                <div class="project-content">
+                    <h3 class="project-title">Ideal Janitorial Services Website</h3>
+                    <p class="project-description">A professional, conversion-optimized website for a renowned janitorial service company. The site features clean design aesthetics, intuitive navigation, and strategic call-to-action placements to effectively convert visitors into clients. Built with performance and SEO in mind.</p>
+                    <div class="project-tech">
+                        <span class="tech-pill"><i class="fab fa-html5"></i> HTML5</span>
+                        <span class="tech-pill"><i class="fab fa-css3-alt"></i> CSS3</span>
+                        <span class="tech-pill"><i class="fab fa-js"></i> JavaScript</span>
+                        <span class="tech-pill"><i class="fab fa-bootstrap"></i> Bootstrap</span>
+                        <span class="tech-pill"><i class="fas fa-search"></i> SEO Optimization</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://idealjanitorialservices.org/" target="_blank" class="project-link">
+                            <i class="fas fa-external-link-alt"></i> Live Website
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Orionex Portfolio -->
+            <div class="project-card">
+                <img src="orionex.png" alt="Orionex Agency" class="project-image">
+                <div class="project-content">
+                    <h3 class="project-title">Orionex Agency Portfolio</h3>
+                    <p class="project-description">A sophisticated portfolio website designed for Orionex, a creative digital agency. The site showcases the agency's work, services, and team with a modern, visually striking design that reflects their creative expertise and professional capabilities.</p>
+                    <div class="project-tech">
+                        <span class="tech-pill"><i class="fab fa-html5"></i> HTML5</span>
+                        <span class="tech-pill"><i class="fab fa-css3-alt"></i> CSS3</span>
+                        <span class="tech-pill"><i class="fab fa-js"></i> JavaScript</span>
+                        <span class="tech-pill"><i class="fas fa-magic"></i> GSAP Animations</span>
+                        <span class="tech-pill"><i class="fas fa-layer-group"></i> Parallax Effects</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://bsse23094.github.io/orionex/" target="_blank" class="project-link">
+                            <i class="fas fa-external-link-alt"></i> Live Demo
+                        </a>
+                        <a href="https://github.com/bsse23094/orionex" target="_blank" class="project-link">
+                            <i class="fab fa-github"></i> View Code
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Human Rights Organization -->
+            <div class="project-card">
+                <img src="hrs.png" alt="Human Rights Organization" class="project-image">
+                <div class="project-content">
+                    <h3 class="project-title">Human Rights Organization Website</h3>
+                    <p class="project-description">A fully functional website for a Human Rights Organization, designed to amplify their mission and facilitate community engagement. The platform includes content management and news publishing capabilities.</p>
+                    <div class="project-tech">
+                        <span class="tech-pill"><i class="fab fa-html5"></i> HTML5</span>
+                        <span class="tech-pill"><i class="fas fa-wind"></i> TailwindCSS</span>
+                        <span class="tech-pill"><i class="fas fa-database"></i> MySQL</span>
+                        <span class="tech-pill"><i class="fab fa-js"></i> JavaScript</span>
+                        <span class="tech-pill"><i class="fas fa-puzzle-piece"></i> Custom Plugins</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://humanrightsitu.site/" target="_blank" class="project-link">
+                            <i class="fas fa-external-link-alt"></i> Live Website
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Restaurant Management System -->
+            <div class="project-card">
+                <img src="skime.jpg" alt="Restaurant Management System" class="project-image">
+                <div class="project-content">
+                    <h3 class="project-title">Restaurant Management System</h3>
+                    <p class="project-description">A comprehensive restaurant management system with a reactive web design. The platform streamlines restaurant operations including table reservations, menu management, order processing, and customer relationship management.</p>
+                    <div class="project-tech">
+                        <span class="tech-pill"><i class="fab fa-html5"></i> HTML5</span>
+                        <span class="tech-pill"><i class="fab fa-css3-alt"></i> CSS3</span>
+                        <span class="tech-pill"><i class="fab fa-js"></i> JavaScript</span>
+                        <span class="tech-pill"><i class="fab fa-bootstrap"></i> Bootstrap</span>
+                        <span class="tech-pill"><i class="fas fa-save"></i> LocalStorage</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://bsse23094.github.io/RMS/" target="_blank" class="project-link">
+                            <i class="fas fa-external-link-alt"></i> Live Demo
+                        </a>
+                        <a href="https://github.com/bsse23094/RMS" target="_blank" class="project-link">
+                            <i class="fab fa-github"></i> View Code
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="batlogo updated.png" alt="Logo" class="footer-logo-img">
+                </div>
+                <p class="footer-text">Crafting digital experiences with passion and precision.</p>
+                <div class="footer-social-links">
+                    <a href="https://github.com/bsse23094" class="footer-social-link" target="_blank">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/ahmed-ayyan-8b25b72b0/" class="footer-social-link" target="_blank">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Ahmed Ayyan. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="index.html">Home</a>
+                    <a href="privacy.html">Privacy Policy</a>
+                    <a href="terms.html">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

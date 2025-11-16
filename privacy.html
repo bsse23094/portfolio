@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Privacy Policy - Dark Knight Portfolio</title>
+    <title>Privacy Policy | Ahmed Ayyan</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Elms+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <style>
         .policy-hero {
@@ -13,113 +15,146 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(135deg, #0a0a14 0%, #1a1a2e 100%);
+            background: #000000;
             position: relative;
             overflow: hidden;
-            animation: heroGlow 8s ease-in-out infinite alternate;
-            padding: 40px 0;
+            padding: 100px 0;
         }
 
-        @keyframes heroGlow {
-            0% {
-                box-shadow: inset 0 0 100px rgba(245, 166, 35, 0.1);
-            }
-            100% {
-                box-shadow: inset 0 0 150px rgba(245, 166, 35, 0.2);
-            }
+        .policy-hero {
+            min-height: 40vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #000000;
+            position: relative;
+            overflow: hidden;
+            padding: 100px 0;
         }
 
-        .policy-hero::before {
-            content: '';
+        .policy-hero h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            color: #ffffff;
+            text-align: center;
+            margin: 0;
+        }
+
+        .policy-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 80px 20px;
+            background: #000000;
+        }
+
+        .policy-section {
+            margin-bottom: 50px;
+        }
+
+        .policy-section h2 {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .policy-section h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
+            margin: 25px 0 15px;
+        }
+
+        .policy-section p, 
+        .policy-section li {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.8;
+            font-size: 1rem;
+            margin-bottom: 15px;
+        }
+
+        .policy-section ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .policy-section li {
+            padding-left: 30px;
+            position: relative;
+            margin-bottom: 12px;
+        }
+
+        .policy-section li:before {
+            content: "•";
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at 50% 50%, rgba(245, 166, 35, 0.15) 0%, transparent 70%);
-            pointer-events: none;
-            animation: pulseGlow 4s ease-in-out infinite;
+            left: 10px;
+            color: rgba(255, 255, 255, 0.4);
         }
 
-        @keyframes pulseGlow {
-            0%, 100% {
-                opacity: 0.5;
+        .policy-section strong {
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 600;
+        }
+
+        .last-updated {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+            margin: 40px 0;
+            padding: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        @media (max-width: 768px) {
+            .policy-hero h1 {
+                font-size: 3rem;
             }
-            50% {
-                opacity: 1;
+
+            .policy-content {
+                padding: 60px 20px;
+            }
+
+            .policy-section h2 {
+                font-size: 1.6rem;
+            }
+
+            .policy-section h3 {
+                font-size: 1.2rem;
             }
         }
 
         .back-button {
             position: fixed;
-            top: 18px;
-            left: 18px;
+            top: 20px;
+            left: 20px;
             z-index: 1000;
-            background: rgba(26, 26, 46, 0.95);
-            border: 2px solid var(--secondary-color);
-            padding: 10px 20px;
-            border-radius: 25px;
-            color: var(--secondary-color);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 12px 24px;
+            border-radius: 12px;
+            color: #ffffff;
             text-decoration: none;
-            font-family: 'Bebas Neue', sans-serif;
-            letter-spacing: 1px;
-            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             backdrop-filter: blur(10px);
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
             font-size: 0.9rem;
-            font-weight: 600;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            opacity: 1;
-            transform: translateX(0);
-        }
-
-        .back-button.hidden {
-            opacity: 0;
-            transform: translateX(-100px);
-            pointer-events: none;
+            font-weight: 500;
         }
 
         .back-button:hover {
-            background: var(--secondary-color);
-            color: var(--dark-color);
-            transform: translateX(-5px);
-            box-shadow: 0 6px 20px rgba(245, 166, 35, 0.4);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.1));
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
 
         .back-button:hover i {
             transform: translateX(-5px);
-        }
-
-        .policy-content {
-            background: rgba(26, 26, 46, 0.6);
-            border: 1px solid rgba(245, 166, 35, 0.2);
-            border-radius: var(--border-radius-lg);
-            padding: 40px;
-            margin: 40px 0;
-            backdrop-filter: blur(10px);
-            animation: fadeInUp 0.8s ease forwards;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .policy-content h2 {
-            color: var(--secondary-color);
-            font-size: 1.8rem;
-            margin-top: 30px;
-            margin-bottom: 15px;
-            font-family: 'Bebas Neue', sans-serif;
-            letter-spacing: 1px;
         }
 
         .policy-content h2:first-child {
@@ -205,15 +240,19 @@
     </style>
 </head>
 <body>
-    <div class="scroll-progress-bar"></div>
-    <div class="bat-signal"></div>
-    <div class="gotham-rain"></div>
+    <div class="particles-container"></div>
 
     <a href="index.html" class="back-button">
-        <i class="fas fa-arrow-left"></i>Return to Main
+        <i class="fas fa-arrow-left"></i>Return to Home
     </a>
 
     <section class="policy-hero">
+        <div class="container">
+            <h1>Privacy Policy</h1>
+        </div>
+    </section>
+
+    <div class="policy-content">
         <div class="container">
             <div class="section-header" style="text-align: center;">
                 <h1 class="section-title" style="font-size: 3rem; color: var(--secondary-color); letter-spacing: -1px;">Privacy Policy</h1>
@@ -348,23 +387,38 @@
             const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
             const scrolled = (window.scrollY / scrollHeight) * 100;
             scrollProgress.style.transform = `scaleX(${scrolled / 100})`;
-        });
+        <div class="last-updated">
+            <p>Last Updated: January 2025</p>
+        </div>
+    </div>
 
-        // Hide back button on scroll down
-        let lastScroll = 0;
-        const backButton = document.querySelector('.back-button');
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="BATLOGO.png" alt="Logo" class="footer-logo-img">
+                </div>
+                <p class="footer-text">Crafting digital experiences with passion and precision.</p>
+                <div class="footer-social-links">
+                    <a href="https://github.com/bsse23094" class="footer-social-link" target="_blank">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/ahmed-ayyan-8b25b72b0/" class="footer-social-link" target="_blank">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Ahmed Ayyan. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="index.html">Home</a>
+                    <a href="privacy.html">Privacy Policy</a>
+                    <a href="terms.html">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
 
-        window.addEventListener('scroll', () => {
-            const currentScroll = window.pageYOffset;
-            
-            if (currentScroll > lastScroll && currentScroll > 100) {
-                backButton.classList.add('hidden');
-            } else {
-                backButton.classList.remove('hidden');
-            }
-            
-            lastScroll = currentScroll;
-        }, { passive: true });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
