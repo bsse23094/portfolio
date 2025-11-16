@@ -2911,9 +2911,9 @@ nav {
     /* Navigation - Override hamburger menu, show compact navbar */
     .floating-nav {
         top: 0.5rem;
-        left: 0.5rem;
-        right: 0.5rem;
-        transform: none;
+        left: 50% !important;
+        right: auto !important;
+        transform: translateX(-50%) !important;
         width: calc(100% - 1rem);
         transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1) !important;
     }
@@ -2992,9 +2992,6 @@ nav {
 
     /* Contracted state on scroll - COMPACT PILL SHAPE CENTERED */
     .floating-nav.contracted {
-        left: 50% !important;
-        right: auto !important;
-        transform: translateX(-50%) !important;
         width: auto !important;
     }
 
@@ -3029,8 +3026,8 @@ nav {
     }
 
     .floating-nav.contracted .nav-menu {
-        gap: 0.15rem !important;
-        flex: 0 !important;
+        gap: 0.2rem !important;
+        flex: 0 1 auto !important;
     }
 
     /* Resume Section - Match 480px styling for consistency */
