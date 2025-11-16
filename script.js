@@ -106,7 +106,7 @@ function initTypingAnimation() {
     let roleIndex = 0;
     let charIndex = 0;
     let isDeleting = false;
-    let typingSpeed = 100;
+    let typingSpeed = 60; // Faster typing speed (was 100)
     
     function type() {
         const currentRole = roles[roleIndex];
@@ -114,20 +114,20 @@ function initTypingAnimation() {
         if (isDeleting) {
             typingElement.textContent = currentRole.substring(0, charIndex - 1);
             charIndex--;
-            typingSpeed = 50;
+            typingSpeed = 30; // Faster delete speed (was 50)
         } else {
             typingElement.textContent = currentRole.substring(0, charIndex + 1);
             charIndex++;
-            typingSpeed = 100;
+            typingSpeed = 60; // Faster typing speed (was 100)
         }
         
         if (!isDeleting && charIndex === currentRole.length) {
-            typingSpeed = 2000;
+            typingSpeed = 1200; // Shorter pause (was 2000)
             isDeleting = true;
         } else if (isDeleting && charIndex === 0) {
             isDeleting = false;
             roleIndex = (roleIndex + 1) % roles.length;
-            typingSpeed = 500;
+            typingSpeed = 300; // Faster transition (was 500)
         }
         
         setTimeout(type, typingSpeed);
