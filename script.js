@@ -65,6 +65,7 @@
     }
     initScrollProgress();
     initScrollAnimations();
+    initTaglineTyping();
 });
 
 // Scroll Reveal Animations
@@ -175,6 +176,35 @@ function initTypingAnimation() {
     
     type();
 }
+
+// Tagline typing animation on scroll
+function initTaglineTyping() {
+    const taglineSection = document.querySelector('.tagline-section');
+    const taglineTyping = document.querySelector('.tagline-typing');
+    if (!taglineSection || !taglineTyping) return;
+    const animatedText = " Powered by caffeine, chaos, and questionable life choices, yet everything still works somehow.";
+    let charIndex = 0;
+    let hasStarted = false;
+
+    function typeTagline() {
+        if (charIndex <= animatedText.length) {
+            taglineTyping.textContent = animatedText.substring(0, charIndex);
+            charIndex++;
+            setTimeout(typeTagline, 40);
+        }
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !hasStarted) {
+                hasStarted = true;
+                typeTagline();
+            }
+        });
+    }, { threshold: 0.5 });
+    observer.observe(taglineSection);
+}
+
 function initScrollProgress() {
     const progressBar = document.querySelector(".scroll-progress-bar");
     if (!progressBar) return;
