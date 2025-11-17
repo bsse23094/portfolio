@@ -64,7 +64,47 @@
         }, {threshold: 0.2}).observe(aboutSection);
     }
     initScrollProgress();
+    initScrollAnimations();
 });
+
+// Scroll Reveal Animations
+function initScrollAnimations() {
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -100px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('scroll-reveal-active');
+            }
+        });
+    }, observerOptions);
+
+    // Observe all elements with scroll reveal classes
+    document.querySelectorAll('.scroll-fade-up, .scroll-fade-in, .scroll-fade-left, .scroll-fade-right, .scroll-scale, .scroll-slide-left, .scroll-slide-right').forEach(el => {
+        observer.observe(el);
+    });
+
+    // Stagger animations for groups
+    document.querySelectorAll('.scroll-stagger-container').forEach(container => {
+        const children = container.querySelectorAll('.scroll-stagger-item');
+        children.forEach((child, index) => {
+            child.style.transitionDelay = `${index * 0.1}s`;
+        });
+    });
+
+    // Parallax effect for hero section
+    window.addEventListener('scroll', () => {
+        const scrolled = window.scrollY;
+        const parallaxElements = document.querySelectorAll('.parallax-element');
+        parallaxElements.forEach(el => {
+            const speed = el.dataset.speed || 0.5;
+            el.style.transform = `translateY(${scrolled * speed}px)`;
+        });
+    });
+}
 function createParticles() {
     const container = document.querySelector(".particles-container");
     if (!container) return;

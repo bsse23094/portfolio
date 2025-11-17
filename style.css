@@ -448,9 +448,9 @@ nav {
     left: -20%;
     width: 140%;
     height: 140%;
-    background: radial-gradient(ellipse 80% 120% at 50% 20%, rgba(50, 50, 50, 0.25) 0%, transparent 60%),
-                radial-gradient(ellipse 60% 100% at 20% 40%, rgba(45, 45, 45, 0.18) 0%, transparent 50%),
-                radial-gradient(ellipse 70% 110% at 80% 30%, rgba(48, 48, 48, 0.15) 0%, transparent 55%);
+    background: radial-gradient(ellipse 80% 120% at 50% 20%, rgba(50, 50, 50, 0.5) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 100% at 20% 40%, rgba(45, 45, 45, 0.4) 0%, transparent 50%),
+                radial-gradient(ellipse 70% 110% at 80% 30%, rgba(48, 48, 48, 0.35) 0%, transparent 55%);
     animation: gradientMove 25s ease-in-out infinite;
     z-index: 0;
 }
@@ -958,10 +958,10 @@ nav {
     height: 700px;
     background: radial-gradient(
         circle,
-        rgba(30, 30, 30, 0.3) 0%,
-        rgba(20, 20, 20, 0.2) 25%,
-        rgba(15, 15, 15, 0.15) 50%,
-        rgba(10, 10, 10, 0.1) 70%,
+        rgba(40, 40, 40, 0.6) 0%,
+        rgba(30, 30, 30, 0.45) 25%,
+        rgba(25, 25, 25, 0.35) 50%,
+        rgba(15, 15, 15, 0.25) 70%,
         transparent 85%
     );
     animation: pulse-gradient 8s ease-in-out infinite;
@@ -972,11 +972,11 @@ nav {
 @keyframes pulse-gradient {
     0%, 100% {
         transform: translate(-50%, -50%) scale(1);
-        opacity: 0.5;
+        opacity: 0.8;
     }
     50% {
         transform: translate(-50%, -50%) scale(1.15);
-        opacity: 0.7;
+        opacity: 1;
     }
 }
 
@@ -1467,7 +1467,7 @@ nav {
 .resume-card-container {
     max-width: 1400px;
     margin: 0 auto;
-    background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 50%, #1a1a1a 100%);
+    background: linear-gradient(135deg, #2d2d2d 0%, #0d0d0d 50%, #2d2d2d 100%);
     border-radius: 30px;
     padding: 0;
     display: grid;
@@ -1915,7 +1915,7 @@ nav {
 }
 
 .featured-project-card {
-    background: linear-gradient(135deg, #0a0a0a 0%, #000000 50%, #0a0a0a 100%);
+    background: linear-gradient(135deg, #1a1a1a 0%, #000000 50%, #1a1a1a 100%);
     border: 1px solid rgba(255, 255, 255, 0.05);
     border-radius: 20px;
     overflow: hidden;
@@ -1934,9 +1934,9 @@ nav {
     bottom: 0;
     background: linear-gradient(
         135deg,
-        rgba(255, 255, 255, 0.03) 0%,
+        rgba(255, 255, 255, 0.08) 0%,
         rgba(255, 255, 255, 0) 50%,
-        rgba(255, 255, 255, 0.03) 100%
+        rgba(255, 255, 255, 0.08) 100%
     );
     opacity: 0;
     transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
@@ -2002,7 +2002,7 @@ nav {
     position: absolute;
     top: 20px;
     right: 20px;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05));
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.12));
     backdrop-filter: blur(10px);
     color: #ffffff;
     padding: 8px 18px;
@@ -2121,12 +2121,12 @@ nav {
 }
 
 .btn-demo {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.1));
     color: #ffffff;
 }
 
 .btn-demo:hover {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.1));
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.18));
     border-color: rgba(255, 255, 255, 0.2);
     transform: translateY(-2px);
 }
@@ -2149,7 +2149,7 @@ nav {
 }
 
 .btn-view-all {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.1));
     color: #ffffff;
     padding: 16px 40px;
     border-radius: 12px;
@@ -2164,7 +2164,7 @@ nav {
 }
 
 .btn-view-all:hover {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.1));
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.18));
     border-color: rgba(255, 255, 255, 0.2);
     transform: translateY(-3px);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
@@ -2212,7 +2212,7 @@ nav {
 }
 
 .contact-card {
-    background: linear-gradient(135deg, #0a0a0a 0%, #000000 50%, #0a0a0a 100%);
+    background: linear-gradient(135deg, #1a1a1a 0%, #000000 50%, #1a1a1a 100%);
     border: 1px solid rgba(255, 255, 255, 0.05);
     border-radius: 20px;
     padding: 50px 35px;
@@ -2319,7 +2319,7 @@ nav {
 .social-link-large {
     width: 90px;
     height: 90px;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.08));
     border: 1px solid rgba(255, 255, 255, 0.05);
     border-radius: 15px;
     display: flex;
@@ -2332,7 +2332,7 @@ nav {
 }
 
 .social-link-large:hover {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.06));
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.12));
     border-color: rgba(255, 255, 255, 0.15);
     color: #ffffff;
     transform: translateY(-5px);
@@ -3538,3 +3538,99 @@ nav {
         padding: 0 15px;
     }
 }
+
+/* ========================================
+   SCROLL REVEAL ANIMATIONS
+   ======================================== */
+
+/* Base states - elements start invisible */
+.scroll-fade-up,
+.scroll-fade-in,
+.scroll-fade-left,
+.scroll-fade-right,
+.scroll-scale,
+.scroll-slide-left,
+.scroll-slide-right {
+    opacity: 0;
+    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Fade Up - Most common elegant animation */
+.scroll-fade-up {
+    transform: translateY(40px);
+}
+
+.scroll-fade-up.scroll-reveal-active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Fade In - Simple opacity */
+.scroll-fade-in {
+    opacity: 0;
+}
+
+.scroll-fade-in.scroll-reveal-active {
+    opacity: 1;
+}
+
+/* Fade Left */
+.scroll-fade-left {
+    transform: translateX(-40px);
+}
+
+.scroll-fade-left.scroll-reveal-active {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Fade Right */
+.scroll-fade-right {
+    transform: translateX(40px);
+}
+
+.scroll-fade-right.scroll-reveal-active {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Scale - Zoom in effect */
+.scroll-scale {
+    transform: scale(0.9);
+}
+
+.scroll-scale.scroll-reveal-active {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Slide animations - More dramatic */
+.scroll-slide-left {
+    transform: translateX(-100px);
+}
+
+.scroll-slide-left.scroll-reveal-active {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.scroll-slide-right {
+    transform: translateX(100px);
+}
+
+.scroll-slide-right.scroll-reveal-active {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Stagger container for sequential animations */
+.scroll-stagger-item {
+    transition-delay: 0s !important;
+}
+
+/* Parallax elements */
+.parallax-element {
+    transition: transform 0.3s ease-out;
+    will-change: transform;
+}
+
