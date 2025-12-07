@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy | Ahmed Ayyan</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Elms+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .policy-hero {
+            min-height: 40vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #000000;
+            position: relative;
+            overflow: hidden;
+            padding: 100px 0;
+        }
+
+        .policy-hero {
+            min-height: 40vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #000000;
+            position: relative;
+            overflow: hidden;
+            padding: 100px 0;
+        }
+
+        .policy-hero h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            color: #ffffff;
+            text-align: center;
+            margin: 0;
+        }
+
+        .policy-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 80px 20px;
+            background: #000000;
+        }
+
+        .policy-section {
+            margin-bottom: 50px;
+        }
+
+        .policy-section h2 {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .policy-section h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
+            margin: 25px 0 15px;
+        }
+
+        .policy-section p, 
+        .policy-section li {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.8;
+            font-size: 1rem;
+            margin-bottom: 15px;
+        }
+
+        .policy-section ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .policy-section li {
+            padding-left: 30px;
+            position: relative;
+            margin-bottom: 12px;
+        }
+
+        .policy-section li:before {
+            content: "•";
+            position: absolute;
+            left: 10px;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .policy-section strong {
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 600;
+        }
+
+        .last-updated {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+            margin: 40px 0;
+            padding: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        @media (max-width: 768px) {
+            .policy-hero h1 {
+                font-size: 3rem;
+            }
+
+            .policy-content {
+                padding: 60px 20px;
+            }
+
+            .policy-section h2 {
+                font-size: 1.6rem;
+            }
+
+            .policy-section h3 {
+                font-size: 1.2rem;
+            }
+        }
+
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 12px 24px;
+            border-radius: 12px;
+            color: #ffffff;
+            text-decoration: none;
+            letter-spacing: 0.5px;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .back-button:hover {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.1));
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .back-button:hover i {
+            transform: translateX(-5px);
+        }
+
+        .policy-content h2:first-child {
+            margin-top: 0;
+        }
+
+        .policy-content h3 {
+            color: var(--secondary-color);
+            font-size: 1.3rem;
+            margin-top: 20px;
+            margin-bottom: 12px;
+            font-family: 'Bebas Neue', sans-serif;
+        }
+
+        .policy-content p {
+            color: var(--light-color);
+            line-height: 1.8;
+            margin-bottom: 16px;
+            font-size: 0.95rem;
+        }
+
+        .policy-content ul {
+            color: var(--light-color);
+            line-height: 1.8;
+            margin-bottom: 16px;
+            margin-left: 20px;
+        }
+
+        .policy-content ul li {
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        .policy-content strong {
+            color: var(--secondary-color);
+            font-weight: 600;
+        }
+
+        .last-updated {
+            color: var(--gray-color);
+            font-style: italic;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+
+        .scroll-progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--secondary-color), var(--accent-color));
+            z-index: 9999;
+            transform-origin: left;
+            transform: scaleX(0);
+            transition: transform 0.1s ease;
+        }
+
+        .floating-particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--secondary-color);
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0.6;
+            animation: float 15s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) translateX(0);
+            }
+            25% {
+                transform: translateY(-30px) translateX(20px);
+            }
+            50% {
+                transform: translateY(-60px) translateX(-20px);
+            }
+            75% {
+                transform: translateY(-30px) translateX(10px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles-container"></div>
+
+    <a href="index.html" class="back-button">
+        <i class="fas fa-arrow-left"></i>Return to Home
+    </a>
+
+    <section class="policy-hero">
+        <div class="container">
+            <h1>Privacy Policy</h1>
+        </div>
+    </section>
+
+    <div class="policy-content">
+        <div class="container">
+            <div class="section-header" style="text-align: center;">
+                <h1 class="section-title" style="font-size: 3rem; color: var(--secondary-color); letter-spacing: -1px;">Privacy Policy</h1>
+                <div class="section-divider" style="margin: 15px auto;"></div>
+                <p class="section-subtitle" style="font-size: 0.95rem;">Your Data Security in the Digital Shadows</p>
+            </div>
+        </div>
+        
+        <!-- Floating particles -->
+        <div class="floating-particle" style="top: 10%; left: 15%; animation-delay: 0s;"></div>
+        <div class="floating-particle" style="top: 60%; left: 80%; animation-delay: 2s;"></div>
+        <div class="floating-particle" style="top: 30%; left: 70%; animation-delay: 4s;"></div>
+        <div class="floating-particle" style="top: 80%; left: 20%; animation-delay: 6s;"></div>
+    </section>
+
+    <section class="section" style="padding: 40px 0 70px;">
+        <div class="container">
+            <div class="policy-content">
+                <p class="last-updated">Last Updated: November 6, 2025</p>
+
+                <h2>Introduction</h2>
+                <p>Welcome to the Dark Knight Portfolio. This Privacy Policy outlines how we collect, use, and protect your information when you visit our website. Your privacy is of paramount importance to us, and we are committed to safeguarding your personal data.</p>
+
+                <h2>Information We Collect</h2>
+                <h3>Personal Information</h3>
+                <p>When you contact us through our website, we may collect the following personal information:</p>
+                <ul>
+                    <li>Name</li>
+                    <li>Email address</li>
+                    <li>Phone number (if provided)</li>
+                    <li>Message content</li>
+                    <li>Any other information you choose to provide</li>
+                </ul>
+
+                <h3>Automated Information</h3>
+                <p>We automatically collect certain information about your device when you visit our website, including:</p>
+                <ul>
+                    <li>IP address</li>
+                    <li>Browser type and version</li>
+                    <li>Operating system</li>
+                    <li>Referring website</li>
+                    <li>Pages viewed and time spent on pages</li>
+                    <li>Date and time of visit</li>
+                </ul>
+
+                <h2>How We Use Your Information</h2>
+                <p>We use the information we collect for the following purposes:</p>
+                <ul>
+                    <li><strong>Communication:</strong> To respond to your inquiries and communicate with you about potential opportunities</li>
+                    <li><strong>Website Improvement:</strong> To analyze website usage and improve our content and user experience</li>
+                    <li><strong>Security:</strong> To protect against fraudulent or unauthorized activity</li>
+                    <li><strong>Legal Compliance:</strong> To comply with applicable laws and regulations</li>
+                </ul>
+
+                <h2>Data Storage and Security</h2>
+                <p>We implement appropriate technical and organizational measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction. However, please note that no method of transmission over the internet is 100% secure.</p>
+                <p>Your data is stored securely and is only accessible by authorized personnel who need it to perform their duties.</p>
+
+                <h2>Cookies and Tracking Technologies</h2>
+                <p>Our website may use cookies and similar tracking technologies to enhance your browsing experience. You can control cookie settings through your browser preferences. Please note that disabling cookies may affect the functionality of certain features on our website.</p>
+
+                <h2>Third-Party Services</h2>
+                <p>We may use third-party services for analytics, hosting, or other purposes. These third parties may have access to your information only to perform specific tasks on our behalf and are obligated not to disclose or use it for any other purpose.</p>
+                <p>Third-party services we may use include:</p>
+                <ul>
+                    <li>Google Analytics for website analytics</li>
+                    <li>Web hosting providers</li>
+                    <li>Email service providers</li>
+                </ul>
+
+                <h2>Your Rights</h2>
+                <p>You have the following rights regarding your personal information:</p>
+                <ul>
+                    <li><strong>Access:</strong> Request access to the personal data we hold about you</li>
+                    <li><strong>Correction:</strong> Request correction of any inaccurate or incomplete data</li>
+                    <li><strong>Deletion:</strong> Request deletion of your personal data</li>
+                    <li><strong>Objection:</strong> Object to the processing of your personal data</li>
+                    <li><strong>Portability:</strong> Request transfer of your data to another service provider</li>
+                </ul>
+
+                <h2>Children's Privacy</h2>
+                <p>Our website is not intended for children under the age of 13. We do not knowingly collect personal information from children. If you believe we have collected information from a child, please contact us immediately.</p>
+
+                <h2>Changes to This Privacy Policy</h2>
+                <p>We may update this Privacy Policy from time to time. Any changes will be posted on this page with an updated revision date. We encourage you to review this Privacy Policy periodically.</p>
+
+                <h2>Contact Information</h2>
+                <p>If you have any questions about this Privacy Policy or our data practices, please contact us through the contact form on our website or at the email address provided in the footer.</p>
+
+                <h2>Consent</h2>
+                <p>By using our website, you consent to our Privacy Policy and agree to its terms.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="gotham-footer">
+        <div class="gotham-skyline"></div>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>The Dark Knight</h3>
+                    <p>Protecting Gotham's digital realm, one line of code at a time.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html#about">Origins</a></li>
+                        <li><a href="index.html#experience">Chronicles</a></li>
+                        <li><a href="index.html#portfolio">Case Files</a></li>
+                        <li><a href="index.html#contact">Signal Me</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Legal</h3>
+                    <ul class="footer-links">
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="terms.html">Terms & Conditions</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Dark Knight Portfolio. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Scroll progress bar
+        window.addEventListener('scroll', () => {
+            const scrollProgress = document.querySelector('.scroll-progress-bar');
+            const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrolled = (window.scrollY / scrollHeight) * 100;
+            scrollProgress.style.transform = `scaleX(${scrolled / 100})`;
+        <div class="last-updated">
+            <p>Last Updated: January 2025</p>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="BATLOGO.png" alt="Logo" class="footer-logo-img">
+                </div>
+                <p class="footer-text">Crafting digital experiences with passion and precision.</p>
+                <div class="footer-social-links">
+                    <a href="https://github.com/bsse23094" class="footer-social-link" target="_blank">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/ahmed-ayyan-8b25b72b0/" class="footer-social-link" target="_blank">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Ahmed Ayyan. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="index.html">Home</a>
+                    <a href="privacy.html">Privacy Policy</a>
+                    <a href="terms.html">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

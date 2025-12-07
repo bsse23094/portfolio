@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms of Service | Ahmed Ayyan</title>
+    <link rel="icon" type="image/png" href="batlogo updated.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Elms+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Elms Sans', sans-serif;
+            background: #000000;
+            color: #ffffff;
+            line-height: 1.6;
+        }
+
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 12px 24px;
+            border-radius: 12px;
+            color: #ffffff;
+            text-decoration: none;
+            letter-spacing: 0.5px;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .back-button:hover {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.1));
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .back-button i {
+            transition: transform 0.3s ease;
+        }
+
+        .back-button:hover i {
+            transform: translateX(-5px);
+        }
+
+        .terms-hero {
+            min-height: 40vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #000000;
+            padding: 150px 20px 100px;
+        }
+
+        .terms-hero h1 {
+            font-size: 4.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            text-align: center;
+            letter-spacing: -1px;
+        }
+
+        .terms-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 60px 20px 100px;
+        }
+
+        .terms-section {
+            margin-bottom: 60px;
+        }
+
+        .terms-section h2 {
+            font-size: 2.2rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .terms-section h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
+            margin: 30px 0 15px;
+        }
+
+        .terms-section p {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.9;
+            font-size: 1.05rem;
+            margin-bottom: 18px;
+        }
+
+        .terms-section ul {
+            list-style: none;
+            padding-left: 0;
+            margin-bottom: 20px;
+        }
+
+        .terms-section li {
+            padding-left: 30px;
+            position: relative;
+            margin-bottom: 14px;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.9;
+            font-size: 1.05rem;
+        }
+
+        .terms-section li:before {
+            content: "•";
+            position: absolute;
+            left: 10px;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 1.2rem;
+        }
+
+        .terms-section strong {
+            color: rgba(255, 255, 255, 0.95);
+            font-weight: 600;
+        }
+
+        .last-updated {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.95rem;
+            margin: 60px 0 0;
+            padding: 30px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        @media (max-width: 768px) {
+            .terms-hero {
+                padding: 120px 20px 80px;
+            }
+
+            .terms-hero h1 {
+                font-size: 3rem;
+            }
+
+            .terms-content {
+                padding: 40px 20px 80px;
+            }
+
+            .terms-section h2 {
+                font-size: 1.8rem;
+            }
+
+            .terms-section h3 {
+                font-size: 1.3rem;
+            }
+
+            .terms-section p,
+            .terms-section li {
+                font-size: 1rem;
+            }
+
+            .back-button {
+                top: 15px;
+                left: 15px;
+                padding: 10px 20px;
+                font-size: 0.85rem;
+            }
+        }
+
+        @media (max-width: 430px) {
+            .terms-hero {
+                min-height: 30vh;
+                padding: 100px 15px 60px;
+            }
+
+            .terms-hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .terms-content {
+                padding: 30px 15px 60px;
+            }
+
+            .terms-section {
+                margin-bottom: 40px;
+            }
+
+            .terms-section h2 {
+                font-size: 1.5rem;
+                margin-bottom: 20px;
+                padding-bottom: 12px;
+            }
+
+            .terms-section h3 {
+                font-size: 1.2rem;
+                margin: 25px 0 12px;
+            }
+
+            .terms-section p,
+            .terms-section li {
+                font-size: 0.9rem;
+                line-height: 1.7;
+                margin-bottom: 15px;
+            }
+
+            .terms-section ul {
+                margin-bottom: 15px;
+            }
+
+            .terms-section li {
+                padding-left: 25px;
+                margin-bottom: 12px;
+            }
+
+            .terms-section li:before {
+                left: 8px;
+                font-size: 1rem;
+            }
+
+            .last-updated {
+                font-size: 0.85rem;
+                margin: 40px 0 0;
+                padding: 25px 0;
+            }
+
+            .back-button {
+                top: 12px;
+                left: 12px;
+                padding: 8px 16px;
+                font-size: 0.8rem;
+                gap: 8px;
+            }
+
+            .back-button i {
+                font-size: 0.8rem;
+            }
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles-container"></div>
+
+    <a href="index.html" class="back-button">
+        <i class="fas fa-arrow-left"></i>Return to Home
+    </a>
+
+    <section class="terms-hero">
+        <h1>Terms of Service</h1>
+    </section>
+
+    <div class="terms-content">
+        <div class="terms-section">
+            <p class="last-updated" style="border: none; margin: 0 0 40px; padding: 0;">
+                <strong>Last Updated:</strong> January 2025
+            </p>
+        </div>
+
+        <div class="terms-section">
+            <h2>1. Acceptance of Terms</h2>
+            <p>By accessing and using this portfolio website, you accept and agree to be bound by the terms and provision of this agreement. If you do not agree to these Terms of Service, please do not use this website.</p>
+        </div>
+
+        <div class="terms-section">
+            <h2>2. Use License</h2>
+            <p>Permission is granted to temporarily access the materials (information or software) on my website for personal, non-commercial transitory viewing only. This is the grant of a license, not a transfer of title, and under this license you may not:</p>
+            <ul>
+                <li>Modify or copy the materials</li>
+                <li>Use the materials for any commercial purpose or for any public display (commercial or non-commercial)</li>
+                <li>Attempt to decompile or reverse engineer any software contained on the website</li>
+                <li>Remove any copyright or other proprietary notations from the materials</li>
+                <li>Transfer the materials to another person or "mirror" the materials on any other server</li>
+            </ul>
+            <p>This license shall automatically terminate if you violate any of these restrictions and may be terminated by me at any time.</p>
+        </div>
+
+        <div class="terms-section">
+            <h2>3. Disclaimer</h2>
+            <p>The materials on my website are provided on an 'as is' basis. I make no warranties, expressed or implied, and hereby disclaim and negate all other warranties including, without limitation, implied warranties or conditions of merchantability, fitness for a particular purpose, or non-infringement of intellectual property or other violation of rights.</p>
+            <p>Further, I do not warrant or make any representations concerning the accuracy, likely results, or reliability of the use of the materials on my website or otherwise relating to such materials or on any sites linked to this site.</p>
+        </div>
+
+        <div class="terms-section">
+            <h2>4. Limitations</h2>
+            <p>In no event shall I or my suppliers be liable for any damages (including, without limitation, damages for loss of data or profit, or due to business interruption) arising out of the use or inability to use the materials on my website, even if I or my authorized representative has been notified orally or in writing of the possibility of such damage.</p>
+        </div>
+
+        <div class="terms-section">
+            <h2>5. Accuracy of Materials</h2>
+            <p>The materials appearing on my website could include technical, typographical, or photographic errors. I do not warrant that any of the materials on my website are accurate, complete, or current. I may make changes to the materials contained on my website at any time without notice.</p>
+        </div>
+
+        <div class="terms-section">
+            <h2>6. Links</h2>
+            <p>I have not reviewed all of the sites linked to my website and am not responsible for the contents of any such linked site. The inclusion of any link does not imply endorsement by me of the site. Use of any such linked website is at the user's own risk.</p>
+        </div>
+
+        <div class="terms-section">
+            <h2>7. Intellectual Property</h2>
+            <p>All content on this website, including but not limited to text, graphics, logos, images, and software, is my property or the property of my content suppliers and is protected by international copyright laws. The compilation of all content on this site is my exclusive property and is protected by international copyright laws.</p>
+        </div>
+
+        <div class="terms-section">
+            <h2>8. User Conduct</h2>
+            <p>You agree to use this website only for lawful purposes and in a way that does not infringe the rights of, restrict, or inhibit anyone else's use and enjoyment of the website. Prohibited behavior includes:</p>
+            <ul>
+                <li>Harassing or causing distress or inconvenience to any person</li>
+                <li>Transmitting obscene or offensive content</li>
+                <li>Disrupting the normal flow of dialogue within the website</li>
+                <li>Attempting to gain unauthorized access to the website or any networks connected to the website</li>
+            </ul>
+        </div>
+
+        <div class="terms-section">
+            <h2>9. Privacy</h2>
+            <p>Your use of this website is also governed by my Privacy Policy. Please review the Privacy Policy, which also governs the site and informs users of my data collection practices.</p>
+        </div>
+
+        <div class="terms-section">
+            <h2>10. Modifications</h2>
+            <p>I may revise these Terms of Service for my website at any time without notice. By using this website, you are agreeing to be bound by the then current version of these Terms of Service.</p>
+        </div>
+
+        <div class="terms-section">
+            <h2>11. Service Inquiries</h2>
+            <p>If you are contacting me for professional services, the following terms apply:</p>
+            <ul>
+                <li>All service inquiries are subject to availability</li>
+                <li>Quotations are valid for 30 days unless otherwise stated</li>
+                <li>Project scope, timeline, and pricing will be outlined in a separate agreement</li>
+                <li>Payment terms will be agreed upon before project commencement</li>
+            </ul>
+        </div>
+
+        <div class="terms-section">
+            <h2>12. Governing Law</h2>
+            <p>These terms and conditions are governed by and construed in accordance with the laws of Pakistan, and you irrevocably submit to the exclusive jurisdiction of the courts in that location.</p>
+        </div>
+
+        <div class="terms-section">
+            <h2>13. Contact Information</h2>
+            <p>If you have any questions about these Terms of Service, please contact me:</p>
+            <ul>
+                <li><strong>Email:</strong> ahmedayyan555@gmail.com</li>
+                <li><strong>Phone:</strong> +92 300 9586306</li>
+                <li><strong>Location:</strong> Lahore, Pakistan</li>
+            </ul>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="batlogo updated.png" alt="Logo" class="footer-logo-img">
+                </div>
+                <p class="footer-text">Crafting digital experiences with passion and precision.</p>
+                <div class="footer-social-links">
+                    <a href="https://github.com/bsse23094" class="footer-social-link" target="_blank">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/ahmed-ayyan-8b25b72b0/" class="footer-social-link" target="_blank">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Ahmed Ayyan. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="index.html">Home</a>
+                    <a href="privacy-new.html">Privacy Policy</a>
+                    <a href="terms-new.html">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
