@@ -1,6 +1,6 @@
 import logo from '../assets/images/brand/BATLOGO.png';
 import profileImage from '../assets/images/profile/ahmed_batman.jpg';
-import resumePdf from '../assets/documents/AHMED AYYAN CV_latest.pdf';
+import resumePdf from '../assets/documents/cv_ahmed.pdf';
 import codeGenImage from '../assets/images/projects/Codegen.png';
 import studyBuddyImage from '../assets/images/projects/studybuddy.png';
 import cinetexImage from '../assets/images/projects/cinetex.png';

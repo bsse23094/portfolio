@@ -374,7 +374,7 @@ function Resume() {
                 {resume.softSkills.map((skill) => <span className="resume-soft-skill-tag" key={skill}>{skill}</span>)}
               </div>
             </div>
-            <a href={assets.resumePdf} download="AHMED AYYAN CV_latest.pdf" className="resume-download-btn">
+            <a href={assets.resumePdf} download="Ahmed-Ayyan-CV.pdf" className="resume-download-btn">
               <i className="fas fa-download" aria-hidden="true" /> Download Resume
             </a>
           </aside>
