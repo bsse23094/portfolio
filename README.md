@@ -1,159 +1,43 @@
-<!-- PROJECT LOGO -->
-<p align="center">
-  <img src="BATLOGO UPDATED.png" alt="Logo" width="120" height="120">
-</p>
+# Ahmed Ayyan — Portfolio
 
-<h1 align="center">🚀 Modern Developer Portfolio</h1>
+Personal portfolio for Ahmed Ayyan Mukhtar, a Software Engineering student and AI Engineer Intern. The site presents practical AI systems, full-stack work, and selected client projects at [ahmedayyan.codes](https://ahmedayyan.codes).
 
-<p align="center">
-  <b>A sleek, minimal, dark-themed portfolio for developers & tech creatives</b><br>
-  <i>Clean typography • Strong hierarchy • Subtle motion • Responsive design</i>
-</p>
+## Highlights
 
----
+- React + Vite single codebase with static entry points for home, projects, privacy, and terms pages.
+- Editorial, brutalist visual language with GSAP/ScrollTrigger interactions and Lenis smooth scrolling.
+- AI project showcase for MediSense AI, A-EYE J.A.R.V.I.S., SentinelAI, Reply Mirror, and CI/CD failure prediction.
+- Portfolio and résumé content are data-driven rather than repeated across page markup.
+- Responsive design and reduced-motion support.
 
-<p align="center">
-  <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white">
-  <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white">
-  <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black">
-  <img src="https://img.shields.io/badge/Responsive-Yes-44cc11?style=for-the-badge">
-  <img src="https://img.shields.io/badge/License-MIT-blue?style=for-the-badge">
-</p>
+## Tech stack
 
----
+- React 19, Vite, GSAP, ScrollTrigger, Lenis
+- CSS with a custom visual system and Font Awesome icons
+- GitHub Pages on the `gh-pages` branch with the custom domain `ahmedayyan.codes`
 
-## ✨ Features
-
-- 🌑 **Modern dark UI** with soft gradients and subtle depth
-- 📱 **Responsive layout** for desktop, tablet, and mobile
-- 🧩 **Reusable section patterns**: hero, about, experience, skills, projects, contact
-- 🎨 **CSS variables** for quick theme customization
-- 🌀 **Hover & entrance animations** for a polished feel
-- 🗂️ **Grid-based layouts** for cards, stats, projects, contact
-- 📝 **ATS-friendly content structure** for resume pairing
-
----
-
-## 🏗 Tech Stack
-
-- **HTML5** for structure  
-- **CSS3** (`style-modern.css`) for layout, theme, animations, responsiveness  
-- Optional vanilla **JavaScript** for scroll animations, navigation, or form handling
-
----
-
-## 📂 File Structure
+## Run locally
 
 ```bash
-project-root/
-├─ index.html
-├─ style-modern.css
-├─ /assets
-│  ├─ images/       # project screenshots, avatar, logo
-│  └─ icons/        # optional SVG icons
-└─ README.md
+npm install
+npm run dev
 ```
 
-- `index.html` – main portfolio page using the classes defined in style-modern.css
-- `style-modern.css` – all core styling, layout, theme variables, and media queries
+Use `npm run build` to create the production-ready `dist/` folder, or `npm run preview` to inspect that build locally.
 
----
-
-## 🚀 Getting Started
+## Deploy
 
 ```bash
-git clone <your-repo-url>
-cd <your-repo-name>
+npm run deploy
 ```
 
-Link the stylesheet in your `index.html`:
-```html
-<link rel="stylesheet" href="style-modern.css">
-```
+The deploy script builds the site and publishes `dist/` to the `gh-pages` branch. `public/CNAME` is copied into the build so GitHub Pages retains `ahmedayyan.codes`; `public/.nojekyll` disables Jekyll processing for the generated site.
 
-Open the page in a browser:
-- Double-click `index.html`, or
-- Use a simple dev server:
-  ```bash
-  npx serve .
-  # or
-  python -m http.server 8000
-  ```
+## Project structure
 
-Replace placeholder content (name, summary, experience, project details, contact info) with your own.
-
----
-
-## 🎨 Theme & Customization
-
-All primary styling is controlled by CSS variables in the `:root` section of `style-modern.css`:
-
-```css
-:root {
-    --bg-primary: #0a0a0a;
-    --bg-secondary: #141414;
-    --bg-card: #1a1a1a;
-    --text-primary: #ffffff;
-    --text-secondary: #a1a1a1;
-    --text-muted: #666666;
-    --border-color: #2a2a2a;
-    --hover-bg: #232323;
-    --border-radius: 12px;
-    --border-radius-lg: 16px;
-    --container-width: 1200px;
-}
-```
-
-**Quickly customize:**
-- 🎨 Color palette: swap `--bg-*` and `--text-*` for dark/light themes
-- 🟦 Accent: tweak `--hover-bg` and border colors
-- 🟪 Card feel: adjust border radius for sharper/softer corners
-- 🟫 Depth: modify shadow variables for stronger/softer depth
-- 📏 Layout: change `--container-width` for max content width
-
----
-
-## 🧱 Main Components & Sections
-
-Your HTML can map to these classes:
-
-1. **Header / Navigation**: `.gotham-header`, `.nav-link`
-2. **Hero Section**: `.hero-section`, `.hero-content`, `.hero-title`, `.hero-subtitle`, `.hero-stats`
-3. **About Section**: `.about-content`, `.about-card`, `.about-badge`
-4. **Experience / Timeline**: `.timeline`, `.timeline-item`, `.timeline-title`, `.timeline-subtitle`
-5. **Skills**: `.skills-container`, `.skill-category`, `.skill-items`, `.skill-bar`, `.skill-progress`
-6. **Featured Projects**: `.featured-projects-grid`, `.featured-project-card`, `.featured-project-image`, `.tech-pill`
-7. **Contact Section**: `.contact-grid`, `.contact-card`, `.contact-icon`, `.contact-form`
-8. **Footer**: `.gotham-footer`, `.footer-content`, `.footer-links`, `.footer-bottom`
-
----
-
-## 📱 Responsiveness
-
-Key breakpoints:
-- **≤ 1024px**: Hero/layout scale down, about switches to single column
-- **≤ 768px**: Compact paddings/fonts, nav can be hidden or mobile
-- **≤ 480px**: Typography scales, card paddings reduced
-
-Flexible layout lets you wire in a mobile menu or JS navigation easily.
-
----
-
-## 📝 Recommended Usage
-
-- Pair with a matching PDF resume for job applications
-- Use Featured Projects to highlight 3–6 strong, production-quality projects
-- Keep text concise and impact-focused for minimalist style
-
----
-
-## 📄 License
-
-You are free to use, modify, and adapt this layout for personal and professional portfolios.
-If you share it publicly, a small credit link back to your portfolio or repository is appreciated but not required.
-
----
-
-<p align="center">
-  <i>Made for developers</i>
-</p>
+- `src/App.jsx` — shared layout and page components
+- `src/data/portfolio.js` — projects, résumé, social links, and page content
+- `src/hooks/useMotion.js` — Lenis and GSAP/ScrollTrigger setup
+- `src/app.css` — responsive visual system
+- `src/assets/` — organized image and document assets
+- `public/` — static deployment files, including the custom-domain configuration
