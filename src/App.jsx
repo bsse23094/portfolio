@@ -1,291 +1,644 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from "react";
 import {
-  aiProjects,
-  assets,
-  featuredProjects,
-  legalPages,
-  navigation,
-  projects,
-  resume,
-  socialLinks,
-  technologies,
-} from './data/portfolio';
-import { usePortfolioMotion, useSmoothScroll } from './hooks/useMotion';
+  profile,
+  experience,
+  selectedProjects,
+  capabilities,
+  archiveProjects,
+} from "./data/portfolio";
+import SystemWorkbench, {
+  ArchitectureButton,
+} from "./components/SystemWorkbench";
+import TechRail from "./components/TechRail";
+import DesignAccent from "./components/DesignAccent";
+import ProjectSignalIndex from "./components/ProjectSignalIndex";
+import { usePortfolioMotion } from "./hooks/useMotion";
 
-const roles = ['AI Engineer', 'RAG Systems Builder', 'Full Stack Developer', 'Frontend Engineer', 'Creative Developer'];
-const taglineLead = 'I juggle frontends and backends like a sleep-deprived circus act, crafting interfaces that flirt with users while my APIs quietly keep the universe from collapsing.';
-const taglineAccent = 'Powered by caffeine, chaos, and questionable life choices—yet everything still works somehow.';
-
-function getPageKind() {
-  const path = window.location.pathname.toLowerCase();
-  if (path.endsWith('/projects') || path.endsWith('/projects.html')) return 'projects';
-  if (path.endsWith('/privacy') || path.endsWith('/privacy.html')) return 'privacy';
-  if (path.endsWith('/terms') || path.endsWith('/terms.html')) return 'terms';
-  return path.endsWith('/') || path.endsWith('/index.html') ? 'home' : 'not-found';
-}
-
-function useScrollProgress() {
-  const [progress, setProgress] = useState(0);
-
-  useEffect(() => {
-    const updateProgress = () => {
-      const maximum = document.documentElement.scrollHeight - window.innerHeight;
-      setProgress(maximum > 0 ? Math.min((window.scrollY / maximum) * 100, 100) : 0);
-    };
-
-    updateProgress();
-    window.addEventListener('scroll', updateProgress, { passive: true });
-    window.addEventListener('resize', updateProgress);
-    return () => {
-      window.removeEventListener('scroll', updateProgress);
-      window.removeEventListener('resize', updateProgress);
-    };
-  }, []);
-
-  return progress;
-}
-
-function useTypingText(words, typingDelay = 60) {
-  const [text, setText] = useState('');
-
-  useEffect(() => {
-    let wordIndex = 0;
-    let characterIndex = 0;
-    let deleting = false;
-    let timeoutId;
-
-    const type = () => {
-      const word = words[wordIndex];
-      characterIndex += deleting ? -1 : 1;
-      setText(word.slice(0, characterIndex));
-
-      if (!deleting && characterIndex === word.length) {
-        deleting = true;
-        timeoutId = window.setTimeout(type, 1200);
-      } else if (deleting && characterIndex === 0) {
-        deleting = false;
-        wordIndex = (wordIndex + 1) % words.length;
-        timeoutId = window.setTimeout(type, 300);
-      } else {
-        timeoutId = window.setTimeout(type, deleting ? 30 : typingDelay);
-      }
-    };
-
-    timeoutId = window.setTimeout(type, typingDelay);
-    return () => window.clearTimeout(timeoutId);
-  }, [typingDelay, words]);
-
-  return text;
-}
-
-function useTaglineTypewriter(text, shouldStart, typingDelay = 24) {
-  const [typedText, setTypedText] = useState('');
-
-  useEffect(() => {
-    if (!shouldStart) return undefined;
-
-    let characterIndex = 0;
-    let timeoutId;
-    const type = () => {
-      characterIndex += 1;
-      setTypedText(text.slice(0, characterIndex));
-      if (characterIndex < text.length) timeoutId = window.setTimeout(type, typingDelay);
-    };
-
-    timeoutId = window.setTimeout(type, typingDelay);
-    return () => window.clearTimeout(timeoutId);
-  }, [shouldStart, text, typingDelay]);
-
-  return typedText;
-}
-
-function useCount(target) {
-  const elementRef = useRef(null);
-  const [count, setCount] = useState(0);
-
-  useEffect(() => {
-    const element = elementRef.current;
-    if (!element) return undefined;
-
-    let frameId;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting) return;
-
-        const startedAt = performance.now();
-        const duration = 900;
-        const animate = (now) => {
-          const ratio = Math.min((now - startedAt) / duration, 1);
-          setCount(Math.floor(target * ratio));
-          if (ratio < 1) frameId = requestAnimationFrame(animate);
-        };
-
-        frameId = requestAnimationFrame(animate);
-        observer.disconnect();
-      },
-      { threshold: 0.5 },
-    );
-
-    observer.observe(element);
-    return () => {
-      observer.disconnect();
-      cancelAnimationFrame(frameId);
-    };
-  }, [target]);
-
-  return [elementRef, count];
-}
-
-function PageShell({ children }) {
-  const progress = useScrollProgress();
-  const shellRef = useRef(null);
-  useSmoothScroll();
-  usePortfolioMotion(shellRef);
-
+function Arrow({ diagonal = false, className = "" }) {
   return (
-    <div className="site-shell" ref={shellRef}>
-      <div className="scroll-progress scroll-progress-bar" style={{ width: `${progress}%` }} aria-hidden="true" />
+    <svg
+      className={`arrow ${className}`}
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+    >
+      <path
+        d={diagonal ? "M5 19 19 5M5 5h14v14" : "M4 12h15m-6-6 6 6-6 6"}
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+function ExternalLink({ href, children, className = "" }) {
+  return (
+    <a
+      href={href}
+      className={className}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
       {children}
-    </div>
+      <Arrow diagonal />
+      <span className="sr-only"> (opens in a new tab)</span>
+    </a>
+  );
+}
+function Tags({ items }) {
+  return (
+    <ul className="tags" aria-label="Technologies">
+      {items.map((item) => (
+        <li key={item}>{item}</li>
+      ))}
+    </ul>
   );
 }
 
-function Header() {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [contracted, setContracted] = useState(false);
-
+function Header({ home }) {
+  const [open, setOpen] = useState(false);
+  const [active, setActive] = useState("");
+  const toggleRef = useRef(null);
+  const prefix = home ? "" : "/";
   useEffect(() => {
-    let previousScroll = window.scrollY;
-    const updateHeader = () => {
-      const currentScroll = window.scrollY;
-      setContracted(currentScroll > 100 && currentScroll > previousScroll);
-      previousScroll = currentScroll;
+    const close = (event) => {
+      if (event.key === "Escape" && open) {
+        setOpen(false);
+        toggleRef.current?.focus();
+      }
     };
-
-    window.addEventListener('scroll', updateHeader, { passive: true });
-    return () => window.removeEventListener('scroll', updateHeader);
-  }, []);
-
-  const closeMenu = () => setMenuOpen(false);
-
+    document.addEventListener("keydown", close);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActive(entry.target.id);
+        });
+      },
+      { rootMargin: "-15% 0px -55% 0px" },
+    );
+    document
+      .querySelectorAll("main > section[id]")
+      .forEach((section) => observer.observe(section));
+    return () => {
+      document.removeEventListener("keydown", close);
+      observer.disconnect();
+    };
+  }, [open]);
   return (
-    <header className={`floating-nav ${contracted ? 'contracted' : ''}`}>
-      <div className="nav-container">
-        <a className="logo" href="index.html" aria-label="Ahmed Ayyan home">
-          <img src={assets.logo} alt="Ahmed Ayyan logo" className="logo-img" />
-          <span className="brand-lockup"><b>AHMED</b><span>AYYAN // SE</span></span>
+    <header className="site-header">
+      <div className="header-inner">
+        <a
+          className="brand"
+          href={home ? "#top" : "/"}
+          aria-label="Ahmed Ayyan home"
+          onClick={() => setOpen(false)}
+        >
+          <span className="brand-mark" aria-hidden="true">
+            a<span>.</span>
+          </span>
+          <span className="brand-name">
+            AHMED AYYAN<span>AI ENGINEER & DEVELOPER</span>
+          </span>
         </a>
-        <nav className={`nav-menu ${menuOpen ? 'active' : ''}`} aria-label="Primary navigation">
-          {navigation.map((item) => (
-            <a className="nav-item" href={item.href} key={item.label} onClick={closeMenu}>
-              <i className={`nav-icon ${item.icon}`} aria-hidden="true" />
-              <span className="nav-text">{item.label}</span>
+        <button
+          className="menu-toggle"
+          ref={toggleRef}
+          onClick={() => setOpen(!open)}
+          aria-expanded={open}
+          aria-controls="primary-navigation"
+        >
+          {open ? "Close" : "Menu"}
+          <span aria-hidden="true">{open ? "−" : "+"}</span>
+        </button>
+        <nav
+          id="primary-navigation"
+          className={open ? "navigation is-open" : "navigation"}
+          aria-label="Main navigation"
+        >
+          {["work", "experience", "about", "contact"].map((id, index) => (
+            <a
+              key={id}
+              href={`${prefix}#${id}`}
+              aria-current={home && active === id ? "location" : undefined}
+              onClick={() => setOpen(false)}
+            >
+              <span className="nav-index">0{index + 1}</span>
+              {id === "work"
+                ? "Selected work"
+                : id[0].toUpperCase() + id.slice(1)}
             </a>
           ))}
-        </nav>
-        <div className="nav-end">
-          <span className="nav-availability">Open for work</span>
-          <button
-            className={`menu-toggle ${menuOpen ? 'active' : ''}`}
-            type="button"
-            aria-label="Toggle navigation menu"
-            aria-expanded={menuOpen}
-            onClick={() => setMenuOpen((open) => !open)}
+          <a
+            className="nav-resume"
+            href={profile.resumePdf}
+            target="_blank"
+            rel="noopener noreferrer"
           >
-            <span className="hamburger" />
-          </button>
-        </div>
+            Résumé <Arrow diagonal />
+            <span className="sr-only">PDF, opens in a new tab</span>
+          </a>
+        </nav>
       </div>
     </header>
   );
 }
 
-function Footer() {
+function Hero() {
   return (
-    <footer className="footer fade-in">
-      <span className="footer-watermark" data-footer-mark aria-hidden="true">Ahmed Ayyan</span>
-      <div className="container">
-        <div className="footer-cta" data-reveal>
-          <div>
-            <span className="footer-cta-kicker">Let’s collaborate</span>
-            <h2>Make the next build <em>count.</em></h2>
-          </div>
-          <a className="footer-cta-link" href="mailto:ahmedayyan555@gmail.com">Start a conversation <i className="fas fa-arrow-up-right-from-square" aria-hidden="true" /></a>
+    <section className="hero container" aria-labelledby="hero-title">
+      <div className="hero-copy">
+        <div className="eyebrow hero-intro" data-enter>
+          <span className="tiny-cross" aria-hidden="true">
+            +
+          </span>{" "}
+          AI ENGINEER / SOFTWARE DEVELOPER <span className="eyebrow-rule" />
         </div>
-        <div className="footer-content">
-          <div className="footer-brand">
-            <div className="footer-logo">
-              <img src={assets.logo} alt="Ahmed Ayyan logo" className="footer-logo-img" />
-            </div>
-            <span className="footer-system">Portfolio // System Online</span>
-          </div>
-          <p className="footer-text">Crafting digital experiences with passion and precision.</p>
-          <div className="footer-social-links">
-            {socialLinks.map((link) => (
-              <a className="footer-social-link" href={link.href} target="_blank" rel="noreferrer" aria-label={link.label} key={link.label}>
-                <i className={link.icon} aria-hidden="true" />
+        <h1 id="hero-title" aria-label="Ahmed Ayyan Mukhtar">
+          <span className="hero-line">
+            <span>Ahmed</span>
+          </span>
+          <span className="hero-line">
+            <span>
+              Ayyan<span className="name-period">.</span>
+            </span>
+          </span>
+        </h1>
+        <p className="hero-description" data-enter>
+          I build agentic workflows, retrieval systems, and{" "}
+          <strong>C#/.NET services.</strong> My focus is the engineering that
+          turns a model into a useful product.
+        </p>
+        <div className="hero-actions" data-enter>
+          <a href="#work" className="button button-primary">
+            Explore my work <Arrow />
+          </a>
+          <a
+            className="text-link resume-link"
+            href={profile.resumePdf}
+            download="Ahmed_Ayyan_Mukhtar_Resume.pdf"
+          >
+            Download résumé <span className="file-label">PDF</span>
+            <Arrow diagonal />
+          </a>
+        </div>
+        <div className="hero-location" data-enter>
+          <span className="location-symbol" aria-hidden="true">
+            ◎
+          </span>
+          <span>Based in Lahore, Pakistan</span>
+          <span className="location-line" />
+          <span className="mono">AI / BACKEND / APPLIED ML</span>
+        </div>
+        <div className="hero-experience">
+          <span className="hero-experience-label">RECENT EXPERIENCE</span>
+          <div>
+            {experience.map((item) => (
+              <a href="#experience" key={item.company}>
+                <strong>{item.company}</strong>
+                <span>{item.role}</span>
               </a>
             ))}
           </div>
         </div>
-        <div className="footer-bottom">
-          <p>© 2025 Ahmed Ayyan. All rights reserved.</p>
-          <div className="footer-links">
-            <a href="privacy.html">Privacy Policy</a>
-            <a href="terms.html">Terms of Service</a>
-          </div>
+      </div>
+      <div className="hero-visual" data-enter>
+        <SystemWorkbench />
+      </div>
+      <div className="hero-footnote">
+        <span>
+          AGENTIC AI <span>/</span> APPLIED ML <span>/</span> BACKEND
+          ENGINEERING
+        </span>
+        <a href="#work">
+          SCROLL TO EXPLORE <span aria-hidden="true">↓</span>
+        </a>
+      </div>
+    </section>
+  );
+}
+
+function ProofStrip() {
+  return (
+    <div className="proof-strip">
+      <div className="container proof-inner">
+        <p className="proof-label">
+          <span className="tiny-cross" aria-hidden="true">
+            +
+          </span>{" "}
+          SELECTED
+          <br />
+          MILESTONES
+        </p>
+        <div>
+          <strong>
+            5th <span>/ 200+</span>
+          </strong>
+          <p>HEC GenAI National Hackathon ’25</p>
+        </div>
+        <div>
+          <strong>20,000</strong>
+          <p>CI logs modeled for build prediction</p>
+        </div>
+        <div>
+          <strong>155</strong>
+          <p>Tests in the UFC prediction pipeline</p>
         </div>
       </div>
-    </footer>
-  );
-}
-
-function SectionHeader({ title, subtitle, className = '', eyebrow = 'SELECTED WORK', reveal = true }) {
-  return (
-    <div className={`section-header ${className}`} {...(reveal ? { 'data-reveal': true } : {})}>
-      <span className="section-eyebrow">{eyebrow}</span>
-      <span className="section-signal" data-section-signal aria-hidden="true" />
-      <h2 className="section-title">{title}</h2>
-      {subtitle && <p className="section-subtitle">{subtitle}</p>}
     </div>
   );
 }
 
-function AboutStats() {
-  const items = [
-    { value: 20, label: 'Public Projects' },
-    { value: 5, label: 'Hackathon Rank' },
-    { value: 4, label: 'AI Systems' },
-  ];
-
+function SectionHeading({ index, label, title, children }) {
   return (
-    <div className="about-stats scroll-stagger-container">
-      {items.map((item) => <CountStat key={item.label} {...item} />)}
+    <div className="section-heading" data-reveal>
+      <div>
+        <div className="eyebrow">
+          <span className="section-number">{index}</span>
+          {label}
+        </div>
+        <h2 className="heading-reveal">
+          <span>{title}</span>
+        </h2>
+      </div>
+      {children}
+      <span className="section-rule" aria-hidden="true" />
     </div>
   );
 }
 
-function CountStat({ value, label }) {
-  const [ref, count] = useCount(value);
+function ProjectVisual({ type }) {
+  if (type === "reply-mirror")
+    return (
+      <div
+        className="project-visual fraud-visual"
+        aria-label="Reply Mirror architecture: ingestion, four signal agents, fusion, and decision"
+        role="img"
+      >
+        <div className="visual-label">
+          <span>REPLY MIRROR / SYSTEM MAP</span>
+          <span>7 AGENTS</span>
+        </div>
+        <svg viewBox="0 0 560 270" fill="none" aria-hidden="true">
+          <defs>
+            <pattern
+              id="fraud-grid"
+              width="22"
+              height="22"
+              patternUnits="userSpaceOnUse"
+            >
+              <circle cx="1" cy="1" r=".6" fill="#63645e" opacity=".4" />
+            </pattern>
+          </defs>
+          <rect width="560" height="270" fill="url(#fraud-grid)" />
+          <g stroke="#62625a" strokeWidth="1">
+            <path d="M111 135H155V51H206M155 107H206M155 163H206M155 219H206M155 135V219M310 51H348V135H388M310 107H348M310 163H348M310 219H348V135M449 135H478" />
+          </g>
+          <g className="diagram-pulse" fill="#d99770">
+            <circle cx="155" cy="135" r="3" />
+            <circle cx="348" cy="135" r="3" />
+          </g>
+          <rect
+            x="27"
+            y="113"
+            width="84"
+            height="44"
+            rx="3"
+            fill="#272924"
+            stroke="#64665c"
+          />
+          <text x="69" y="139" textAnchor="middle" fill="#e8e8dd">
+            INGEST
+          </text>
+          {["BEHAVIOR", "GEO", "COMMS", "AUDIO"].map((name, i) => (
+            <g key={name}>
+              <rect
+                x="206"
+                y={29 + i * 56}
+                width="104"
+                height="44"
+                rx="3"
+                fill="#242721"
+                stroke="#64665c"
+              />
+              <circle cx="222" cy={51 + i * 56} r="2.5" fill="#c98d6d" />
+              <text x="265" y={55 + i * 56} textAnchor="middle" fill="#e8e8dd">
+                {name}
+              </text>
+            </g>
+          ))}
+          <path d="m418 105 30 30-30 30-30-30Z" fill="#d59873" />
+          <text
+            x="418"
+            y="138"
+            textAnchor="middle"
+            fill="#20231d"
+            style={{ fontSize: 8 }}
+          >
+            FUSE
+          </text>
+          <circle cx="495" cy="135" r="17" fill="#323c2d" stroke="#aab897" />
+          <path d="m488 135 5 5 9-10" stroke="#d8e2c8" strokeWidth="1.5" />
+          <text
+            x="495"
+            y="172"
+            textAnchor="middle"
+            fill="#aab897"
+            style={{ fontSize: 8 }}
+          >
+            DECIDE
+          </text>
+        </svg>
+        <div className="visual-bottom">
+          <span>
+            <i className="status-dot" /> RISK-AWARE ROUTING
+          </span>
+          <span>TRACEABLE BY DESIGN ↗</span>
+        </div>
+      </div>
+    );
   return (
-    <div className="stat-item" ref={ref}>
-      <div className="stat-number">{count}</div>
-      <div className="stat-label">{label}</div>
+    <div
+      className="project-visual medical-visual"
+      aria-label="MediSense architecture: medical guidance and patient report retrieval combined in a grounded response"
+      role="img"
+    >
+      <div className="visual-label">
+        <span>MEDISENSE AI / RETRIEVAL MAP</span>
+        <span>HYBRID RAG</span>
+      </div>
+      <svg viewBox="0 0 560 270" fill="none" aria-hidden="true">
+        <circle
+          cx="280"
+          cy="135"
+          r="113"
+          stroke="#c5cbc0"
+          strokeDasharray="3 7"
+        />
+        <circle cx="280" cy="135" r="84" stroke="#c5cbc0" />
+        <circle cx="280" cy="135" r="57" stroke="#c5cbc0" />
+        <path
+          d="M133 90H185L241 124M133 182H185L241 147M319 135H400"
+          stroke="#899580"
+          strokeWidth="1.2"
+        />
+        <rect
+          x="30"
+          y="67"
+          width="122"
+          height="46"
+          rx="3"
+          fill="#f6f7ef"
+          stroke="#bbc4b5"
+        />
+        <text x="91" y="87" textAnchor="middle" fill="#3c4836">
+          WHO / NIH
+        </text>
+        <text
+          x="91"
+          y="101"
+          textAnchor="middle"
+          fill="#707b69"
+          style={{ fontSize: 8 }}
+        >
+          MEDICAL GUIDANCE
+        </text>
+        <rect
+          x="30"
+          y="158"
+          width="122"
+          height="46"
+          rx="3"
+          fill="#f6f7ef"
+          stroke="#bbc4b5"
+        />
+        <text x="91" y="178" textAnchor="middle" fill="#3c4836">
+          PATIENT REPORT
+        </text>
+        <text
+          x="91"
+          y="192"
+          textAnchor="middle"
+          fill="#707b69"
+          style={{ fontSize: 8 }}
+        >
+          OCR EXTRACTION
+        </text>
+        <rect x="242" y="97" width="76" height="76" rx="38" fill="#3d4e37" />
+        <path d="M280 115v40M260 135h40" stroke="#dce6d3" strokeWidth="1.5" />
+        <circle cx="280" cy="135" r="13" fill="#3d4e37" stroke="#dce6d3" />
+        <rect
+          x="400"
+          y="104"
+          width="133"
+          height="62"
+          rx="3"
+          fill="#f6f7ef"
+          stroke="#bbc4b5"
+        />
+        <text x="466" y="131" textAnchor="middle" fill="#3c4836">
+          GROUNDED
+        </text>
+        <text x="466" y="147" textAnchor="middle" fill="#3c4836">
+          RESPONSE
+        </text>
+        <circle
+          className="diagram-pulse"
+          cx="363"
+          cy="135"
+          r="3"
+          fill="#536449"
+        />
+      </svg>
+      <div className="visual-bottom">
+        <span>CONTEXT + KNOWLEDGE</span>
+        <span>ISOLATED COLLECTIONS ↗</span>
+      </div>
     </div>
   );
 }
 
-function TechnologySlider() {
-  const slides = [...technologies, ...technologies];
+function ProjectDetails({ project }) {
   return (
-    <section className="tech-slider-section" aria-label="Technologies I work with">
-      <div className="tech-slider-header">TECHNOLOGIES I WORK WITH</div>
-      <div className="tech-slider-wrapper">
-        <div className="tech-slider">
-          {slides.map((icon, index) => (
-            <div className="tech-slide" key={`${icon}-${index}`}>
-              <i className={icon} aria-hidden="true" />
-            </div>
+    <details className="project-details">
+      <summary>
+        Engineering notes<span className="sr-only"> for {project.title}</span>
+        <span className="details-plus" aria-hidden="true">
+          +
+        </span>
+      </summary>
+      <div className="details-content">
+        <div>
+          <h4>The problem</h4>
+          <p>{project.challenge}</p>
+        </div>
+        <div>
+          <h4>What I built</h4>
+          <p>{project.approach}</p>
+        </div>
+        <div>
+          <h4>The evidence</h4>
+          <p>{project.evidence}</p>
+        </div>
+      </div>
+    </details>
+  );
+}
+
+function FeaturedProject({ project }) {
+  return (
+    <article
+      id={project.id}
+      className={`featured-project ${project.id}`}
+      data-reveal
+    >
+      <ProjectVisual type={project.id} />
+      <div className="project-info">
+        <div className="project-kicker">
+          <span>{project.category}</span>
+          <span>/{project.number}</span>
+        </div>
+        <div className="project-title-row">
+          <h3>{project.title}</h3>
+          <a
+            className="circle-link"
+            href={project.repository}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`View ${project.title} source on GitHub (opens in a new tab)`}
+          >
+            <Arrow diagonal />
+          </a>
+        </div>
+        <p className="project-description">{project.description}</p>
+        <Tags items={project.stack} />
+        <div className="project-result">
+          <strong>{project.metric}</strong>
+          <span>{project.metricLabel}</span>
+        </div>
+        <ArchitectureButton project={project} />
+        <ProjectDetails project={project} />
+      </div>
+    </article>
+  );
+}
+
+function CompactProject({ project }) {
+  return (
+    <article id={project.id} className="compact-project" data-reveal>
+      <div className="compact-main">
+        <span className="project-index">/{project.number}</span>
+        <div className="compact-copy">
+          <div className="project-kicker">{project.category}</div>
+          <h3>{project.title}</h3>
+          <p>{project.description}</p>
+          <Tags items={project.stack} />
+        </div>
+        <div className="compact-result">
+          <strong>{project.metric}</strong>
+          <span>{project.metricLabel}</span>
+        </div>
+        <a
+          className="circle-link"
+          href={project.repository}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`View ${project.title} source on GitHub (opens in a new tab)`}
+        >
+          <Arrow diagonal />
+        </a>
+      </div>
+      <ArchitectureButton project={project} />
+      <ProjectDetails project={project} />
+    </article>
+  );
+}
+
+function Work() {
+  return (
+    <section id="work" className="section container">
+      <SectionHeading
+        index="01"
+        label="SELECTED WORK"
+        title="Selected projects."
+      >
+        <p>
+          Agent orchestration, retrieval, and predictive models.
+          <br className="desktop-break" /> Open a project’s notes for the
+          engineering decisions.
+        </p>
+      </SectionHeading>
+      <ProjectSignalIndex />
+      <div className="featured-grid">
+        {selectedProjects.slice(0, 2).map((project) => (
+          <FeaturedProject key={project.id} project={project} />
+        ))}
+      </div>
+      <div className="compact-projects">
+        {selectedProjects.slice(2).map((project) => (
+          <CompactProject key={project.id} project={project} />
+        ))}
+      </div>
+      <div className="archive-callout" data-reveal>
+        <p>
+          There’s more in the workshop.
+          <span>Developer tools, web apps, and work for clients.</span>
+        </p>
+        <a href="/projects.html" className="text-link">
+          Explore all projects <Arrow />
+        </a>
+      </div>
+    </section>
+  );
+}
+
+function Experience() {
+  return (
+    <section id="experience" className="experience-section">
+      <div className="container section">
+        <SectionHeading
+          index="02"
+          label="EXPERIENCE"
+          title="Where I’ve worked."
+        >
+          <a
+            className="text-link"
+            href={profile.resumePdf}
+            download="Ahmed_Ayyan_Mukhtar_Resume.pdf"
+          >
+            Full résumé <Arrow diagonal />
+          </a>
+        </SectionHeading>
+        <div className="experience-list">
+          {experience.map((job) => (
+            <article className="experience-row" key={job.company} data-reveal>
+              <div className="experience-meta">
+                <p className="mono">
+                  {job.start} — {job.end}
+                </p>
+                <span>{job.location}</span>
+              </div>
+              <div className="experience-content">
+                <div className="job-heading">
+                  <div>
+                    <h3>{job.company}</h3>
+                    <p className="job-role">{job.role}</p>
+                  </div>
+                  <span className="job-mark" aria-hidden="true">
+                    ↗
+                  </span>
+                </div>
+                <p className="job-description">{job.description}</p>
+                <ul className="job-points">
+                  {job.points.map((point) => (
+                    <li key={point}>{point}</li>
+                  ))}
+                </ul>
+                <Tags items={job.stack} />
+              </div>
+            </article>
           ))}
         </div>
       </div>
@@ -293,238 +646,173 @@ function TechnologySlider() {
   );
 }
 
-function Tagline() {
-  const sectionRef = useRef(null);
-  const [shouldType, setShouldType] = useState(false);
-  const typedAccent = useTaglineTypewriter(taglineAccent, shouldType);
-
-  useEffect(() => {
-    const section = sectionRef.current;
-    if (!section) return undefined;
-
-    const observer = new IntersectionObserver(([entry]) => {
-      if (!entry.isIntersecting) return;
-      setShouldType(true);
-      observer.disconnect();
-    }, { rootMargin: '0px 0px -35% 0px' });
-
-    observer.observe(section);
-    return () => observer.disconnect();
-  }, []);
-
+function About() {
   return (
-    <section className="tagline-section" ref={sectionRef}>
-      <i className="tagline-icon fas fa-mug-hot" data-tagline-icon aria-hidden="true" />
-      <span className="tagline-kicker">02 // BUILT UNDER PRESSURE</span>
-      <div className="tagline-content">
-        <p className="tagline-text">{taglineLead}</p>
-        <p className="tagline-text tagline-accent">{typedAccent}<span className="tagline-cursor" aria-hidden="true">_</span></p>
-      </div>
-    </section>
-  );
-}
-
-function ContactList({ title, icon, items }) {
-  return (
-    <div className="resume-sidebar-section">
-      <h3 className="resume-sidebar-title"><i className={icon} aria-hidden="true" /> {title}</h3>
-      {items.map((item) => (
-        <div className="resume-contact-item" key={item.text}>
-          <i className={item.icon} aria-hidden="true" />
-          {item.href ? <a href={item.href} target={item.href.startsWith('http') ? '_blank' : undefined} rel={item.href.startsWith('http') ? 'noreferrer' : undefined}>{item.text}</a> : <span>{item.text}</span>}
+    <section id="about" className="section container about-section">
+      <SectionHeading
+        index="03"
+        label="ABOUT ME"
+        title="The person behind the code."
+      />
+      <div className="about-grid">
+        <div className="portrait-block" data-reveal>
+          <div className="portrait-frame">
+            <img
+              src={profile.portrait}
+              width="720"
+              height="900"
+              alt="Ahmed Ayyan Mukhtar wearing a suit outdoors"
+              loading="lazy"
+            />
+            <span className="portrait-corner" aria-hidden="true">
+              ↗
+            </span>
+          </div>
+          <div className="portrait-caption">
+            <span>AHMED AYYAN MUKHTAR</span>
+            <span>LAHORE, PK</span>
+          </div>
         </div>
-      ))}
-    </div>
-  );
-}
-
-function Resume() {
-  return (
-    <section id="resume" className="section resume-section fade-in">
-      <div className="container">
-        <div className="section-header" data-reveal>
-          <h2 className="resume-section-title">Engineering Profile</h2>
-          <p className="section-subtitle">AI systems, production front-end delivery, technical leadership, and practical software engineering.</p>
-        </div>
-        <div className="resume-card-container scroll-fade-up" data-reveal>
-          <aside className="resume-sidebar">
-            <div className="resume-profile">
-              <div className="resume-profile-img">
-                <img src={assets.profileImage} alt="Ahmed Ayyan" />
-              </div>
-              <div className="resume-profile-identity">
-                <strong>Ahmed Ayyan Mukhtar</strong>
-                <span>Software Engineering · AI Systems</span>
-              </div>
+        <div className="about-copy" data-reveal>
+          <p className="about-lead">
+            A model is only one part
+            <br />
+            of a useful product.
+          </p>
+          <p>
+            I’m interested in everything around it: how data gets in, how tools
+            connect, how decisions are traced, and how the result reaches a
+            person who needs it.
+          </p>
+          <p>
+            I’m studying Software Engineering at Information Technology
+            University, Lahore, while building across AI, backend services, and
+            product interfaces.
+          </p>
+          <div className="about-facts">
+            <div>
+              <span className="eyebrow">EDUCATION</span>
+              <h3>BS Software Engineering</h3>
+              <p>
+                Information Technology University, Lahore
+                <br />
+                2023–2027 <span className="subtle">(expected)</span>
+              </p>
             </div>
-            <ContactList title="Contact" icon="fas fa-envelope" items={resume.contacts} />
-            <ContactList title="Links" icon="fas fa-link" items={resume.links} />
-            <div className="resume-sidebar-section">
-              <h3 className="resume-sidebar-title"><i className="fas fa-code" aria-hidden="true" /> Technical Skills</h3>
-              {resume.skills.map((skill) => (
-                <div className="resume-skill-item" key={skill.name}>
-                  <div className="resume-skill-header"><span>{skill.name}</span><span>{skill.level}%</span></div>
-                  <div className="resume-skill-bar"><div className="resume-skill-fill" style={{ '--skill-level': `${skill.level}%` }} /></div>
-                </div>
-              ))}
-            </div>
-            <div className="resume-sidebar-section">
-              <h3 className="resume-sidebar-title"><i className="fas fa-lightbulb" aria-hidden="true" /> Soft Skills</h3>
-              <div className="resume-soft-skills">
-                {resume.softSkills.map((skill) => <span className="resume-soft-skill-tag" key={skill}>{skill}</span>)}
-              </div>
-            </div>
-            <a href={assets.resumePdf} download="Ahmed-Ayyan-CV.pdf" className="resume-download-btn">
-              <i className="fas fa-download" aria-hidden="true" /> Download Resume
-            </a>
-          </aside>
-          <div className="resume-content">
-            <div className="resume-content-section">
-              <h3 className="resume-content-title">Introduction</h3>
-              <p className="resume-intro-text">{resume.intro}</p>
-            </div>
-            <div className="resume-content-section">
-              <h3 className="resume-content-title"><i className="fas fa-briefcase" aria-hidden="true" /> Work Experience</h3>
-              {resume.jobs.map((job) => (
-                <div className="resume-job" key={job.title}>
-                  <div className="resume-job-header"><div><h4 className="resume-job-title">{job.title}</h4><p className="resume-job-company">{job.company}</p></div></div>
-                  <ul className="resume-job-list">{job.achievements.map((achievement) => <li key={achievement}>{achievement}</li>)}</ul>
-                </div>
-              ))}
-            </div>
-            <div className="resume-content-section">
-              <h3 className="resume-content-title"><i className="fas fa-graduation-cap" aria-hidden="true" /> Education</h3>
-              <div className="resume-education">
-                <h4 className="resume-education-title">{resume.education.title}</h4>
-                <p className="resume-education-school">{resume.education.school}</p>
-                <p>{resume.education.description}</p>
-              </div>
-            </div>
-            <div className="resume-content-section">
-              <h3 className="resume-content-title"><i className="fas fa-brain" aria-hidden="true" /> Selected AI Projects</h3>
-              <div className="resume-projects">
-                {resume.projects.map((project) => (
-                  <article className="resume-project" key={project.title}>
-                    <h4>{project.title}</h4>
-                    <p className="resume-project-meta">{project.meta}</p>
-                    <p>{project.description}</p>
-                  </article>
-                ))}
-              </div>
-            </div>
-            <div className="resume-content-section">
-              <h3 className="resume-content-title"><i className="fas fa-trophy" aria-hidden="true" /> Achievements</h3>
-              <div className="resume-certifications">{resume.achievements.map((achievement) => <div className="resume-cert-item" key={achievement}>{achievement}</div>)}</div>
+            <div>
+              <span className="eyebrow">COMMUNITY</span>
+              <h3>Tech Lead, Code Rush</h3>
+              <p>
+                GDG on Campus, ITU · A competitive programming event for 100+
+                participants, from problem design to live troubleshooting.
+              </p>
             </div>
           </div>
         </div>
       </div>
-    </section>
-  );
-}
-
-function RolesSlider() {
-  const rolesList = ['AI Engineer', 'RAG Systems Builder', 'Angular Developer', 'React Developer', 'Full Stack Developer', 'VS Code Extension Developer'];
-  return (
-    <section className="roles-slider-section" aria-label="Roles">
-      <div className="roles-slider-wrapper">
-        <div className="roles-slider">
-          {[...rolesList, ...rolesList].map((role, index) => <span className="role-slide" key={`${role}-${index}`}>{role}<span className="role-separator">✦</span></span>)}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function FeaturedProjectCard({ project }) {
-  return (
-    <article className="featured-project-card slide-in-up" data-reveal>
-      <div className="featured-project-image">
-        <img src={project.image} alt={project.alt} />
-        <span className="featured-overlay-badge">Featured</span>
-      </div>
-      <div className="featured-project-content">
-        <div className="featured-tech-stack">
-          {project.stack.map(([icon, name]) => <span className="tech-pill" key={name}><i className={icon} aria-hidden="true" /> {name}</span>)}
-        </div>
-        <h3 className="featured-project-title">{project.title}</h3>
-        <p className="featured-project-description">{project.description}</p>
-        <div className="featured-highlights">
-          {project.highlights.map((highlight) => <div className="highlight" key={highlight}><i className="fas fa-check" aria-hidden="true" /><span>{highlight}</span></div>)}
-        </div>
-        <div className="featured-project-actions">
-          <a href={project.demo} className="btn-featured btn-demo" target="_blank" rel="noreferrer"><i className="fas fa-external-link-alt" aria-hidden="true" /> Live Demo</a>
-          <a href="projects.html" className="btn-featured btn-details"><i className="fas fa-info-circle" aria-hidden="true" /> Full Details</a>
-        </div>
-      </div>
-    </article>
-  );
-}
-
-function AIProjectCard({ project }) {
-  return (
-    <article className="ai-project-card" data-ai-card data-gsap-stagger-item>
-      <div className="ai-project-card-header">
-        <span>{project.id}</span>
-        <span className="ai-project-status"><i className="fas fa-circle" aria-hidden="true" /> AI System</span>
-      </div>
-      <div className="ai-project-card-body">
-        <p className="ai-project-category">{project.category}</p>
-        <h3>{project.name}</h3>
-        <p className="ai-project-description">{project.description}</p>
-        <div className="ai-project-stack">
-          {project.stack.map((technology) => <span key={technology}>{technology}</span>)}
-        </div>
-        <ul className="ai-project-capabilities">
-          {project.capabilities.map((capability) => <li key={capability}>{capability}</li>)}
-        </ul>
-      </div>
-      <a className="ai-project-link" href={project.repository} target="_blank" rel="noreferrer">
-        View repository <i className="fab fa-github" aria-hidden="true" />
-      </a>
-    </article>
-  );
-}
-
-function AIProjects() {
-  return (
-    <section id="ai-projects" className="section ai-projects-section">
-      <i className="ai-section-robot fas fa-robot" data-ai-robot aria-hidden="true" />
-      <div className="container">
-        <SectionHeader reveal={false} eyebrow="03 // AI SYSTEMS" title="Intelligence, applied." subtitle="Local assistants, healthcare intelligence, developer tooling, and security systems built around practical AI workflows." />
-        <div className="ai-projects-grid" data-gsap-stagger>
-          {aiProjects.map((project) => <AIProjectCard project={project} key={project.name} />)}
-        </div>
+      <div className="capabilities">
+        {capabilities.map((item, index) => (
+          <article key={item.title} data-reveal>
+            <span className="capability-number">0{index + 1} /</span>
+            <h3>{item.title}</h3>
+            <p>{item.description}</p>
+            <div className="capability-tools">{item.tools}</div>
+          </article>
+        ))}
       </div>
     </section>
   );
 }
 
 function Contact() {
-  const contacts = [
-    { icon: 'fas fa-envelope', title: 'Email Me', subtitle: 'Drop me a line anytime', href: 'mailto:ahmedayyan555@gmail.com', text: 'ahmedayyan555@gmail.com' },
-    { icon: 'fas fa-phone', title: 'Call Me', subtitle: 'Mon-Fri from 9am to 6pm', href: 'tel:+923009586306', text: '+92 300 9586306' },
-    { icon: 'fas fa-map-marker-alt', title: 'Visit Me', subtitle: 'Come say hello', href: 'https://www.google.com/maps/search/?api=1&query=Lahore%2C+Pakistan', text: 'Lahore, Pakistan' },
-  ];
-
+  const [copyState, setCopyState] = useState("");
+  const timer = useRef(null);
+  useEffect(() => () => clearTimeout(timer.current), []);
+  const copyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText(profile.email);
+      setCopyState("Email copied");
+    } catch {
+      setCopyState("Copy unavailable. Select the email address to copy it.");
+    }
+    clearTimeout(timer.current);
+    timer.current = setTimeout(() => setCopyState(""), 4500);
+  };
   return (
-    <section id="contact" className="section contact-section fade-in">
+    <section id="contact" className="contact-section">
       <div className="container">
-        <SectionHeader eyebrow="04 // COMMS" title="Get In Touch" subtitle="I’m always open to discussing new projects, creative ideas, or opportunities to be part of your vision." />
-        <div className="contact-cards-grid">
-          {contacts.map((contact) => (
-            <article className="contact-card" data-reveal key={contact.title}>
-              <div className="contact-card-icon"><i className={contact.icon} aria-hidden="true" /></div>
-              <h3 className="contact-card-title">{contact.title}</h3>
-              <p className="contact-card-subtitle">{contact.subtitle}</p>
-              <a href={contact.href} className="contact-card-link" target={contact.href.startsWith('http') ? '_blank' : undefined} rel={contact.href.startsWith('http') ? 'noreferrer' : undefined}>{contact.text}</a>
-            </article>
-          ))}
+        <div className="contact-top">
+          <span className="eyebrow">
+            <span className="section-number">04</span> START A CONVERSATION
+          </span>
+          <span className="mono">LAHORE, PAKISTAN / UTC +05</span>
         </div>
-        <div className="social-section" data-reveal>
-          <h3 className="social-section-title">Connect on Social Media</h3>
-          <div className="social-links-large">
-            {socialLinks.map((link) => <a href={link.href} className="social-link-large" target="_blank" rel="noreferrer" aria-label={link.label} key={link.label}><i className={link.icon} aria-hidden="true" /></a>)}
+        <div className="contact-main" data-reveal>
+          <h2>
+            Good problems.
+            <br />
+            <em>Let’s solve them.</em>
+          </h2>
+          <a
+            className="contact-arrow"
+            href={`mailto:${profile.email}`}
+            aria-label="Send Ahmed an email"
+          >
+            <DesignAccent kind="orbit" className="contact-orbits" />
+            <Arrow diagonal />
+          </a>
+        </div>
+        <div className="contact-bottom">
+          <div>
+            <p>
+              Hiring for AI or backend engineering?
+              <br />
+              I’d like to hear what you’re building.
+            </p>
+            <div className="email-row">
+              <a href={`mailto:${profile.email}`}>{profile.email}</a>
+              <button
+                onClick={copyEmail}
+                aria-label="Copy email address"
+                title="Copy email address"
+              >
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  aria-hidden="true"
+                >
+                  <rect
+                    x="8"
+                    y="8"
+                    width="12"
+                    height="13"
+                    rx="2"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                  />
+                  <path
+                    d="M15 8V3H3v12h5"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                  />
+                </svg>
+              </button>
+            </div>
+            <span className="copy-status" role="status">
+              {copyState}
+            </span>
+          </div>
+          <div className="contact-socials">
+            <ExternalLink href={profile.linkedin}>LinkedIn</ExternalLink>
+            <ExternalLink href={profile.github}>GitHub</ExternalLink>
+            <a
+              href={profile.resumePdf}
+              download="Ahmed_Ayyan_Mukhtar_Resume.pdf"
+            >
+              Download résumé <Arrow diagonal />
+            </a>
           </div>
         </div>
       </div>
@@ -532,154 +820,287 @@ function Contact() {
   );
 }
 
-function HomePage() {
-  const typedRole = useTypingText(roles);
-
+function Footer() {
   return (
-    <PageShell>
-      <Header />
-      <main>
-        <section className="hero">
-          <div className="hero-grid" aria-hidden="true" />
-          <i className="hero-code-icon fas fa-code" data-hero-code aria-hidden="true" />
-          <div className="hero-content">
-            <div className="hero-meta" data-hero-meta><p className="hero-greeting">Portfolio // 2026</p><span className="hero-status">AVAILABLE FOR SELECTED WORK</span></div>
-            <h1 className="hero-title" aria-label="Ahmed Ayyan">
-              <span data-hero-line>Ahmed</span>
-              <span data-hero-line><em>Ayyan.</em></span>
-            </h1>
-            <div className="hero-footer">
-              <div className="hero-roles" data-hero-copy><span className="role-prefix">BUILDING AS A </span><span className="typing-text">{typedRole}</span><span className="cursor-blink">_</span></div>
-              <div className="hero-actions"><a href="#ai-projects" className="btn btn-primary" data-hero-action>View Selected Work</a><a href="#contact" className="btn btn-secondary" data-hero-action>Start a Conversation</a></div>
-            </div>
-          </div>
-        </section>
-        <section id="about" className="section about-section fade-in">
-          <div className="container">
-            <SectionHeader eyebrow="01 // PROFILE" title="About" />
-            <div className="about-content scroll-fade-up" data-reveal>
-              <div className="about-text">
-                <p className="about-intro">I’m a Software Engineering student at Information Technology University, building practical AI systems and digital experiences that blend intelligent workflows with reliable engineering.</p>
-                <p className="about-description">My work spans grounded RAG applications, local AI assistants, developer tooling, fraud analysis, and responsive production interfaces. I care about clear UX, maintainable systems, and measurable outcomes.</p>
-                <AboutStats />
-              </div>
-            </div>
-          </div>
-        </section>
-        <TechnologySlider />
-        <Tagline />
-        <Resume />
-        <RolesSlider />
-        <AIProjects />
-        <section id="portfolio" className="section portfolio-section gotham-section fade-in">
-          <div className="container">
-            <SectionHeader eyebrow="04 // SELECTED WORK" title="Featured Projects" subtitle="A selection of work across web development, AI, and interactive experiences." />
-            <div className="featured-projects-grid">{featuredProjects.map((project) => <FeaturedProjectCard project={project} key={project.title} />)}</div>
-            <div className="text-center view-all-section" data-reveal>
-              <a href="projects.html" className="btn btn-primary btn-view-all"><i className="fas fa-folder-open" aria-hidden="true" /> View All Projects</a>
-              <p className="view-all-subtitle">Explore detailed information on all my projects</p>
-            </div>
-          </div>
-        </section>
-        <Contact />
-      </main>
-      <Footer />
-    </PageShell>
-  );
-}
-
-function ProjectDetailCard({ project }) {
-  return (
-    <article className="project-detail-card" data-reveal>
-      <div className="project-header">
-        <div className="project-thumbnail"><img src={project.image} alt={project.alt} /></div>
-        <div className="project-info">
-          <h2 className="project-title">{project.title}</h2>
-          <span className="project-category">Web Development</span>
-          <p className="project-description">{project.description}</p>
+    <footer className="site-footer container">
+      <a href="/" className="footer-wordmark">
+        ahmed ayyan<span>.</span>
+      </a>
+      <div className="footer-meta">
+        <span>© {new Date().getFullYear()} Ahmed Ayyan Mukhtar</span>
+        <div>
+          <a href="/privacy.html">Privacy</a>
+          <a href="/terms.html">Site notes</a>
+          <a href="#top" className="back-top">
+            Back to top ↑
+          </a>
         </div>
       </div>
-      <div className="project-technologies">
-        <h3>Technologies Used</h3>
-        <div className="tech-tags">{project.technologies.map((technology) => <span className="tech-tag" key={technology}>{technology}</span>)}</div>
-      </div>
-      <div className="project-features">
-        <h3>Key Features</h3>
-        <ul>{project.features.map((feature) => <li key={feature}>{feature}</li>)}</ul>
-      </div>
-      <div className="project-links">
-        <a href={project.demo} className="project-link" target="_blank" rel="noreferrer"><i className="fas fa-external-link-alt" aria-hidden="true" /> Live Demo</a>
-        {project.code && <a href={project.code} className="project-link" target="_blank" rel="noreferrer"><i className="fab fa-github" aria-hidden="true" /> View Code</a>}
-      </div>
-    </article>
+    </footer>
   );
 }
 
 function ProjectsPage() {
+  const [filter, setFilter] = useState("All work");
+  const allProjects = [
+    ...selectedProjects.map((project) => ({ ...project, category: "AI & ML" })),
+    ...archiveProjects,
+  ];
+  const filtered =
+    filter === "All work"
+      ? allProjects
+      : allProjects.filter((project) => project.category === filter);
   return (
-    <PageShell>
-      <main>
-        <a href="index.html#portfolio" className="back-button"><i className="fas fa-arrow-left" aria-hidden="true" /> Back to Portfolio</a>
-        <section className="projects-hero">
-          <div className="container"><div className="projects-hero-content"><h1>All Projects</h1><p>A comprehensive collection of my development work, showcasing expertise across technologies and domains.</p></div></div>
-        </section>
-        <section className="projects-section"><div className="container">{projects.map((project) => <ProjectDetailCard project={project} key={project.title} />)}</div></section>
-      </main>
-      <Footer />
-    </PageShell>
-  );
-}
-
-function LegalPage({ type }) {
-  const page = legalPages[type];
-  const heroClass = type === 'privacy' ? 'policy-hero' : 'terms-hero';
-
-  return (
-    <PageShell>
-      <main>
-        <a href="index.html" className="back-button"><i className="fas fa-arrow-left" aria-hidden="true" /> Back to Portfolio</a>
-        <section className={heroClass}>
-          <div className="container">
-            <div className="section-header" data-reveal>
-              <h1 className="section-title">{page.title}</h1>
-              <div className="section-divider" />
-              <p className="section-subtitle">{page.subtitle}</p>
-            </div>
+    <>
+      <section className="container archive-hero">
+        <a href="/#work" className="text-link">
+          ← Back to selected work
+        </a>
+        <div className="eyebrow">THE EXTENDED COLLECTION</div>
+        <h1>
+          From the
+          <br />
+          <em>workshop.</em>
+        </h1>
+        <p>
+          AI systems, useful tools, and interfaces for real people.
+          <br />A broader look at what I build.
+        </p>
+      </section>
+      <section
+        className="container archive-section"
+        aria-label="Project archive"
+      >
+        <div className="archive-toolbar">
+          <div className="filter-buttons" aria-label="Filter projects">
+            {["All work", "AI & ML", "Web applications", "Client work"].map(
+              (item) => (
+                <button
+                  key={item}
+                  onClick={() => setFilter(item)}
+                  aria-pressed={filter === item}
+                >
+                  {item}
+                </button>
+              ),
+            )}
           </div>
-        </section>
-        <section className="section legal-section"><div className="container"><div className={page.contentClass} data-reveal><p className="last-updated">Last Updated: November 6, 2025</p>
-          {page.sections.map((section, index) => (
-            <div key={`${section.heading || section.subheading}-${index}`}>
-              {section.heading && <h2>{section.heading}</h2>}
-              {section.subheading && <h3>{section.subheading}</h3>}
-              {section.paragraphs?.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
-              {section.list && <ul>{section.list.map((item) => <li key={item}>{item}</li>)}</ul>}
-            </div>
+          <span className="mono" aria-live="polite">
+            {String(filtered.length).padStart(2, "0")} PROJECTS
+          </span>
+        </div>
+        <div className="archive-grid">
+          {filtered.map((project, index) => (
+            <article className="archive-card" key={project.title}>
+              {project.image ? (
+                <div className="archive-image">
+                  <img
+                    src={project.image}
+                    alt={`${project.title} interface`}
+                    loading="lazy"
+                    width="720"
+                    height="450"
+                  />
+                </div>
+              ) : (
+                <div className="archive-code-art" aria-hidden="true">
+                  <span>{project.category}</span>
+                  <strong>
+                    {project.id === "medisense"
+                      ? "+"
+                      : project.title.includes("UFC")
+                        ? "VS"
+                        : "{ }"}
+                  </strong>
+                  <span>{project.stack.join(" / ")}</span>
+                </div>
+              )}
+              <div className="archive-card-body">
+                <div className="project-kicker">
+                  <span>{project.category}</span>
+                  <span>/{String(index + 1).padStart(2, "0")}</span>
+                </div>
+                <h2>{project.title}</h2>
+                <p>{project.description}</p>
+                <Tags items={project.stack} />
+                <div className="archive-links">
+                  {project.status && (
+                    <span className="archived-status">{project.status}</span>
+                  )}
+                  {project.repository && (
+                    <ExternalLink href={project.repository}>
+                      Source code
+                    </ExternalLink>
+                  )}
+                  {project.demo && (
+                    <ExternalLink href={project.demo}>Visit site</ExternalLink>
+                  )}
+                </div>
+              </div>
+            </article>
           ))}
-        </div></div></section>
-      </main>
-      <Footer />
-    </PageShell>
+        </div>
+      </section>
+      <Contact />
+    </>
   );
 }
 
-function NotFoundPage() {
+function InformationPage({ type }) {
+  const privacy = type === "privacy";
   return (
-    <PageShell>
-      <main className="route-not-found"><div><h1>Page not found</h1><p>The page you requested does not exist.</p><a className="btn btn-primary" href="index.html">Go home</a></div></main>
-    </PageShell>
+    <section className="container information-page">
+      <a href="/" className="text-link">
+        ← Back to the portfolio
+      </a>
+      <div className="eyebrow">{privacy ? "PRIVACY" : "SITE NOTES"}</div>
+      <h1>
+        {privacy ? (
+          <>
+            A little
+            <br />
+            <em>transparency.</em>
+          </>
+        ) : (
+          <>
+            About
+            <br />
+            <em>this website.</em>
+          </>
+        )}
+      </h1>
+      <div className="information-copy">
+        {privacy ? (
+          <>
+            <h2>A simple portfolio</h2>
+            <p>
+              This site does not use analytics trackers, advertising cookies,
+              account registration, or contact-form storage. Project filters and
+              animation controls run in your browser.
+            </p>
+            <h2>Contacting me</h2>
+            <p>
+              Email links open your email application. Messages you choose to
+              send are handled by your email provider and mine. The copy-email
+              button writes only the displayed email address to your clipboard
+              when you click it.
+            </p>
+            <h2>External services</h2>
+            <p>
+              This site is hosted on GitHub Pages. The hosting provider may
+              process standard request logs. Links to GitHub, LinkedIn, and
+              project websites take you to services with their own privacy
+              practices.
+            </p>
+            <h2>Questions</h2>
+            <p>
+              Contact <a href={`mailto:${profile.email}`}>{profile.email}</a>.
+            </p>
+          </>
+        ) : (
+          <>
+            <h2>Work and attribution</h2>
+            <p>
+              This is the personal portfolio of Ahmed Ayyan Mukhtar. Project
+              names, company names, and third-party marks belong to their
+              respective owners. Source-code licenses are available in the
+              linked repositories.
+            </p>
+            <h2>Project context</h2>
+            <p>
+              Project summaries describe work completed and results reported in
+              my résumé. Research and prototype projects are presented in that
+              context. External demos may change or become unavailable.
+            </p>
+            <h2>Built with care</h2>
+            <p>
+              Built with React and Vite, with GSAP motion, an interactive
+              Three.js architecture study, keyboard-accessible controls, and
+              support for reduced motion.
+            </p>
+            <h2>Get in touch</h2>
+            <p>
+              For questions about my work, email{" "}
+              <a href={`mailto:${profile.email}`}>{profile.email}</a>.
+            </p>
+          </>
+        )}
+      </div>
+    </section>
   );
 }
 
 export default function App() {
-  const page = getPageKind();
-
+  const root = useRef(null);
+  const path = window.location.pathname.toLowerCase();
+  const page = /\/projects(?:\.html)?$/.test(path)
+    ? "projects"
+    : /\/privacy(?:\.html)?$/.test(path)
+      ? "privacy"
+      : /\/terms(?:\.html)?$/.test(path)
+        ? "terms"
+        : path === "/" || path === "/index.html"
+          ? "home"
+          : "not-found";
+  usePortfolioMotion(root);
   useEffect(() => {
-    document.title = page === 'home' ? 'Ahmed Ayyan | Portfolio' : `${page === 'not-found' ? 'Page not found' : legalPages[page]?.title || 'Projects'} | Ahmed Ayyan`;
+    let cancelled = false;
+    // Hash targets do not exist when the static HTML first loads. Resolve them
+    // after React mounts and fonts settle, including links from the archive.
+    const scrollToInitialHash = async () => {
+      await document.fonts.ready;
+      if (cancelled || !window.location.hash) return;
+      const legacyTargets = { resume: "experience", "ai-projects": "work" };
+      const hash = window.location.hash.slice(1);
+      document
+        .getElementById(legacyTargets[hash] || hash)
+        ?.scrollIntoView({ behavior: "instant", block: "start" });
+    };
+    scrollToInitialHash();
+    return () => {
+      cancelled = true;
+    };
   }, [page]);
-
-  if (page === 'projects') return <ProjectsPage />;
-  if (page === 'privacy' || page === 'terms') return <LegalPage type={page} />;
-  if (page === 'not-found') return <NotFoundPage />;
-  return <HomePage />;
+  useEffect(() => {
+    document.title = `${page === "home" ? "AI Engineer & Developer" : page === "projects" ? "Project Archive" : page === "privacy" ? "Privacy" : page === "terms" ? "Site Notes" : "Page Not Found"} — Ahmed Ayyan Mukhtar`;
+  }, [page]);
+  return (
+    <div ref={root} id="top">
+      <div className="reading-progress" aria-hidden="true" />
+      <a className="skip-link" href="#main">
+        Skip to content
+      </a>
+      <Header home={page === "home"} />
+      <main id="main">
+        {page === "home" ? (
+          <>
+            <Hero />
+            <ProofStrip />
+            <Work />
+            <TechRail />
+            <Experience />
+            <About />
+            <Contact />
+          </>
+        ) : page === "projects" ? (
+          <ProjectsPage />
+        ) : page === "privacy" || page === "terms" ? (
+          <InformationPage type={page} />
+        ) : (
+          <section className="container information-page">
+            <span className="eyebrow">404 / NOT FOUND</span>
+            <h1>
+              A wrong turn.
+              <br />
+              <em>An easy fix.</em>
+            </h1>
+            <a className="button button-primary" href="/">
+              Back to the portfolio <Arrow />
+            </a>
+          </section>
+        )}
+      </main>
+      <Footer />
+    </div>
+  );
 }

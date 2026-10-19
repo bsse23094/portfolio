@@ -1,212 +1,273 @@
-import { useLayoutEffect } from 'react';
-import Lenis from 'lenis';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+﻿import { useLayoutEffect } from "react";
+import Lenis from "lenis";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import "lenis/dist/lenis.css";
 
 gsap.registerPlugin(ScrollTrigger);
-
-const prefersReducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-export function useSmoothScroll() {
-  useLayoutEffect(() => {
-    if (prefersReducedMotion()) return undefined;
-
-    const lenis = new Lenis({
-      duration: 1.05,
-      smoothWheel: true,
-      syncTouch: false,
-      anchors: { offset: -96 },
-    });
-
-    const updateScrollTrigger = () => ScrollTrigger.update();
-    const raf = (time) => lenis.raf(time * 1000);
-
-    lenis.on('scroll', updateScrollTrigger);
-    gsap.ticker.add(raf);
-    gsap.ticker.lagSmoothing(0);
-
-    return () => {
-      lenis.off('scroll', updateScrollTrigger);
-      gsap.ticker.remove(raf);
-      lenis.destroy();
-    };
-  }, []);
-}
 
 export function usePortfolioMotion(scope) {
   useLayoutEffect(() => {
     const root = scope.current;
-    if (!root || prefersReducedMotion()) return undefined;
-
-    const context = gsap.context(() => {
-      const heroMeta = root.querySelectorAll('[data-hero-meta]');
-      const heroLines = root.querySelectorAll('[data-hero-line]');
-      const heroCopy = root.querySelectorAll('[data-hero-copy]');
-      const heroActions = root.querySelectorAll('[data-hero-action]');
-
-      if (heroMeta.length || heroLines.length || heroCopy.length || heroActions.length) {
-        const intro = gsap.timeline({ defaults: { ease: 'power3.out' } });
-        if (heroMeta.length) intro.from(heroMeta, { autoAlpha: 0, y: 18, duration: 0.5 });
-        if (heroLines.length) intro.from(heroLines, { autoAlpha: 0, yPercent: 120, stagger: 0.12, duration: 0.9 }, '-=0.15');
-        if (heroCopy.length) intro.from(heroCopy, { autoAlpha: 0, y: 20, duration: 0.55 }, '-=0.35');
-        if (heroActions.length) intro.from(heroActions, { autoAlpha: 0, y: 16, stagger: 0.08, duration: 0.45 }, '-=0.25');
-      }
-
-      gsap.utils.toArray('[data-reveal], [data-gsap-reveal]').forEach((element) => {
-        gsap.from(element, {
-          autoAlpha: 0,
-          y: 36,
-          duration: 0.7,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: element,
-            start: 'top 84%',
-            once: true,
-          },
-        });
+    if (!root) return undefined;
+    const media = gsap.matchMedia();
+    const cleanups = [];
+    let lenis;
+    let refreshFrame;
+    const refresh = () => {
+      cancelAnimationFrame(refreshFrame);
+      refreshFrame = requestAnimationFrame(() => {
+        lenis?.resize();
+        ScrollTrigger.refresh();
       });
+    };
 
-      gsap.utils.toArray('[data-gsap-stagger], .scroll-stagger-container').forEach((container) => {
-        const items = container.querySelectorAll('[data-gsap-stagger-item], .scroll-stagger-item');
-        if (!items.length) return;
-
-        const isAIProjects = container.querySelector('[data-ai-card]');
-        if (isAIProjects) {
-          const section = container.closest('.ai-projects-section');
-          const heading = section?.querySelectorAll('.section-eyebrow, .section-title, .section-subtitle');
-          const cardContent = [...items].flatMap((card) => [
-            card.querySelector('.ai-project-card-header'),
-            ...card.querySelectorAll('.ai-project-card-body > *'),
-          ].filter(Boolean));
-          const aiTimeline = gsap.timeline({
-            scrollTrigger: {
-              trigger: section || container,
-              start: 'top 72%',
-              once: true,
-            },
+    media.add(
+      {
+        motion: "(prefers-reduced-motion: no-preference)",
+        fine: "(pointer: fine)",
+      },
+      (context) => {
+        if (!context.conditions.motion) return undefined;
+        // Lenis keeps document scrolling native; GSAP supplies one shared clock.
+        if (context.conditions.fine) {
+          lenis = new Lenis({
+            duration: 1.05,
+            smoothWheel: true,
+            syncTouch: false,
+            autoRaf: false,
+            anchors: false,
           });
-
-          if (heading?.length) {
-            aiTimeline.from(heading, {
-              autoAlpha: 0,
-              y: 26,
-              stagger: 0.08,
-              duration: 0.62,
-              ease: 'power3.out',
-            });
-          }
-
-          aiTimeline.from(items, {
-            autoAlpha: 0,
-            y: 54,
-            scale: 0.96,
-            stagger: 0.13,
-            duration: 0.9,
-            ease: 'expo.out',
-            force3D: true,
-          }, heading?.length ? '-=0.22' : 0);
-
-          aiTimeline.from(cardContent, {
-            autoAlpha: 0,
-            y: 18,
-            stagger: 0.025,
-            duration: 0.5,
-            ease: 'power3.out',
-          }, '-=0.62');
-          return;
+          const tick = (time) => lenis?.raf(time * 1000);
+          lenis.on("scroll", ScrollTrigger.update);
+          gsap.ticker.add(tick);
+          gsap.ticker.lagSmoothing(0);
+          const anchors = (event) => {
+            const link = event.target.closest("a[href]");
+            if (
+              !link ||
+              event.defaultPrevented ||
+              event.button !== 0 ||
+              event.metaKey ||
+              event.ctrlKey ||
+              event.shiftKey ||
+              event.altKey ||
+              link.target === "_blank"
+            )
+              return;
+            const url = new URL(link.href, window.location.href);
+            if (
+              url.origin !== location.origin ||
+              url.pathname !== location.pathname ||
+              !url.hash
+            )
+              return;
+            let id;
+            try {
+              id = decodeURIComponent(url.hash.slice(1));
+            } catch {
+              return;
+            }
+            const target = document.getElementById(id);
+            if (!target || id === "main") return;
+            event.preventDefault();
+            if (location.hash !== url.hash)
+              history.pushState(null, "", url.hash);
+            lenis.scrollTo(target, { offset: -100, duration: 1.1 });
+          };
+          document.addEventListener("click", anchors);
+          cleanups.push(() => {
+            document.removeEventListener("click", anchors);
+            gsap.ticker.remove(tick);
+            lenis?.destroy();
+            lenis = null;
+          });
         }
 
-        gsap.from(items, {
-          autoAlpha: 0,
-          y: 28,
-          stagger: 0.1,
-          duration: 0.6,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: container,
-            start: 'top 82%',
-            once: true,
-          },
+        const intro = gsap.timeline({ defaults: { ease: "power3.out" } });
+        const lines = root.querySelectorAll(".hero-line > span");
+        if (lines.length)
+          intro
+            .from(".hero-intro", { y: 12, autoAlpha: 0, duration: 0.55 }, 0.05)
+            .from(
+              lines,
+              { yPercent: 110, rotation: 2, duration: 1.15, stagger: 0.13 },
+              0.12,
+            )
+            .from(
+              ".hero-description, .hero-actions, .hero-location, .hero-experience",
+              {
+                y: 18,
+                autoAlpha: 0,
+                duration: 0.7,
+                stagger: 0.1,
+                clearProps: "all",
+              },
+              0.55,
+            )
+            .from(
+              ".hero-visual",
+              { y: 30, autoAlpha: 0, duration: 1, clearProps: "all" },
+              0.3,
+            );
+
+        const progress = root.querySelector(".reading-progress");
+        if (progress)
+          gsap.to(progress, {
+            scaleX: 1,
+            ease: "none",
+            scrollTrigger: {
+              trigger: root,
+              start: "top top",
+              end: "bottom bottom",
+              scrub: 0.2,
+            },
+          });
+        root.querySelectorAll(".section-heading").forEach((heading) => {
+          const title = heading.querySelector(".heading-reveal > span");
+          const rule = heading.querySelector(".section-rule");
+          const timeline = gsap.timeline({
+            scrollTrigger: { trigger: heading, start: "top 88%", once: true },
+          });
+          if (title)
+            timeline.from(title, {
+              yPercent: 105,
+              duration: 0.9,
+              ease: "power3.out",
+              clearProps: "transform",
+            });
+          if (rule)
+            timeline.from(
+              rule,
+              {
+                scaleX: 0,
+                transformOrigin: "left",
+                duration: 1.05,
+                ease: "power3.inOut",
+              },
+              0,
+            );
         });
-      });
-
-      gsap.utils.toArray('[data-section-signal]').forEach((signal) => {
-        gsap.from(signal, {
-          scaleX: 0,
-          duration: 0.85,
-          ease: 'expo.out',
-          scrollTrigger: {
-            trigger: signal.closest('.section-header'),
-            start: 'top 80%',
-            once: true,
-          },
+        root
+          .querySelectorAll("[data-reveal]:not(.section-heading)")
+          .forEach((element) => {
+            gsap.from(element, {
+              y: 34,
+              duration: 0.9,
+              ease: "power3.out",
+              clearProps: "transform",
+              scrollTrigger: { trigger: element, start: "top 92%", once: true },
+            });
+          });
+        root.querySelectorAll(".project-visual > svg").forEach((art) => {
+          gsap.fromTo(
+            art,
+            { yPercent: 5 },
+            {
+              yPercent: -5,
+              ease: "none",
+              scrollTrigger: {
+                trigger: art.closest(".featured-project"),
+                start: "top bottom",
+                end: "bottom top",
+                scrub: 0.7,
+              },
+            },
+          );
         });
-      });
-
-      gsap.utils.toArray('.featured-project-image img').forEach((image) => {
-        gsap.from(image, {
-          scale: 1.16,
-          duration: 1.15,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: image.closest('.featured-project-card'),
-            start: 'top 82%',
-            once: true,
-          },
+        root.querySelectorAll(".experience-content").forEach((item) => {
+          gsap.from(item.children, {
+            y: 20,
+            opacity: 0.25,
+            stagger: 0.07,
+            duration: 0.7,
+            clearProps: "all",
+            scrollTrigger: { trigger: item, start: "top 88%", once: true },
+          });
         });
-      });
+        const portrait = root.querySelector(".portrait-frame img");
+        if (portrait)
+          gsap.fromTo(
+            portrait,
+            { yPercent: -4, scale: 1.12 },
+            {
+              yPercent: 4,
+              scale: 1.06,
+              ease: "none",
+              scrollTrigger: {
+                trigger: portrait.parentElement,
+                start: "top bottom",
+                end: "bottom top",
+                scrub: 0.7,
+              },
+            },
+          );
+        const signature = root.querySelector(".footer-wordmark");
+        if (signature)
+          gsap.from(signature, {
+            yPercent: 30,
+            opacity: 0.4,
+            duration: 1.1,
+            ease: "power3.out",
+            scrollTrigger: { trigger: signature, start: "top 98%", once: true },
+          });
 
-      const skillFills = root.querySelectorAll('.resume-skill-fill');
-      if (skillFills.length) {
-        gsap.from(skillFills, {
-          scaleX: 0,
-          transformOrigin: 'left center',
-          stagger: 0.09,
-          duration: 0.7,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: skillFills[0].closest('.resume-sidebar'),
-            start: 'top 78%',
-            once: true,
-          },
-        });
-      }
+        if (context.conditions.fine) {
+          root
+            .querySelectorAll(".button-primary, .circle-link, .contact-arrow")
+            .forEach((button) => {
+              const x = gsap.quickTo(button, "x", {
+                duration: 0.45,
+                ease: "power3.out",
+              });
+              const y = gsap.quickTo(button, "y", {
+                duration: 0.45,
+                ease: "power3.out",
+              });
+              const move = (event) => {
+                const bounds = button.getBoundingClientRect();
+                x((event.clientX - bounds.left - bounds.width / 2) * 0.12);
+                y((event.clientY - bounds.top - bounds.height / 2) * 0.12);
+              };
+              const reset = () => {
+                x(0);
+                y(0);
+              };
+              button.addEventListener("pointermove", move);
+              button.addEventListener("pointerleave", reset);
+              cleanups.push(() => {
+                button.removeEventListener("pointermove", move);
+                button.removeEventListener("pointerleave", reset);
+                x.tween.kill();
+                y.tween.kill();
+                gsap.set(button, { clearProps: "transform" });
+              });
+            });
+        }
+        return () => {
+          cleanups.splice(0).forEach((cleanup) => cleanup());
+        };
+      },
+      root,
+    );
 
-      const addParallax = (selector, triggerSelector, properties, start = 'top bottom') => {
-        const element = root.querySelector(selector);
-        if (!element) return;
-
-        gsap.to(element, {
-          ...properties,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: element.closest(triggerSelector),
-            start,
-            end: 'bottom top',
-            scrub: 1,
-          },
-        });
-      };
-
-      addParallax('[data-hero-code]', '.hero', { y: -145, rotation: 16, scale: 1.08 }, 'top top');
-      addParallax('[data-tagline-icon]', '.tagline-section', { y: -130, rotation: 12, scale: 1.06 });
-      addParallax('[data-ai-robot]', '.ai-projects-section', { y: -155, rotation: 25, scale: 1.05 });
-
-      const footerMark = root.querySelector('[data-footer-mark]');
-      if (footerMark) {
-        gsap.fromTo(footerMark, { xPercent: 18 }, {
-          xPercent: -12,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: footerMark.closest('.footer'),
-            start: 'top bottom',
-            end: 'bottom bottom',
-            scrub: 1,
-          },
-        });
-      }
-    }, root);
-
-    return () => context.revert();
+    // Expanding project notes and loading images change document geometry.
+    root.addEventListener("toggle", refresh, true);
+    root.addEventListener("load", refresh, true);
+    const layoutObserver = new ResizeObserver(refresh);
+    layoutObserver.observe(root);
+    let alive = true;
+    document.fonts.ready.then(() => {
+      if (alive) refresh();
+    });
+    return () => {
+      alive = false;
+      cancelAnimationFrame(refreshFrame);
+      root.removeEventListener("toggle", refresh, true);
+      root.removeEventListener("load", refresh, true);
+      layoutObserver.disconnect();
+      media.revert();
+      cleanups.splice(0).forEach((cleanup) => cleanup());
+    };
   }, [scope]);
 }
