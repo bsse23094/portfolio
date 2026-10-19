@@ -1118,6 +1118,30 @@ html {
 .project-actions {
   border-block: 1px solid var(--line);
 }
+.featured-project .project-actions {
+  margin-top: 24px;
+}
+.project-actions .project-result {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 68px;
+  margin: 0;
+  padding: 18px 10px;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+}
+.project-actions .project-result strong {
+  flex: 0 0 auto;
+  font: 500 26px/1.2 var(--sans);
+  font-variant-numeric: lining-nums tabular-nums;
+  letter-spacing: -0.035em;
+  color: var(--ink);
+}
+.project-actions .project-result > span {
+  font: 500 12px/1.5 var(--sans);
+  color: var(--muted);
+}
 .project-actions .project-details {
   margin: 0;
   padding: 0;

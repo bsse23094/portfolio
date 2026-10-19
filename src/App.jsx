@@ -499,11 +499,11 @@ function FeaturedProject({ project }) {
         </div>
         <p className="project-description">{project.description}</p>
         <Tags items={project.stack} />
-        <div className="project-result">
-          <strong>{project.metric}</strong>
-          <span>{project.metricLabel}</span>
-        </div>
         <div className="project-actions">
+          <div className="project-result">
+            <strong>{project.metric}</strong>
+            <span>{project.metricLabel}</span>
+          </div>
           <ArchitectureButton project={project} />
           <ProjectDetails project={project} />
         </div>
