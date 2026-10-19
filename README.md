@@ -11,7 +11,8 @@ A personal portfolio focused on agentic AI, applied machine learning, and C#/.NE
 - GSAP entrance sequences, ScrollTrigger reveals and parallax, and a pausable technology rail with locally served icons.
 - Three.js details integrated with navigation: a four-terminal project index links directly to the studies, and an open copper circuit frames the contact button with hover/focus feedback. Native links remain usable independently of the canvas.
 - The decorative views share one WebGL renderer and copy completed frames to DOM-local 2D canvases. One GSAP scheduler wakes on interaction and detaches when settled. Resolution budgets, 24/30fps limits, offscreen suspension, modal suppression, reduced-motion rendering, SVG fallback, and context-loss cleanup keep the accents bounded.
-- Four selected projects, architecture illustrations, and progressively disclosed engineering notes.
+- Four selected projects with 2D architecture diagrams, consistent metric/action rows, and progressively disclosed engineering notes. CI/CD and UFC diagrams reuse the 3D studies' stage graphs and switch to readable vertical layouts on phones.
+- Experience date ranges use prominent Manrope numerals and a slim copper rule, with location as secondary text.
 - Experience, education, leadership, project results, and downloadable PDF aligned with the supplied October 2026 CV.
 - A 14-project archive with AI, web application, and client-work filters.
 - Lenis wheel smoothing synchronized with the GSAP ticker, native touch scrolling, keyboard controls, reduced-motion support, and clipboard feedback.
@@ -53,6 +54,7 @@ Generated screenshots and failure traces live in the ignored `test-results/` dir
 - `src/components/DesignAccent.jsx` — lazy accent mounting, live project selection, and non-interactive SVG fallbacks.
 - `src/components/designScene.js` — shared renderer, event-driven scheduling, bounded resolution, 2D output surfaces, and context/resource lifecycle.
 - `src/components/accentGeometry.js` — project-terminal and contact-circuit geometry with shared visual treatment.
+- `src/components/PipelineVisual.jsx` ? responsive SVG architecture diagrams for CI/CD and UFC, using the shared project stage data.
 - `src/components/ProjectSignalIndex.jsx` — native project navigation linked to the 3D terminal states.
 - `src/components/SystemExplorer.jsx` — accessible controls, inspector, walkthrough, and interactive 2D fallback.
 - `src/components/systemScene.js` — dynamically imported Three.js renderer; draws only on interaction or during a walkthrough, pauses outside the viewport, and disposes GPU resources on unmount.

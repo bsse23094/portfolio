@@ -1,5 +1,6 @@
 import Arrow from "./components/Arrow";
 import ProjectActionIcon from "./components/ProjectActionIcon";
+import PipelineVisual from "./components/PipelineVisual";
 import { useEffect, useRef, useState } from "react";
 import {
   profile,
@@ -252,6 +253,7 @@ function SectionHeading({ index, label, title, children }) {
 }
 
 function ProjectVisual({ type }) {
+  if (type === "cicd" || type === "ufc") return <PipelineVisual type={type} />;
   if (type === "reply-mirror")
     return (
       <div
@@ -512,39 +514,6 @@ function FeaturedProject({ project }) {
   );
 }
 
-function CompactProject({ project }) {
-  return (
-    <article id={project.id} className="compact-project" data-reveal>
-      <div className="compact-main">
-        <span className="project-index">/{project.number}</span>
-        <div className="compact-copy">
-          <div className="project-kicker">{project.category}</div>
-          <h3>{project.title}</h3>
-          <p>{project.description}</p>
-          <Tags items={project.stack} />
-        </div>
-        <div className="compact-result">
-          <strong>{project.metric}</strong>
-          <span>{project.metricLabel}</span>
-        </div>
-        <a
-          className="circle-link"
-          href={project.repository}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label={`View ${project.title} source on GitHub (opens in a new tab)`}
-        >
-          <Arrow diagonal />
-        </a>
-      </div>
-      <div className="project-actions">
-        <ArchitectureButton project={project} />
-        <ProjectDetails project={project} />
-      </div>
-    </article>
-  );
-}
-
 function Work() {
   return (
     <section id="work" className="section container">
@@ -561,13 +530,8 @@ function Work() {
       </SectionHeading>
       <ProjectSignalIndex />
       <div className="featured-grid">
-        {selectedProjects.slice(0, 2).map((project) => (
+          {selectedProjects.map((project) => (
           <FeaturedProject key={project.id} project={project} />
-        ))}
-      </div>
-      <div className="compact-projects">
-        {selectedProjects.slice(2).map((project) => (
-          <CompactProject key={project.id} project={project} />
         ))}
       </div>
       <div className="archive-callout" data-reveal>
@@ -604,8 +568,8 @@ function Experience() {
           {experience.map((job) => (
             <article className="experience-row" key={job.company} data-reveal>
               <div className="experience-meta">
-                <p className="mono">
-                  {job.start} — {job.end}
+                <p className="experience-dates">
+                  <span>{job.start}</span> <span className="date-divider">—</span> <span>{job.end}</span>
                 </p>
                 <span>{job.location}</span>
               </div>

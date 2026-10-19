@@ -1607,3 +1607,60 @@ html {
   height: 1em;
   vertical-align: -0.15em;
 }
+
+/* Project diagrams use the same nodes and connections as the 3D studies. */
+.featured-grid { row-gap: 64px; }
+.featured-project.ufc { margin-top: 90px; }
+.pipeline-visual {
+  --diagram-surface: #f7f4ed;
+  --diagram-stroke: #b4a794;
+  --diagram-text: #403b32;
+  --diagram-muted: #706354;
+  --diagram-output: #e3c6ae;
+  background: #eae4d9;
+  color: #706354;
+}
+.pipeline-ufc {
+  --diagram-surface: #303e34;
+  --diagram-stroke: #7a8b72;
+  --diagram-text: #f0eee6;
+  --diagram-muted: #b2c0a7;
+  --diagram-output: #4b5e42;
+  background: #263129;
+  color: #b2c0a7;
+}
+.pipeline-routes { stroke: var(--diagram-stroke); color: var(--diagram-stroke); }
+.pipeline-node rect { fill: var(--diagram-surface); stroke: var(--diagram-stroke); }
+.pipeline-output rect { fill: var(--diagram-output); }
+.project-visual .pipeline-node-title { fill: var(--diagram-text); font-size: 12px; }
+.project-visual .pipeline-node-detail { fill: var(--diagram-muted); font-size: 9px; }
+.project-visual > .pipeline-mobile { display: none; }
+.pipeline-visual .visual-bottom { letter-spacing: 0.025em; }
+.experience-meta .experience-dates {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35em;
+  padding-left: 14px;
+  border-left: 2px solid var(--copper);
+  color: var(--ink);
+  font: 600 clamp(17px, 1.5vw, 22px)/1.5 var(--sans);
+  letter-spacing: -0.035em;
+  font-variant-numeric: lining-nums tabular-nums;
+}
+.experience-dates > span { white-space: nowrap; }
+.experience-dates .date-divider { color: var(--copper); font-weight: 400; }
+.experience-meta > span { padding-left: 16px; }
+@media (max-width: 800px) {
+  .featured-project.ufc { margin-top: 60px; }
+}
+@media (max-width: 580px) {
+  .featured-project.ufc { margin-top: 0; }
+  .featured-grid { row-gap: 44px; }
+  .project-visual > .pipeline-desktop { display: none; }
+  .project-visual > .pipeline-mobile { display: block; margin-block: 16px; }
+  .pipeline-visual .visual-bottom { font-size: 8px; flex-wrap: wrap; gap: 6px 12px; }
+  .experience-meta { display: block; }
+  .experience-meta .experience-dates { font-size: 19px; }
+  .experience-meta > span { margin-top: 8px; font-size: 12px; }
+}
