@@ -1,3 +1,4 @@
+import Arrow from "./components/Arrow";
 import { useEffect, useRef, useState } from "react";
 import {
   profile,
@@ -14,26 +15,6 @@ import DesignAccent from "./components/DesignAccent";
 import ProjectSignalIndex from "./components/ProjectSignalIndex";
 import { usePortfolioMotion } from "./hooks/useMotion";
 
-function Arrow({ diagonal = false, className = "" }) {
-  return (
-    <svg
-      className={`arrow ${className}`}
-      width="20"
-      height="20"
-      viewBox="0 0 24 24"
-      fill="none"
-      aria-hidden="true"
-    >
-      <path
-        d={diagonal ? "M5 19 19 5M5 5h14v14" : "M4 12h15m-6-6 6 6-6 6"}
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
 function ExternalLink({ href, children, className = "" }) {
   return (
     <a
@@ -355,7 +336,7 @@ function ProjectVisual({ type }) {
           <span>
             <i className="status-dot" /> RISK-AWARE ROUTING
           </span>
-          <span>TRACEABLE BY DESIGN ↗</span>
+          <span>TRACEABLE BY DESIGN <Arrow diagonal className="inline-arrow" /></span>
         </div>
       </div>
     );
@@ -454,7 +435,7 @@ function ProjectVisual({ type }) {
       </svg>
       <div className="visual-bottom">
         <span>CONTEXT + KNOWLEDGE</span>
-        <span>ISOLATED COLLECTIONS ↗</span>
+        <span>ISOLATED COLLECTIONS <Arrow diagonal className="inline-arrow" /></span>
       </div>
     </div>
   );
@@ -627,7 +608,7 @@ function Experience() {
                     <p className="job-role">{job.role}</p>
                   </div>
                   <span className="job-mark" aria-hidden="true">
-                    ↗
+                    <Arrow diagonal className="inline-arrow" />
                   </span>
                 </div>
                 <p className="job-description">{job.description}</p>
@@ -665,7 +646,7 @@ function About() {
               loading="lazy"
             />
             <span className="portrait-corner" aria-hidden="true">
-              ↗
+              <Arrow diagonal className="inline-arrow" />
             </span>
           </div>
           <div className="portrait-caption">

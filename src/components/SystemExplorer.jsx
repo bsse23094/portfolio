@@ -1,3 +1,4 @@
+import Arrow from "./Arrow";
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { systems } from "../data/projectSystems";
@@ -292,7 +293,7 @@ export default function SystemExplorer({
       <div className="system-footnote">
         <span>Illustrative flow · not live inference</span>
         <a href={`#${projectId}`} onClick={onNotes}>
-          Project notes <span aria-hidden="true">↗</span>
+          Project notes <span aria-hidden="true"><Arrow diagonal className="inline-arrow" /></span>
         </a>
       </div>
     </section>

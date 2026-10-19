@@ -1,3 +1,4 @@
+import Arrow from "./Arrow";
 import { useState } from "react";
 import DesignAccent from "./DesignAccent";
 import { systems } from "../data/projectSystems";
@@ -23,7 +24,7 @@ export default function ProjectSignalIndex() {
           <span>{project.number}</span>
           <strong>{project.tab}</strong>
           <span className="signal-index-arrow" aria-hidden="true">
-            ↘
+            <Arrow diagonal down className="inline-arrow" />
           </span>
         </a>
       ))}

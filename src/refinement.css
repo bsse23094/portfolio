@@ -1541,3 +1541,10 @@ html {
     display: none;
   }
 }
+
+/* SVG arrows keep their line treatment on platforms with emoji fonts. */
+.inline-arrow {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.15em;
+}
