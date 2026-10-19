@@ -188,7 +188,7 @@ function Hero() {
         </div>
       </div>
       <div className="hero-visual" data-enter>
-        <SystemWorkbench />
+        <SystemWorkbench appearance="paper" />
       </div>
       <div className="hero-footnote">
         <span>

@@ -7,6 +7,7 @@ import { systems } from "../data/projectSystems";
 
 export default function SystemWorkbench({
   initialProject = "reply-mirror",
+  appearance = "dark",
   onNotes,
 }) {
   const [projectId, setProjectId] = useState(initialProject);
@@ -26,7 +27,7 @@ export default function SystemWorkbench({
     tabRefs.current[next]?.focus();
   };
   return (
-    <div className="system-workbench">
+    <div className="system-workbench" data-appearance={appearance}>
       <div
         className="system-project-tabs"
         role="tablist"
@@ -46,7 +47,7 @@ export default function SystemWorkbench({
             onClick={() => setProjectId(project.id)}
             onKeyDown={(event) => changeTab(event, index)}
           >
-            <span>{project.number}</span>
+            {appearance !== "paper" && <span>{project.number}</span>}
             {project.tab}
           </button>
         ))}
@@ -59,6 +60,7 @@ export default function SystemWorkbench({
         <SystemExplorer
           key={projectId}
           projectId={projectId}
+          appearance={appearance}
           onNotes={onNotes}
         />
       </div>
@@ -119,7 +121,9 @@ export function ArchitectureButton({ project }) {
       >
         <ProjectActionIcon />
         Explore architecture<span className="sr-only"> of {project.title}</span>
-        <span className="project-action-trailing" aria-hidden="true"><Arrow diagonal className="inline-arrow" /></span>
+        <span className="project-action-trailing" aria-hidden="true">
+          <Arrow diagonal className="inline-arrow" />
+        </span>
       </button>
       {open && (
         <ArchitectureDialog project={project} onClose={() => setOpen(false)} />

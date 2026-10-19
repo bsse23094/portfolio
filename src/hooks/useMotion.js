@@ -107,8 +107,8 @@ export function usePortfolioMotion(scope) {
             )
             .from(
               ".hero-visual",
-              { y: 30, autoAlpha: 0, duration: 1, clearProps: "all" },
-              0.3,
+              { y: 14, autoAlpha: 0, duration: 1.35, clearProps: "all" },
+              0.2,
             );
 
         const progress = root.querySelector(".reading-progress");

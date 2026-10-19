@@ -3,6 +3,7 @@ import { gsap } from "gsap";
 
 export function createSystemScene({
   system,
+  appearance = "dark",
   canvas,
   host,
   labels,
@@ -11,6 +12,7 @@ export function createSystemScene({
   reducedMotion,
 }) {
   const { nodes: systemNodes, edges: systemEdges } = system;
+  const paper = appearance === "paper";
   const layerState = { amount: 0 };
   const renderer = new THREE.WebGLRenderer({
     canvas,
@@ -153,7 +155,7 @@ export function createSystemScene({
   const grid = new THREE.GridHelper(11, 22, 0x54604e, 0x384435);
   grid.position.y = -0.38;
   grid.material.transparent = true;
-  grid.material.opacity = 0.45;
+  grid.material.opacity = paper ? 0.12 : 0.45;
   own(grid.geometry);
   own(grid.material);
   world.add(grid);
@@ -161,11 +163,11 @@ export function createSystemScene({
     own(new THREE.BoxGeometry(10.4, 0.12, 6.6)),
     own(
       new THREE.MeshStandardMaterial({
-        color: 0x222b23,
+        color: paper ? 0xcbd2bf : 0x222b23,
         metalness: 0.1,
         roughness: 0.9,
         transparent: true,
-        opacity: 0.8,
+        opacity: paper ? 0.22 : 0.8,
       }),
     ),
   );

@@ -425,6 +425,146 @@ html {
   color: #f1c6a3;
 }
 
+/* A paper-and-sage study lets the hero illustration share the page surface. */
+.system-workbench[data-appearance="paper"] {
+  --study-ink: #354333;
+  --study-muted: #5f6858;
+  --study-line: #6e7c6329;
+  position: relative;
+  isolation: isolate;
+  background: linear-gradient(155deg, #f7f6f080, #e9ece266 55%, #f6f4ee33);
+  border: 1px solid #6e7c631c;
+  border-radius: 18px;
+  box-shadow: 0 20px 55px -38px #43513b40;
+}
+.system-workbench[data-appearance="paper"]::before {
+  content: "";
+  position: absolute;
+  inset: -35px -24px;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 55% 45%, #d7dfcb55, transparent 70%);
+}
+.system-workbench[data-appearance="paper"] .system-project-tabs {
+  margin-inline: 24px;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--study-line);
+}
+.system-workbench[data-appearance="paper"] .system-project-tabs button {
+  color: var(--study-muted);
+  border-left: 0;
+  background: transparent;
+}
+.system-workbench[data-appearance="paper"] .system-project-tabs button[aria-selected="true"] {
+  color: var(--copper);
+  border-bottom-color: var(--copper);
+}
+.system-workbench[data-appearance="paper"] .system-project-tabs button:hover {
+  color: var(--study-ink);
+  background: #dce2d344;
+}
+.system-workbench[data-appearance="paper"] .system-explorer {
+  color: var(--study-ink);
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+.system-workbench[data-appearance="paper"] :is(.system-eyebrow, .layer-toggle, .inspector-number, .system-decision strong, .system-footnote > a) {
+  color: var(--copper);
+}
+.system-workbench[data-appearance="paper"] :is(.system-edition, .system-hint, .system-decision p, .system-inspector > p, .inspector-output > span, .trace-caption, .system-evidence > span, .system-footnote, .system-orientation) {
+  color: var(--study-muted);
+}
+.system-workbench[data-appearance="paper"] :is(.system-toolbar, .system-inspector, .system-trace, .system-evidence, .system-footnote, .system-layer-key) {
+  border-color: var(--study-line);
+}
+.system-workbench[data-appearance="paper"] .system-toolbar {
+  border-top: 0;
+}
+.system-workbench[data-appearance="paper"] .system-stage {
+  background: radial-gradient(ellipse at 54% 52%, #d4ddc780, #e9ece21a 65%, transparent 80%);
+}
+.system-workbench[data-appearance="paper"] .system-stage canvas {
+  mask-image: radial-gradient(ellipse at center, #000 48%, #0009 72%, transparent 100%);
+}
+.system-workbench[data-appearance="paper"] .system-node {
+  background: #f5f6efed;
+  color: var(--study-ink);
+  border-color: #8e9c7d80;
+  border-radius: 5px;
+  box-shadow: 0 3px 10px #35433308;
+}
+.system-workbench[data-appearance="paper"] .node-index {
+  color: var(--study-muted);
+}
+.system-workbench[data-appearance="paper"] .system-node:is(:hover, :focus-visible) {
+  background: #e3e9d9;
+  border-color: #68785c;
+}
+.system-workbench[data-appearance="paper"] .system-node.is-active {
+  background: #f3e5d7;
+  color: #864322;
+  border-color: #b7835f;
+}
+.system-workbench[data-appearance="paper"] .system-node.is-active .node-index {
+  color: #864322;
+}
+.system-workbench[data-appearance="paper"] .system-inspector {
+  background: linear-gradient(110deg, #dde4d466, #e9ece222);
+}
+.system-workbench[data-appearance="paper"] :is(.inspector-output, .system-evidence p, .system-layer-key span) {
+  color: var(--study-ink);
+}
+.system-workbench[data-appearance="paper"] .inspector-layer {
+  color: var(--study-muted);
+  border-color: #8e9c7d66;
+  border-radius: 3px;
+}
+.system-workbench[data-appearance="paper"] .trace-button {
+  background: #e3e8da;
+  border-color: #8e9c7d66;
+  border-radius: 5px;
+  color: var(--study-ink);
+  transition: background-color 0.25s;
+}
+.system-workbench[data-appearance="paper"] .trace-button:hover {
+  background: #d4dec8;
+}
+.system-workbench[data-appearance="paper"] .trace-dot {
+  background: #68785c;
+}
+.system-workbench[data-appearance="paper"] .trace-dot.is-playing {
+  background: var(--copper);
+}
+.system-workbench[data-appearance="paper"] .system-layer-key {
+  background: #e3e8da66;
+}
+.system-workbench[data-appearance="paper"] .system-layer-key i {
+  color: var(--copper);
+  border-color: #8e9c7d66;
+}
+.system-workbench[data-appearance="paper"] .system-flat-lines {
+  stroke: #718164;
+}
+.system-workbench[data-appearance="paper"] :is(button, a):focus-visible {
+  outline: 2px solid var(--copper);
+  outline-offset: 3px;
+}
+@media (max-width: 800px) {
+  .system-workbench[data-appearance="paper"]::before {
+    inset-inline: -12px;
+  }
+  .system-workbench[data-appearance="paper"] .system-project-tabs {
+    margin-inline: 15px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .system-workbench[data-appearance="paper"] .trace-button {
+    transition: none;
+  }
+}
+
 /* A slow, pausable tool rail, with a static layout for reduced motion. */
 .tech-section {
   padding: 46px 0 28px;
@@ -1663,4 +1803,96 @@ html {
   .experience-meta { display: block; }
   .experience-meta .experience-dates { font-size: 19px; }
   .experience-meta > span { margin-top: 8px; font-size: 12px; }
+}
+
+/* Keep the complete desktop introduction inside the first screen. */
+.system-workbench[data-appearance="paper"] .system-heading {
+  padding-block: 20px 16px;
+}
+.system-workbench[data-appearance="paper"] .system-heading h2 {
+  margin: 0;
+  line-height: 1.25;
+}
+.system-workbench[data-appearance="paper"] .layer-toggle {
+  flex-shrink: 0;
+}
+.system-workbench[data-appearance="paper"] .system-inspector {
+  min-height: 0;
+  padding-block: 18px 20px;
+  border-radius: 0 0 18px 18px;
+}
+.system-workbench[data-appearance="paper"] .inspector-header {
+  flex-wrap: wrap;
+}
+.system-workbench[data-appearance="paper"] .inspector-header .trace-button {
+  margin-left: auto;
+}
+.system-workbench[data-appearance="paper"] .system-inspector > p {
+  min-height: 0;
+  margin-top: 10px;
+}
+.system-workbench[data-appearance="paper"] .inspector-output {
+  margin-top: 8px;
+}
+@media (min-width: 581px) {
+  .hero {
+    min-height: calc(100svh - 92px);
+    align-content: space-between;
+  }
+}
+@media (min-width: 581px) and (max-height: 1100px) {
+  .hero {
+    padding-top: clamp(22px, 3.2svh, 34px);
+  }
+  .hero-copy {
+    padding-top: 10px;
+  }
+  .hero h1 {
+    font-size: clamp(88px, 8.7vw, 126px);
+    margin-top: 18px;
+  }
+  .hero-description {
+    margin-top: 22px;
+  }
+  .hero-actions {
+    margin-top: 19px;
+  }
+  .hero-location {
+    margin-top: 20px;
+  }
+  .hero-experience {
+    margin-top: 27px;
+    padding-top: 16px;
+  }
+  .hero-footnote {
+    margin-top: 14px;
+    padding-block: 12px;
+  }
+  .system-workbench[data-appearance="paper"] .system-stage {
+    height: clamp(300px, 38svh, 380px);
+  }
+  .system-workbench[data-appearance="paper"] .system-project-tabs button {
+    min-height: 40px;
+    padding-block: 10px;
+  }
+}
+@media (min-width: 581px) and (max-height: 820px) {
+  .hero h1 {
+    font-size: clamp(80px, 7.8vw, 110px);
+  }
+  .hero-description {
+    margin-top: 15px;
+    line-height: 1.65;
+  }
+  .hero-experience {
+    margin-top: 18px;
+  }
+}
+@media (min-width: 581px) and (max-width: 700px) and (max-height: 820px) {
+  .hero-experience {
+    margin-top: 14px;
+  }
+  .hero-footnote {
+    padding-block: 7px;
+  }
 }

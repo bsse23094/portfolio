@@ -5,9 +5,11 @@ import { systems } from "../data/projectSystems";
 
 export default function SystemExplorer({
   projectId = "reply-mirror",
+  appearance = "dark",
   onNotes,
 }) {
   const system = systems[projectId];
+  const minimal = appearance === "paper";
   const selectionHint = `Select ${system.unit === "agent" ? "an agent" : "a stage"} to see its role`;
   const { nodes: systemNodes, steps: traceSteps } = system;
   const fallbackPositions = systemNodes.map((node) => [
@@ -55,6 +57,7 @@ export default function SystemExplorer({
         try {
           sceneRef.current = createSystemScene({
             system,
+            appearance,
             canvas: canvasRef.current,
             host: hostRef.current,
             labels: labelsRef.current,
@@ -81,7 +84,7 @@ export default function SystemExplorer({
       sceneRef.current = null;
       media.removeEventListener("change", onMotion);
     };
-  }, [system]);
+  }, [system, appearance]);
 
   useEffect(() => {
     sceneRef.current?.select(selected, active, trace === "playing");
@@ -158,6 +161,31 @@ export default function SystemExplorer({
     timelineRef.current = timeline;
   }
 
+  const layerControl = status === "ready" && (
+    <button
+      aria-pressed={layers}
+      onClick={() => setLayers(!layers)}
+      className="layer-toggle"
+    >
+      {layers ? "Collapse layers" : "Inspect layers"}{" "}
+      <span aria-hidden="true">{layers ? "−" : "+"}</span>
+    </button>
+  );
+  const traceControl = (
+    <button onClick={runTrace} className="trace-button">
+      {reduced
+        ? "Next stage"
+        : trace === "playing"
+          ? "Pause walkthrough"
+          : trace === "paused"
+            ? "Resume walkthrough"
+            : trace === "done"
+              ? "Replay example"
+              : "Trace a request"}
+      <span aria-hidden="true">{trace === "playing" ? "Ⅱ" : "→"}</span>
+    </button>
+  );
+
   return (
     <section
       className="system-explorer"
@@ -167,38 +195,39 @@ export default function SystemExplorer({
     >
       <div className="system-heading">
         <div>
-          <span className="system-eyebrow">
-            PROJECT STUDY / {system.number}
-          </span>
+          {!minimal && (
+            <span className="system-eyebrow">
+              PROJECT STUDY / {system.number}
+            </span>
+          )}
           <h2>Inside {system.name}</h2>
         </div>
-        <span className="system-edition">
-          {systemNodes.length} {system.unit === "agent" ? "AGENTS" : "STAGES"}
-          <br />
-          ONE PIPELINE
-        </span>
-      </div>
-      <div className="system-decision">
-        <strong>{system.headline}</strong>
-        <p>{system.decision}</p>
-      </div>
-      <div className="system-toolbar">
-        <span className="system-hint">
-          {status === "ready"
-            ? "Interactive 3D architecture"
-            : "Interactive architecture"}
-        </span>
-        {status === "ready" && (
-          <button
-            aria-pressed={layers}
-            onClick={() => setLayers(!layers)}
-            className="layer-toggle"
-          >
-            {layers ? "Collapse layers" : "Inspect layers"}{" "}
-            <span aria-hidden="true">{layers ? "−" : "+"}</span>
-          </button>
+        {minimal ? (
+          layerControl
+        ) : (
+          <span className="system-edition">
+            {systemNodes.length} {system.unit === "agent" ? "AGENTS" : "STAGES"}
+            <br />
+            ONE PIPELINE
+          </span>
         )}
       </div>
+      {!minimal && (
+        <div className="system-decision">
+          <strong>{system.headline}</strong>
+          <p>{system.decision}</p>
+        </div>
+      )}
+      {!minimal && (
+        <div className="system-toolbar">
+          <span className="system-hint">
+            {status === "ready"
+              ? "Interactive 3D architecture"
+              : "Interactive architecture"}
+          </span>
+          {layerControl}
+        </div>
+      )}
       <div
         className={`system-stage ${status !== "ready" ? "is-flat" : ""} ${layers ? "is-exploded" : ""}`}
         ref={hostRef}
@@ -238,9 +267,11 @@ export default function SystemExplorer({
             {item.short}
           </button>
         ))}
-        <div className="system-orientation" aria-hidden="true">
-          <span>↑</span> DATA FLOW <span>→</span>
-        </div>
+        {!minimal && (
+          <div className="system-orientation" aria-hidden="true">
+            <span>↑</span> DATA FLOW <span>→</span>
+          </div>
+        )}
       </div>
       {layers && (
         <div className="system-layer-key" aria-label="Component layers">
@@ -254,9 +285,15 @@ export default function SystemExplorer({
       )}
       <div className="system-inspector" aria-live="polite" aria-atomic="true">
         <div className="inspector-header">
-          <span className="inspector-number">0{selected + 1}</span>
+          {!minimal && (
+            <span className="inspector-number">0{selected + 1}</span>
+          )}
           <h3>{node.name}</h3>
-          <span className="inspector-layer">{node.layer}</span>
+          {minimal ? (
+            traceControl
+          ) : (
+            <span className="inspector-layer">{node.layer}</span>
+          )}
         </div>
         <p>{node.detail}</p>
         <div className="inspector-output">
@@ -264,38 +301,36 @@ export default function SystemExplorer({
           {node.output}
         </div>
       </div>
-      <div className="system-trace">
-        <div className="trace-caption">
-          <span
-            className={
-              trace === "playing" ? "trace-dot is-playing" : "trace-dot"
-            }
-          />
-          <span>{stepLabel}</span>
+      {!minimal && (
+        <div className="system-trace">
+          <div className="trace-caption">
+            <span
+              className={
+                trace === "playing" ? "trace-dot is-playing" : "trace-dot"
+              }
+            />
+            <span>{stepLabel}</span>
+          </div>
+          {traceControl}
         </div>
-        <button onClick={runTrace} className="trace-button">
-          {reduced
-            ? "Next stage"
-            : trace === "playing"
-              ? "Pause walkthrough"
-              : trace === "paused"
-                ? "Resume walkthrough"
-                : trace === "done"
-                  ? "Replay example"
-                  : "Trace a request"}
-          <span aria-hidden="true">{trace === "playing" ? "Ⅱ" : "→"}</span>
-        </button>
-      </div>
-      <div className="system-evidence">
-        <span>PROJECT EVIDENCE</span>
-        <p>{system.evidence}</p>
-      </div>
-      <div className="system-footnote">
-        <span>Illustrative flow · not live inference</span>
-        <a href={`#${projectId}`} onClick={onNotes}>
-          Project notes <span aria-hidden="true"><Arrow diagonal className="inline-arrow" /></span>
-        </a>
-      </div>
+      )}
+      {!minimal && (
+        <div className="system-evidence">
+          <span>PROJECT EVIDENCE</span>
+          <p>{system.evidence}</p>
+        </div>
+      )}
+      {!minimal && (
+        <div className="system-footnote">
+          <span>Illustrative flow · not live inference</span>
+          <a href={`#${projectId}`} onClick={onNotes}>
+            Project notes{" "}
+            <span aria-hidden="true">
+              <Arrow diagonal className="inline-arrow" />
+            </span>
+          </a>
+        </div>
+      )}
     </section>
   );
 }
