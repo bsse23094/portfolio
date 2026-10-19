@@ -1114,35 +1114,79 @@ html {
   color: #f0cba4;
   font-style: normal;
 }
-.architecture-button {
+/* The two project actions share one typographic and interaction system. */
+.project-actions {
+  border-block: 1px solid var(--line);
+}
+.project-actions .project-details {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-top: 1px solid var(--line);
+}
+.project-actions .project-action {
   display: flex;
   align-items: center;
-  gap: 10px;
+  justify-content: flex-start;
+  gap: 12px;
   width: 100%;
-  min-height: 52px;
-  padding: 12px 0;
-  background: none;
-  border-top: 1px solid var(--line);
+  min-height: 54px;
+  padding: 14px 10px;
+  border: 0;
+  background: transparent;
   color: var(--ink);
+  font: 500 12px/1.5 var(--sans);
   text-align: left;
-  font-size: 12px;
-  transition: color 0.2s;
+  cursor: pointer;
+  transition: color 0.2s, background-color 0.2s;
 }
-.architecture-button > span:last-child {
-  margin-left: auto;
-  font-size: 18px;
-  transition: transform 0.25s;
-}
-.architecture-button:hover {
+.project-action-icon {
+  flex: 0 0 18px;
   color: var(--copper);
 }
-.architecture-button:hover > span:last-child {
-  transform: translate(2px, -2px);
+.project-action-trailing {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 18px;
+  width: 18px;
+  height: 18px;
+  margin-left: auto;
+  color: var(--copper);
+  font-size: 18px;
+  transition: transform 0.2s;
 }
-.compact-project > .architecture-button {
-  width: calc(100% - 63px);
-  margin-left: 63px;
-  margin-top: 25px;
+.project-actions .project-action:hover,
+.project-actions .project-action:focus-visible {
+  color: var(--copper);
+  background: #a3533109;
+}
+.project-actions .project-action:focus-visible {
+  outline: 2px solid var(--copper);
+  outline-offset: -2px;
+}
+.project-actions .project-details[open] > summary {
+  color: var(--copper);
+  background: #a3533109;
+}
+.project-actions .details-content {
+  padding: 16px 10px 26px 40px;
+}
+.compact-project > .project-actions {
+  margin: 25px 0 0 63px;
+}
+@media (max-width: 1150px) {
+  .compact-project > .project-actions { margin-left: 45px; }
+}
+@media (max-width: 800px) {
+  .compact-project > .project-actions { margin-left: 37px; }
+}
+@media (max-width: 580px) {
+  .compact-project > .project-actions { margin-left: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .project-actions .project-action,
+  .project-action-trailing { transition: none; }
 }
 .compact-project {
   scroll-margin-top: 115px;
@@ -1310,10 +1354,6 @@ html {
   .system-layer-key i {
     display: none;
   }
-  .compact-project > .architecture-button {
-    width: 100%;
-    margin-left: 0;
-  }
   .architecture-dialog-bar {
     padding: 8px 15px;
   }
@@ -1333,7 +1373,7 @@ html {
   }
 }
 @media print {
-  .architecture-button,
+  .project-actions .architecture-button,
   .system-workbench,
   .architecture-dialog {
     display: none;
@@ -1390,11 +1430,6 @@ html {
   }
   .hero-experience strong {
     font-size: 12px;
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .architecture-button:hover > span:last-child {
-    transform: none;
   }
 }
 

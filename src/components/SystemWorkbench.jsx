@@ -1,4 +1,5 @@
 import Arrow from "./Arrow";
+import ProjectActionIcon from "./ProjectActionIcon";
 import { useEffect, useId, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import SystemExplorer from "./SystemExplorer";
@@ -112,22 +113,13 @@ export function ArchitectureButton({ project }) {
   return (
     <>
       <button
-        className="architecture-button"
+        className="architecture-button project-action"
         aria-haspopup="dialog"
         onClick={() => setOpen(true)}
       >
-        <svg
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          aria-hidden="true"
-        >
-          <path d="m12 2 9 5v10l-9 5-9-5V7l9-5Zm0 10v10M3 7l9 5 9-5M7.5 4.5l9 5v5" />
-        </svg>
+        <ProjectActionIcon />
         Explore architecture<span className="sr-only"> of {project.title}</span>
-        <span aria-hidden="true"><Arrow diagonal className="inline-arrow" /></span>
+        <span className="project-action-trailing" aria-hidden="true"><Arrow diagonal className="inline-arrow" /></span>
       </button>
       {open && (
         <ArchitectureDialog project={project} onClose={() => setOpen(false)} />

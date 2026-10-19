@@ -1,4 +1,5 @@
 import Arrow from "./components/Arrow";
+import ProjectActionIcon from "./components/ProjectActionIcon";
 import { useEffect, useRef, useState } from "react";
 import {
   profile,
@@ -444,10 +445,13 @@ function ProjectVisual({ type }) {
 function ProjectDetails({ project }) {
   return (
     <details className="project-details">
-      <summary>
+      <summary className="project-action">
+        <ProjectActionIcon notes />
         Engineering notes<span className="sr-only"> for {project.title}</span>
-        <span className="details-plus" aria-hidden="true">
-          +
+        <span className="project-action-trailing details-plus" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" focusable="false">
+            <path d="M5 12h14M12 5v14" />
+          </svg>
         </span>
       </summary>
       <div className="details-content">
@@ -499,8 +503,10 @@ function FeaturedProject({ project }) {
           <strong>{project.metric}</strong>
           <span>{project.metricLabel}</span>
         </div>
-        <ArchitectureButton project={project} />
-        <ProjectDetails project={project} />
+        <div className="project-actions">
+          <ArchitectureButton project={project} />
+          <ProjectDetails project={project} />
+        </div>
       </div>
     </article>
   );
@@ -531,8 +537,10 @@ function CompactProject({ project }) {
           <Arrow diagonal />
         </a>
       </div>
-      <ArchitectureButton project={project} />
-      <ProjectDetails project={project} />
+      <div className="project-actions">
+        <ArchitectureButton project={project} />
+        <ProjectDetails project={project} />
+      </div>
     </article>
   );
 }
