@@ -11,6 +11,8 @@ export default defineConfig({
         privacy: "privacy.html",
         terms: "terms.html",
         notFound: "404.html",
+        creative: "creative.html",
+        creativeIndex: "creative/index.html",
       },
     },
   },

@@ -1,4 +1,8 @@
-export default function Arrow({ diagonal = false, down = false, className = "" }) {
+export default function Arrow({
+  diagonal = false,
+  down = false,
+  className = "",
+}) {
   return (
     <svg
       className={`arrow ${className}`}

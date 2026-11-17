@@ -339,7 +339,9 @@ function ProjectVisual({ type }) {
           <span>
             <i className="status-dot" /> RISK-AWARE ROUTING
           </span>
-          <span>TRACEABLE BY DESIGN <Arrow diagonal className="inline-arrow" /></span>
+          <span>
+            TRACEABLE BY DESIGN <Arrow diagonal className="inline-arrow" />
+          </span>
         </div>
       </div>
     );
@@ -438,7 +440,9 @@ function ProjectVisual({ type }) {
       </svg>
       <div className="visual-bottom">
         <span>CONTEXT + KNOWLEDGE</span>
-        <span>ISOLATED COLLECTIONS <Arrow diagonal className="inline-arrow" /></span>
+        <span>
+          ISOLATED COLLECTIONS <Arrow diagonal className="inline-arrow" />
+        </span>
       </div>
     </div>
   );
@@ -450,8 +454,20 @@ function ProjectDetails({ project }) {
       <summary className="project-action">
         <ProjectActionIcon notes />
         Engineering notes<span className="sr-only"> for {project.title}</span>
-        <span className="project-action-trailing details-plus" aria-hidden="true">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" focusable="false">
+        <span
+          className="project-action-trailing details-plus"
+          aria-hidden="true"
+        >
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            focusable="false"
+          >
             <path d="M5 12h14M12 5v14" />
           </svg>
         </span>
@@ -530,7 +546,7 @@ function Work() {
       </SectionHeading>
       <ProjectSignalIndex />
       <div className="featured-grid">
-          {selectedProjects.map((project) => (
+        {selectedProjects.map((project) => (
           <FeaturedProject key={project.id} project={project} />
         ))}
       </div>
@@ -569,7 +585,8 @@ function Experience() {
             <article className="experience-row" key={job.company} data-reveal>
               <div className="experience-meta">
                 <p className="experience-dates">
-                  <span>{job.start}</span> <span className="date-divider">—</span> <span>{job.end}</span>
+                  <span>{job.start}</span>{" "}
+                  <span className="date-divider">—</span> <span>{job.end}</span>
                 </p>
                 <span>{job.location}</span>
               </div>
