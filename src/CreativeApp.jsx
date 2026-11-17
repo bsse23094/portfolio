@@ -10,6 +10,8 @@ gsap.registerPlugin(ScrollTrigger);
 
 /* ───────────────────────── Data ───────────────────────── */
 
+const BASE = import.meta.env.BASE_URL || "/";
+
 const PROFILE = {
   name: "Ahmed Ayyan Mukhtar",
   title: "Content Creator | Storyteller | Video Editor",
@@ -69,7 +71,7 @@ const FEATURED_PROJECTS = [
     metric: "549K",
     metricLabel: "organic views",
     url: "https://www.instagram.com/reel/DSFNaKhCtyB/",
-    videoSrc: "/videos/skinny-jeans.mp4",
+    videoSrc: `${BASE}videos/skinny-jeans.mp4`,
     tag: "549K ORGANIC REACH",
     likes: "21K",
     comments: "482",
@@ -104,7 +106,7 @@ const FEATURED_PROJECTS = [
     metric: "~50K",
     metricLabel: "organic views",
     url: "https://www.instagram.com/reel/DeMY9tbKnat/",
-    videoSrc: "/videos/hal-jordan.mp4",
+    videoSrc: `${BASE}videos/hal-jordan.mp4`,
     tag: "~50K ORGANIC REACH",
     likes: "3.2K",
     comments: "140",
@@ -138,7 +140,7 @@ const BRAND_COLLABORATIONS = [
     type: "Commercial Campaign",
     scope: "Ergonomic chair (2 reels + 1 story) · Aura headphones (1 reel)",
     url: "https://www.instagram.com/reel/DXy9rO8Kv1X/",
-    videoSrc: "/videos/boost-chair.mp4",
+    videoSrc: `${BASE}videos/boost-chair.mp4`,
     positioning: "Creative execution within brand constraints",
     description:
       "Boost provided rigid campaign requirements without specific shot-by-shot instructions. I independently developed the creative concepts, storyboards and execution to deliver engaging lifestyle content that fulfilled all commercial parameters.",
@@ -156,7 +158,7 @@ const BRAND_COLLABORATIONS = [
     type: "Lifestyle Integration",
     scope: "Day-in-the-life video with natural product integration",
     url: "https://www.instagram.com/reel/De6qAcoR4h0/",
-    videoSrc: "/videos/nestle.mp4",
+    videoSrc: `${BASE}videos/nestle.mp4`,
     positioning: "Natural product integration & lifestyle storytelling",
     description:
       "Tasked with naturally integrating Nestlé Pure Life into a day-in-the-life narrative. The focus was seamless product placement within an authentic daily routine, preserving narrative flow rather than feeling like a conventional disruptive advertisement.",
@@ -172,7 +174,7 @@ const BRAND_COLLABORATIONS = [
     type: "Experience Content",
     scope: "First-look review of newly opened store at Dolmen Mall",
     url: "https://www.instagram.com/reel/DXHNRGPCsLl/",
-    videoSrc: "/videos/amd-fragrances.mp4",
+    videoSrc: `${BASE}videos/amd-fragrances.mp4`,
     positioning: "Experience-led commercial content",
     description:
       "Captured the physical store environment and opening impressions through a creator-led lens, walking the audience through scents, atmosphere, and initial reactions.",
@@ -834,7 +836,7 @@ function Hero() {
           sceneSubtitle="2022 vs Present Day · Personal Fashion Evolution"
           audio="Original Audio · Ahmed Ayyan Mukhtar"
           url="https://www.instagram.com/reel/DSFNaKhCtyB/"
-          videoSrc="/videos/skinny-jeans.mp4"
+          videoSrc={`${BASE}videos/skinny-jeans.mp4`}
           theme="terracotta"
           isHero={true}
         />

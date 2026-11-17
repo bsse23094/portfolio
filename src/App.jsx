@@ -45,7 +45,7 @@ function Header({ home }) {
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState("");
   const toggleRef = useRef(null);
-  const prefix = home ? "" : "/";
+  const prefix = home ? "" : import.meta.env.BASE_URL;
   useEffect(() => {
     const close = (event) => {
       if (event.key === "Escape" && open) {
@@ -75,7 +75,7 @@ function Header({ home }) {
       <div className="header-inner">
         <a
           className="brand"
-          href={home ? "#top" : "/"}
+          href={home ? "#top" : import.meta.env.BASE_URL}
           aria-label="Ahmed Ayyan home"
           onClick={() => setOpen(false)}
         >
@@ -555,7 +555,10 @@ function Work() {
           There’s more in the workshop.
           <span>Developer tools, web apps, and work for clients.</span>
         </p>
-        <a href="/projects.html" className="text-link">
+        <a
+          href={`${import.meta.env.BASE_URL}projects.html`}
+          className="text-link"
+        >
           Explore all projects <Arrow />
         </a>
       </div>
@@ -793,14 +796,14 @@ function Contact() {
 function Footer() {
   return (
     <footer className="site-footer container">
-      <a href="/" className="footer-wordmark">
+      <a href={import.meta.env.BASE_URL} className="footer-wordmark">
         ahmed ayyan<span>.</span>
       </a>
       <div className="footer-meta">
         <span>© {new Date().getFullYear()} Ahmed Ayyan Mukhtar</span>
         <div>
-          <a href="/privacy.html">Privacy</a>
-          <a href="/terms.html">Site notes</a>
+          <a href={`${import.meta.env.BASE_URL}privacy.html`}>Privacy</a>
+          <a href={`${import.meta.env.BASE_URL}terms.html`}>Site notes</a>
           <a href="#top" className="back-top">
             Back to top ↑
           </a>
@@ -823,7 +826,7 @@ function ProjectsPage() {
   return (
     <>
       <section className="container archive-hero">
-        <a href="/#work" className="text-link">
+        <a href={`${import.meta.env.BASE_URL}#work`} className="text-link">
           ← Back to selected work
         </a>
         <div className="eyebrow">THE EXTENDED COLLECTION</div>
@@ -920,7 +923,7 @@ function InformationPage({ type }) {
   const privacy = type === "privacy";
   return (
     <section className="container information-page">
-      <a href="/" className="text-link">
+      <a href={import.meta.env.BASE_URL} className="text-link">
         ← Back to the portfolio
       </a>
       <div className="eyebrow">{privacy ? "PRIVACY" : "SITE NOTES"}</div>
@@ -1009,7 +1012,9 @@ export default function App() {
       ? "privacy"
       : /\/terms(?:\.html)?$/.test(path)
         ? "terms"
-        : path === "/" || path === "/index.html"
+        : /(?:\/|\/index\.html|\/portfolio\/?|\/portfolio\/index\.html)$/.test(
+              path,
+            )
           ? "home"
           : "not-found";
   usePortfolioMotion(root);
@@ -1064,7 +1069,10 @@ export default function App() {
               <br />
               <em>An easy fix.</em>
             </h1>
-            <a className="button button-primary" href="/">
+            <a
+              className="button button-primary"
+              href={import.meta.env.BASE_URL}
+            >
               Back to the portfolio <Arrow />
             </a>
           </section>
